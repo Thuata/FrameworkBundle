@@ -11,7 +11,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Thuata\\FrameworkBundle": "" }
+        "psr-4": { "Thuata\\FrameworkBundle\\": "" }
     },
     "require": {
         "php": ">=5.5",

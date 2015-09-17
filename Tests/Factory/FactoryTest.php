@@ -26,8 +26,15 @@ namespace Thuata\FrameworkBundle\Tests;
 
 class FactoryTest extends \Symfony\Bundle\FrameworkBundle\Tests\TestCase
 {
+    /**
+     * testGetInstance
+     */
     public function testGetInstance()
     {
+        $factory = new Resources\Factory();
         
+        $factorable = $factory->getFactorableInstance(Resources\Factorable::class);
+        
+        $this->assertTrue($factorable instanceof Resources\Factorable);
     }
 }

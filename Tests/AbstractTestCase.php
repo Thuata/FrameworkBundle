@@ -1,4 +1,5 @@
 <?php
+
 /* 
  * The MIT License
  *
@@ -22,21 +23,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Thuata\FrameworkBundle\Tests\Resources;
 
-use Thuata\FrameworkBundle\Factory\AbstractFactory;
+namespace Thuata\FrameworkBundle\Tests;
 
 /**
- * Description of Factory
+ * Description of AbstractTestCase
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class Factory extends AbstractFactory
+class AbstractTestCase extends \Symfony\Bundle\FrameworkBundle\Tests\TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function injectDependancies(\Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface $factorable)
-    {
-    }
 }

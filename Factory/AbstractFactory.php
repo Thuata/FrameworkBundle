@@ -24,21 +24,26 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Factory\Factorable;
+namespace Thuata\FrameworkBundle\Factory;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Thuata\FrameworkBundle\Factory\FactoryInterface;
 
 /**
- * Description of FactoryTrait
+ * Description of Factory
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-trait FactoryTrait
+abstract class AbstractFactory implements FactoryInterface
 {
     /**
      * @var ContainerInterface
      */
     private $container;
+
+    /**
+     * @var array
+     */
+    private $registry = [];
     
     /**
      * Sets the container
@@ -50,11 +55,48 @@ trait FactoryTrait
         $this->container = $container;
     }
     
+    /**
+     * Gets the container
+     * 
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     */
     protected function getContainer()
     {
         return $this->container;
     }
     
+    /**
+     * Loads a factorable from registry
+     * 
+     * @param string $factorableClassName
+     * 
+     * @return Factorable\FactorableInterface|null
+     */
+    private function loadFromRegistry($factorableClassName)
+    {
+        return array_key_exists($factorableClassName, $this->registry) ? $this->registry[$factorableClassName] : null;
+    }
+
+    /**
+     * 
+     * @param type $factorableClassName
+     */
+    private function loadFactorableInstance($factorableClassName)
+    {
+        $reflectionClass = new \ReflectionClass($factorableClassName);
+        if (!$reflectionClass->implementsInterface(Factorable\FactorableInterface::class)) {
+            throw new \Exception('Trying to factory a class that does not implements FactorableInterface');
+        }
+        $factorable = $reflectionClass->newInstance();
+    }
+
+    /**
+     * Injects dependancies to a factorable
+     * 
+     * @param Factorable\FactorableInterface $factorable
+     */
+    abstract protected function injectDependancies(Factorable\FactorableInterface $factorable);
+
     /**
      * Instanciate a factorable from a class name and inject its dependancies.
      * 
@@ -64,9 +106,10 @@ trait FactoryTrait
      */
     public function getFactorableInstance($factorableClassName)
     {
-        $reflectionClass = new \ReflectionClass($factorableClassName);
-        if (!$reflectionClass->implementsInterface(FactorableInterface::class)) {
-            
+        $factorable = $this->loadFromRegistry($factorableClassName);
+        
+        if (!$factorable) {
+            $factorable = $this->loadFactorableInstance($factorableClassName);
         }
     }
 }

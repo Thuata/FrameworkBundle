@@ -24,18 +24,45 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Factory;
-
-use Thuata\FrameworkBundle\Factory\FactoryInterface;
-use Thuata\FrameworkBundle\Factory\FactoryTrait;
+namespace Thuata\FrameworkBundle\Tests\Resources;
 
 /**
- * Description of Factory
+ * Description of Factorable
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class Factory implements FactoryInterface
+class Factorable implements \Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface
 {
-    use FactoryTrait;
-
+    static $builds = 0;
+    /**
+     *
+     * @var Factory
+     */
+    private $factory;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        self::$builds++;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setFactory(\Thuata\FrameworkBundle\Factory\FactoryInterface $factory)
+    {
+        $this->factory = $factory;
+    }
+    
+    /**
+     * Gets the factory
+     * 
+     * @return Factory
+     */
+    public function getFactory()
+    {
+        return $this->factory;
+    }
 }
