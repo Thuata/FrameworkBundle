@@ -28,6 +28,7 @@ namespace Thuata\FrameworkBundle\Service;
 
 use Thuata\FrameworkBundle\Factory\AbstractFactory;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
+use Thuata\ComponentBundle\Registry\RegistryableTrait;
 
 /**
  * Description of ServiceFactory
@@ -36,7 +37,7 @@ use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
  */
 class ServiceFactory extends AbstractFactory
 {
-    use \Thuata\FrameworkBundle\Component\RegistryableTrait;
+    use RegistryableTrait;
 
     /**
      * {@inheritdoc}

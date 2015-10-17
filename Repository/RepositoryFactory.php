@@ -29,6 +29,7 @@ namespace Thuata\FrameworkBundle\Repository;
 use Thuata\FrameworkBundle\Factory\AbstractFactory;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Repository\AbstractRepository;
+use Thuata\ComponentBundle\Registry\RegistryableTrait;
 
 /**
  * Description of RepositoryFactory
@@ -37,7 +38,7 @@ use Thuata\FrameworkBundle\Repository\AbstractRepository;
  */
 class RepositoryFactory extends AbstractFactory
 {
-    use \Thuata\FrameworkBundle\Component\RegistryableTrait;
+    use RegistryableTrait;
 
     /**
      * {@inheritdoc}

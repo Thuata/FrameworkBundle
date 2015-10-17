@@ -24,8 +24,8 @@
  * THE SOFTWARE.
  */
 
-use Thuata\FrameworkBundle\Component\Singleton\SingletonInterface;
-use Thuata\FrameworkBundle\Component\Singleton\SingletonableTrait;
+use Thuata\ComponentBundle\Singleton\SingletonInterface;
+use Thuata\ComponentBundle\Singleton\SingletonableTrait;
 
 /**
  * Description of MockFactory

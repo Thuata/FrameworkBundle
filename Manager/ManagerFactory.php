@@ -29,6 +29,7 @@ namespace Thuata\FrameworkBundle\Manager;
 use Thuata\FrameworkBundle\Factory\AbstractFactory;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Manager\AbstractManager;
+use Thuata\ComponentBundle\Registry\RegistryableTrait;
 
 /**
  * Description of ManagerFactory
@@ -37,7 +38,7 @@ use Thuata\FrameworkBundle\Manager\AbstractManager;
  */
 class ManagerFactory extends AbstractFactory
 {
-    use \Thuata\FrameworkBundle\Component\RegistryableTrait;
+    use RegistryableTrait;
 
     /**
      * {@inheritdoc}
