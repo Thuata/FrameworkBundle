@@ -33,21 +33,37 @@ namespace Thuata\FrameworkBundle\Tests\Resources;
  */
 class Factorable implements \Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface
 {
-    static $builds = 0;
+
     /**
-     *
      * @var Factory
      */
     private $factory;
     
     /**
-     * Constructor
+     * @var \DateTime
      */
-    public function __construct()
+    private $dateTime;
+    
+    /**
+     * Sets the datetime
+     * 
+     * @param \DateTime $dateTime
+     */
+    public function setDateTime(\DateTime $dateTime)
     {
-        self::$builds++;
+        $this->dateTime = $dateTime;
     }
     
+    /**
+     * Gets the datetime
+     * 
+     * @return \DateTime
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
+    }
+
     /**
      * {@inheritdoc}
      */

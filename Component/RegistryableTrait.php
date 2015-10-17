@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -23,26 +23,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Thuata\FrameworkBundle\Component\Singleton;
+
+namespace Thuata\FrameworkBundle\Component;
 
 /**
- * Trait for singleton
+ * Description of SingletonFactoryTrait
+ *
+ * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-trait SingletonableTrait
+trait RegistryableTrait
 {
     /**
-     * Gets an instance
-     * 
-     * @staticvar type $instance
-     *
-     * @return SingletonInterface
+     * @var array
      */
-    public static function getInstance()
+    private $registry = [];
+    
+    /**
+     * Loads a factorable from registry
+     * 
+     * @param string $className
+     * 
+     * @return Factorable\FactorableInterface|null
+     */
+    protected function loadFromRegistry($className)
     {
-        static $instance = null;
-        
-        is_null($instance) and $instance = new self();
-        
-        return $instance;
+        return array_key_exists($className, $this->registry) ? $this->registry[$className] : null;
+    }
+    
+    /**
+     * Adds the factorable to registry
+     * 
+     * @param mixed $instance
+     */
+    protected function addToRegistry($instance)
+    {
+        $this->registry[get_class($instance)] = $instance;
     }
 }

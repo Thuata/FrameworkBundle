@@ -23,31 +23,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Thuata\FrameworkBundle\Tests\Component;
-
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
-use Thuata\FrameworkBundle\Tests\Resources\Singleton;
-use Thuata\FrameworkBundle\Tests\Resources\OtherSingleton;
+namespace Thuata\FrameworkBundle\Component\Singleton;
 
 /**
- * SingletonTest
+ * Trait for singleton
  */
-class SingletonTest extends TestCase
+trait SingletonableTrait
 {
     /**
-     * test 1
+     * Gets an instance
+     * 
+     * @staticvar SingletonInterface $instance
+     *
+     * @return SingletonInterface
      */
-    public function testGetInstance()
+    public static function getInstance()
     {
-        $this->assertInstanceOf(Singleton::class, Singleton::getInstance());
-    }
-    
-    /**
-     * test 2
-     */
-    public function testGetDifferentInstances()
-    {
-        Singleton::getInstance();
-        $this->assertFalse(OtherSingleton::getInstance() instanceof Singleton);
+        static $instance = null;
+        
+        is_null($instance) and $instance = new self();
+        
+        return $instance;
     }
 }

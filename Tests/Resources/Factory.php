@@ -38,5 +38,6 @@ class Factory extends AbstractFactory
      */
     protected function injectDependancies(\Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface $factorable)
     {
+        $factorable->setDateTime(new \DateTime());
     }
 }

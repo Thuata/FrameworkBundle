@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -23,31 +23,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Thuata\FrameworkBundle\Tests\Component;
 
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
-use Thuata\FrameworkBundle\Tests\Resources\Singleton;
-use Thuata\FrameworkBundle\Tests\Resources\OtherSingleton;
+namespace Thuata\FrameworkBundle\Repository;
+
+use Thuata\FrameworkBundle\Factory\AbstractFactory;
+use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
+use Thuata\FrameworkBundle\Repository\AbstractRepository;
 
 /**
- * SingletonTest
+ * Description of RepositoryFactory
+ *
+ * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class SingletonTest extends TestCase
+class RepositoryFactory extends AbstractFactory
 {
+    use \Thuata\FrameworkBundle\Component\RegistryableTrait;
+
     /**
-     * test 1
+     * {@inheritdoc}
      */
-    public function testGetInstance()
+    protected function injectDependancies(FactorableInterface $factorable)
     {
-        $this->assertInstanceOf(Singleton::class, Singleton::getInstance());
     }
     
     /**
-     * test 2
+     * Called when factorable is loaded
+     * 
+     * @param FactorableInterface $factorable
      */
-    public function testGetDifferentInstances()
+    protected function onFactorableLoaded(FactorableInterface $factorable)
     {
-        Singleton::getInstance();
-        $this->assertFalse(OtherSingleton::getInstance() instanceof Singleton);
+        $this->addToRegistry($factorable);
+    }
+    
+    /**
+     * Gets a service
+     * 
+     * @param string $factorableClassName
+     * 
+     * @return AbstractRepository
+     */
+    public function getFactorableInstance($factorableClassName)
+    {
+        $factorable = $this->loadFromRegistry($factorableClassName);
+        
+        if (!$factorable instanceof AbstractRepository) {
+            $factorable = parent::getFactorableInstance($factorableClassName);
+        }
+        
+        return $factorable;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -23,31 +23,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Thuata\FrameworkBundle\Tests\Component;
 
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
-use Thuata\FrameworkBundle\Tests\Resources\Singleton;
-use Thuata\FrameworkBundle\Tests\Resources\OtherSingleton;
+namespace Thuata\FrameworkBundle\Service;
+
+use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 
 /**
- * SingletonTest
+ * Description of AbstractService
+ *
+ * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class SingletonTest extends TestCase
+class AbstractService implements FactorableInterface
 {
-    /**
-     * test 1
-     */
-    public function testGetInstance()
-    {
-        $this->assertInstanceOf(Singleton::class, Singleton::getInstance());
-    }
-    
-    /**
-     * test 2
-     */
-    public function testGetDifferentInstances()
-    {
-        Singleton::getInstance();
-        $this->assertFalse(OtherSingleton::getInstance() instanceof Singleton);
-    }
+    use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
 }

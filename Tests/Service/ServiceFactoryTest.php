@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -23,31 +23,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Thuata\FrameworkBundle\Tests\Component;
 
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
-use Thuata\FrameworkBundle\Tests\Resources\Singleton;
-use Thuata\FrameworkBundle\Tests\Resources\OtherSingleton;
+use Thuata\FrameworkBundle\Tests\Resources\Service\Service;
 
 /**
- * SingletonTest
+ * Description of ServiceFactoryTest
+ *
+ * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class SingletonTest extends TestCase
+class ServiceFactoryTest extends TestCase
 {
     /**
-     * test 1
+     * testGetInstance
      */
     public function testGetInstance()
     {
-        $this->assertInstanceOf(Singleton::class, Singleton::getInstance());
+        $factory = new Thuata\FrameworkBundle\Service\ServiceFactory();
+        
+        $factorable = $factory->getFactorableInstance(Service::class);
+        
+        $this->assertTrue($factorable instanceof Service);
     }
     
     /**
-     * test 2
+     * one factorable instance created, two loaded
      */
-    public function testGetDifferentInstances()
+    public function testOnlyOneNew()
     {
-        Singleton::getInstance();
-        $this->assertFalse(OtherSingleton::getInstance() instanceof Singleton);
+        Service::$builds = 0;
+
+        $factory = new Thuata\FrameworkBundle\Service\ServiceFactory();
+        
+        // first call
+        $factorable = $factory->getFactorableInstance(Service::class);
+        
+        // second call
+        $factorable = $factory->getFactorableInstance(Service::class);
+        
+        $this->assertEquals(1, Service::$builds);
     }
 }

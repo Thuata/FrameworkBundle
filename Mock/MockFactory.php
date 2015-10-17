@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -23,31 +23,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Thuata\FrameworkBundle\Tests\Component;
 
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
-use Thuata\FrameworkBundle\Tests\Resources\Singleton;
-use Thuata\FrameworkBundle\Tests\Resources\OtherSingleton;
+use Thuata\FrameworkBundle\Component\Singleton\SingletonInterface;
+use Thuata\FrameworkBundle\Component\Singleton\SingletonableTrait;
 
 /**
- * SingletonTest
+ * Description of MockFactory
+ *
+ * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class SingletonTest extends TestCase
+class MockFactory implements SingletonInterface
 {
-    /**
-     * test 1
-     */
-    public function testGetInstance()
-    {
-        $this->assertInstanceOf(Singleton::class, Singleton::getInstance());
-    }
+    use SingletonableTrait;
     
-    /**
-     * test 2
-     */
-    public function testGetDifferentInstances()
+    public function getMock($className)
     {
-        Singleton::getInstance();
-        $this->assertFalse(OtherSingleton::getInstance() instanceof Singleton);
+        if (!class_exists($className)) {
+            throw new \Exception(sprtintf('Can\'t mock "%s" class, as it does not exist.'));
+        }
+        
+        $reflectionClass = new ReflectionClass($className);
     }
 }

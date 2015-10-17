@@ -27,6 +27,7 @@
 namespace Thuata\FrameworkBundle\Factory;
 
 use Thuata\FrameworkBundle\Factory\FactoryInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Description of Factory
@@ -39,11 +40,6 @@ abstract class AbstractFactory implements FactoryInterface
      * @var ContainerInterface
      */
     private $container;
-
-    /**
-     * @var array
-     */
-    private $registry = [];
     
     /**
      * Sets the container
@@ -66,15 +62,12 @@ abstract class AbstractFactory implements FactoryInterface
     }
     
     /**
-     * Loads a factorable from registry
+     * Called when factorable is loaded
      * 
-     * @param string $factorableClassName
-     * 
-     * @return Factorable\FactorableInterface|null
+     * @param \Thuata\FrameworkBundle\Factory\Factorable $factorable
      */
-    private function loadFromRegistry($factorableClassName)
+    protected function onFactorableLoaded(Factorable\FactorableInterface $factorable)
     {
-        return array_key_exists($factorableClassName, $this->registry) ? $this->registry[$factorableClassName] : null;
     }
 
     /**
@@ -88,6 +81,12 @@ abstract class AbstractFactory implements FactoryInterface
             throw new \Exception('Trying to factory a class that does not implements FactorableInterface');
         }
         $factorable = $reflectionClass->newInstance();
+        
+        $this->injectDependancies($factorable);
+        
+        $this->onFactorableLoaded($factorable);
+        
+        return $factorable;
     }
 
     /**
@@ -106,10 +105,6 @@ abstract class AbstractFactory implements FactoryInterface
      */
     public function getFactorableInstance($factorableClassName)
     {
-        $factorable = $this->loadFromRegistry($factorableClassName);
-        
-        if (!$factorable) {
-            $factorable = $this->loadFactorableInstance($factorableClassName);
-        }
+        return $this->loadFactorableInstance($factorableClassName);
     }
 }

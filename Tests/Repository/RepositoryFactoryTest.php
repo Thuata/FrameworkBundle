@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -23,31 +23,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Thuata\FrameworkBundle\Tests\Component;
+namespace Thuata\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
-use Thuata\FrameworkBundle\Tests\Resources\Singleton;
-use Thuata\FrameworkBundle\Tests\Resources\OtherSingleton;
+use Thuata\FrameworkBundle\Tests\Resources\Repository\Repository;
 
 /**
- * SingletonTest
+ * Description of RepositoryFactoryTest
+ *
+ * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class SingletonTest extends TestCase
+class RepositoryFactoryTest extends TestCase
 {
     /**
-     * test 1
+     * testGetInstance
      */
     public function testGetInstance()
     {
-        $this->assertInstanceOf(Singleton::class, Singleton::getInstance());
+        $factory = new \Thuata\FrameworkBundle\Repository\RepositoryFactory();
+        
+        $factorable = $factory->getFactorableInstance(Repository::class);
+        
+        $this->assertTrue($factorable instanceof Repository);
     }
     
     /**
-     * test 2
+     * one factorable instance created, two loaded
      */
-    public function testGetDifferentInstances()
+    public function testOnlyOneNew()
     {
-        Singleton::getInstance();
-        $this->assertFalse(OtherSingleton::getInstance() instanceof Singleton);
+        Repository::$builds = 0;
+
+        $factory = new \Thuata\FrameworkBundle\Repository\RepositoryFactory();
+        
+        // first call
+        $factorable = $factory->getFactorableInstance(Repository::class);
+        
+        // second call
+        $factorable = $factory->getFactorableInstance(Repository::class);
+        
+        $this->assertEquals(1, Repository::$builds);
     }
 }
