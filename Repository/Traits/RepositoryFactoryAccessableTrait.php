@@ -1,6 +1,5 @@
 <?php
-
-/*
+/* 
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -24,19 +23,44 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Manager;
+namespace Thuata\FrameworkBundle\Repository\Traits;
 
-use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
-use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
-use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInterface;
+use Thuata\FrameworkBundle\Repository\RepositoryFactory;
+
 /**
- * Description of AbstractManager
+ * Description of RepositoryAccessableTrait
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class AbstractManager implements FactorableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
+trait RepositoryFactoryAccessableTrait
 {
-    use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait,
-        \Thuata\FrameworkBundle\Manager\Traits\ManagerFactoryAccessableTrait,
-        \Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
+    /**
+     *
+     * @var RepositoryFactory
+     */
+    private $repositoryFactory;
+   
+    /**
+     * Sets the Repository
+     * 
+     * @param RepositoryFactory $repositoryFactory
+     *
+     * @return \Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInterface
+     */
+    public function setRepositoryFactory(RepositoryFactory $repositoryFactory)
+    {
+        $this->repositoryFactory = $repositoryFactory;
+        
+        return $this;
+    }
+
+    /**
+     * Gets the repository
+     * 
+     * @return RepositoryFactory
+     */
+    protected function getRepositoryFactory()
+    {
+        return $this->repositoryFactory;
+    }
 }

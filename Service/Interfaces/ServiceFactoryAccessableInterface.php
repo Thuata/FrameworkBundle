@@ -24,19 +24,22 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Manager;
+namespace Thuata\FrameworkBundle\Service\Interfaces;
 
-use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
-use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
-use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInterface;
+use Thuata\FrameworkBundle\Service\ServiceFactory;
+
 /**
- * Description of AbstractManager
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class AbstractManager implements FactorableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
+interface ServiceFactoryAccessableInterface
 {
-    use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait,
-        \Thuata\FrameworkBundle\Manager\Traits\ManagerFactoryAccessableTrait,
-        \Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
+    /**
+     * Sets the service factory
+     * 
+     * @param ServiceFactory $serviceFactory
+     * 
+     * @return ServiceFactoryAccessableInterface
+     */
+    public function setServiceFactory(ServiceFactory $serviceFactory);
 }

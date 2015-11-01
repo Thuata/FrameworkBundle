@@ -27,13 +27,20 @@
 namespace Thuata\FrameworkBundle\Service;
 
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
+use Thuata\FrameworkBundle\Service\Interfaces\ServiceFactoryAccessableInterface;
+use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
+use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInterface;
 
 /**
  * Description of AbstractService
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class AbstractService implements FactorableInterface
+class AbstractService implements FactorableInterface, ServiceFactoryAccessableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
 {
-    use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
+    use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait,
+        Traits\ServiceFactoryAccessableTrait,
+        \Thuata\FrameworkBundle\Manager\Traits\ManagerFactoryAccessableTrait,
+        \Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
+
 }

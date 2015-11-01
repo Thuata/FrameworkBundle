@@ -1,6 +1,5 @@
 <?php
-
-/*
+/* 
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -24,19 +23,44 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Manager;
+namespace Thuata\FrameworkBundle\Manager\Traits;
 
-use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
-use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
-use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInterface;
+use Thuata\FrameworkBundle\Manager\AbstractManager;
+
 /**
- * Description of AbstractManager
+ * Description of ManagerAccessableTrait
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class AbstractManager implements FactorableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
+trait ManagerAccessableTrait
 {
-    use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait,
-        \Thuata\FrameworkBundle\Manager\Traits\ManagerFactoryAccessableTrait,
-        \Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
+    /**
+     *
+     * @var AbstractManager
+     */
+    private $manager;
+   
+    /**
+     * Sets the Manager
+     * 
+     * @param AbstractManager $manager
+     *
+     * @return \Thuata\FrameworkBundle\Manager\Interfaces\ManagerAccessableInterface
+     */
+    public function setManager(AbstractManager $manager)
+    {
+        $this->manager = $manager;
+        
+        return $this;
+    }
+
+    /**
+     * Gets the manager
+     * 
+     * @return AbstractManager
+     */
+    protected function getManager()
+    {
+        return $this->manager;
+    }
 }

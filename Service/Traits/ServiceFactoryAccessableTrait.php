@@ -1,6 +1,5 @@
 <?php
-
-/*
+/* 
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -24,19 +23,44 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Manager;
+namespace Thuata\FrameworkBundle\Service\Traits;
 
-use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
-use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
-use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInterface;
+use Thuata\FrameworkBundle\Service\ServiceFactory;
+
 /**
- * Description of AbstractManager
+ * Description of ServiceAccessableTrait
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class AbstractManager implements FactorableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
+trait ServiceFactoryAccessableTrait
 {
-    use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait,
-        \Thuata\FrameworkBundle\Manager\Traits\ManagerFactoryAccessableTrait,
-        \Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
+    /**
+     *
+     * @var ServiceFactory
+     */
+    private $serviceFactory;
+   
+    /**
+     * Sets the Service
+     * 
+     * @param ServiceFactory $serviceFactory
+     *
+     * @return \Thuata\FrameworkBundle\Service\Interfaces\ServiceFactoryAccessableInterface
+     */
+    public function setServiceFactory(ServiceFactory $serviceFactory)
+    {
+        $this->serviceFactory = $serviceFactory;
+        
+        return $this;
+    }
+
+    /**
+     * Gets the service
+     * 
+     * @return ServiceFactory
+     */
+    protected function getServiceFactory()
+    {
+        return $this->serviceFactory;
+    }
 }
