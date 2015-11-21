@@ -45,6 +45,7 @@ class ManagerFactory extends AbstractFactory
      */
     protected function injectDependancies(FactorableInterface $factorable)
     {
+        $factorable->setFactory($this);
     }
     
     /**
