@@ -38,6 +38,10 @@ use Thuata\ComponentBundle\Registry\RegistryableTrait;
  */
 class RepositoryFactory extends AbstractFactory
 {
+    const REPOSITORY_FORMAT = '%sRepository';
+
+    const ERROR_REPO_CLASS_INVALID = 'Repository class "%s" does not exist. Repositories should be defined beside the entity they manage.';
+
     use RegistryableTrait;
 
     /**
@@ -46,32 +50,52 @@ class RepositoryFactory extends AbstractFactory
     protected function injectDependancies(FactorableInterface $factorable)
     {
     }
-    
+
     /**
      * Called when factorable is loaded
-     * 
+     *
      * @param FactorableInterface $factorable
      */
     protected function onFactorableLoaded(FactorableInterface $factorable)
     {
         $this->addToRegistry($factorable);
     }
-    
+
     /**
      * Gets a service
-     * 
+     *
      * @param string $factorableClassName
-     * 
+     *
      * @return AbstractRepository
      */
     public function getFactorableInstance($factorableClassName)
     {
         $factorable = $this->loadFromRegistry($factorableClassName);
-        
+
         if (!$factorable instanceof AbstractRepository) {
             $factorable = parent::getFactorableInstance($factorableClassName);
         }
-        
+
         return $factorable;
+    }
+
+    /**
+     * Gets the thuata repository corresponding to the entity class passed as param
+     *
+     * @param string $entityClassName
+     *
+     * @return AbstractRepository
+     *
+     * @throws \Exception
+     */
+    public function getRepositoryForEntityClassName($entityClassName)
+    {
+        $repositoryClass = sprintf(self::REPOSITORY_FORMAT, $entityClassName);
+
+        if (!class_exists($repositoryClass)) {
+            throw new \Exception(sprintf(self::ERROR_REPO_CLASS_INVALID, $repositoryClass));
+        }
+
+        return $this->getFactorableInstance($repositoryClass);
     }
 }

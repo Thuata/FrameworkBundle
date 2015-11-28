@@ -29,14 +29,160 @@ namespace Thuata\FrameworkBundle\Manager;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
 use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInterface;
+use Thuata\FrameworkBundle\Entity\Interfaces\TimestampableInterface;
+use Thuata\FrameworkBundle\Entity\AbstractEntity;
+use Doctrine\Common\Collections\Collection;
+use \Doctrine\Common\Collections\Criteria;
+use DateTime;
+
 /**
  * Description of AbstractManager
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class AbstractManager implements FactorableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
+abstract class AbstractManager implements FactorableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
 {
+
     use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait,
         \Thuata\FrameworkBundle\Manager\Traits\ManagerFactoryAccessableTrait,
         \Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
+
+    abstract protected function getEntityClassName();
+
+    /**
+     * Gets the repository corresponding to the managed entity
+     *
+     * @return \Thuata\FrameworkBundle\Repository\AbstractRepository
+     */
+    protected function getRepository()
+    {
+        return $this->getRepositoryFactory()->getRepositoryForEntityClassName($this->getEntityClassName());
+    }
+
+    /**
+     * Gets a new intance of an entity
+     *
+     * @return type
+     */
+    public function getNew()
+    {
+        $newEntity = $this->getRepository()->getNew();
+
+        $this->prepareEntityForNew($newEntity);
+
+        return $newEntity;
+    }
+
+    /**
+     * Prepares an entity, setting its default values
+     *
+     * @param \Thuata\FrameworkBundle\Manager\AbstractEntity $entity
+     *
+     * @return boolean
+     */
+    protected function prepareEntityForNew(AbstractEntity $entity)
+    {
+        if ($entity instanceof TimestampableInterface) {
+            $entity->setCreationDate(new DateTime());
+            $entity->setEditionDate(new DateTime());
+        }
+
+        return true;
+    }
+
+    /**
+     * Prepares an entity when retrieved from database
+     *
+     * @param AbstractEntity $entity
+     *
+     * @return boolean
+     */
+    protected function prepareEntityForGet(AbstractEntity $entity)
+    {
+        return true;
+    }
+
+    /**
+     * Prepares an entity for persist
+     *
+     * @param AbstractEntity $entity
+     *
+     * @return boolean
+     */
+    protected function prepareEntityForPersist(AbstractEntity $entity)
+    {
+        if ($entity instanceof TimestampableInterface) {
+            $entity->setEditionDate(new DateTime());
+        }
+
+        return true;
+    }
+
+    /**
+     * Prepares multiple entities for get
+     *
+     * @param Collection $entities
+     *
+     * @return boolean
+     */
+    protected function prepareEntitesForGet(Collection $entities)
+    {
+        foreach ($entities as $entity) {
+            if ($this->prepareEntityForGet($entity) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Gets an entity by its ids
+     *
+     * @param type $id
+     */
+    public function getById($id)
+    {
+        $entity = $this->getRepository()->find($id);
+
+        $this->prepareEntityForGet($entity);
+
+        return $entity;
+    }
+
+    /**
+     * Gets all entities matching a Criteria
+     *
+     * @param Criteria $criteria
+     *
+     * @return Collection
+     */
+    public function getEntitiesMatching(Criteria $criteria)
+    {
+        $entities = $this->getRepository()->matching($criteria);
+
+        $this->prepareEntitesForGet($entities);
+
+        return $entities;
+    }
+
+    /**
+     * Get entities with id in $ids
+     *
+     * @param array $ids
+     * @param array $orderBy
+     * @param type $limit
+     * @param type $offset
+     */
+    public function getByIds(array $ids, array $orderBy = null, $limit = null, $offset = null)
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->in('id', $ids));
+        $criteria->orderBy($orderBy);
+        $criteria->setFirstResult($offset);
+        $criteria->setMaxResults($limit);
+
+        return $this->getEntitiesMatching($criteria);
+    }
+
 }

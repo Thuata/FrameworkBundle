@@ -37,4 +37,18 @@ use Doctrine\ORM\EntityRepository;
 class AbstractRepository extends EntityRepository implements FactorableInterface
 {
     use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
+
+    /**
+     * Gets a new instance
+     *
+     * @return \Thuata\FrameworkBundle\Entity\AbstractEntity
+     */
+    public function getNew()
+    {
+        $className = $this->getClassName();
+
+        $ref = new \ReflectionClass($className);
+
+        return $ref->newInstance();
+    }
 }
