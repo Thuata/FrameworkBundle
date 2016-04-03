@@ -26,6 +26,7 @@
 namespace Thuata\Tests\Manager;
 
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
+use Thuata\FrameworkBundle\Manager\ManagerFactory;
 use Thuata\FrameworkBundle\Tests\Resources\Manager\Manager;
 
 /**
@@ -40,10 +41,10 @@ class ManagerFactoryTest extends TestCase
      */
     public function testGetInstance()
     {
-        $factory = new \Thuata\FrameworkBundle\Manager\ManagerFactory();
+        $factory = new ManagerFactory();
         
         $factorable = $factory->getFactorableInstance(Manager::class);
-        
+
         $this->assertTrue($factorable instanceof Manager);
     }
     
@@ -54,7 +55,7 @@ class ManagerFactoryTest extends TestCase
     {
         Manager::$builds = 0;
 
-        $factory = new \Thuata\FrameworkBundle\Manager\ManagerFactory();
+        $factory = new ManagerFactory();
         
         // first call
         $factorable = $factory->getFactorableInstance(Manager::class);

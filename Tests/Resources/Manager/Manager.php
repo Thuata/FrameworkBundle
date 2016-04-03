@@ -27,6 +27,7 @@
 namespace Thuata\FrameworkBundle\Tests\Resources\Manager;
 
 use Thuata\FrameworkBundle\Manager\AbstractManager;
+use Thuata\FrameworkBundle\Tests\Resources\Entity;
 
 /**
  * Description of Manager
@@ -43,5 +44,10 @@ class Manager extends AbstractManager
     public function __construct()
     {
         self::$builds++;
+    }
+
+    protected function getEntityClassName()
+    {
+        return Entity::class;
     }
 }

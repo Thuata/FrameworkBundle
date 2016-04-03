@@ -26,6 +26,7 @@
 namespace Thuata\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
+use Thuata\FrameworkBundle\Repository\RepositoryFactory;
 use Thuata\FrameworkBundle\Tests\Resources\Repository\Repository;
 
 /**
@@ -40,7 +41,7 @@ class RepositoryFactoryTest extends TestCase
      */
     public function testGetInstance()
     {
-        $factory = new \Thuata\FrameworkBundle\Repository\RepositoryFactory();
+        $factory = new RepositoryFactory();
         
         $factorable = $factory->getFactorableInstance(Repository::class);
         
@@ -54,7 +55,7 @@ class RepositoryFactoryTest extends TestCase
     {
         Repository::$builds = 0;
 
-        $factory = new \Thuata\FrameworkBundle\Repository\RepositoryFactory();
+        $factory = new RepositoryFactory();
         
         // first call
         $factorable = $factory->getFactorableInstance(Repository::class);
