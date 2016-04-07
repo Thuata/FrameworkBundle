@@ -17,7 +17,7 @@
         "php": ">=5.5",
         "symfony/symfony": ">=2.7",
         "thuata/componentbundle" : "dev-master",
-        "thuata/intercessionbundle" : "dev-master"
+        "thuata/intercessionbundle" : ">=1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
