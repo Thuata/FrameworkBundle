@@ -36,11 +36,12 @@ use Symfony\Component\Console\Command\Command;
 class EntityStackGeneratorCommand extends Command
 {
     const NAME = 'thuata:entity:generate';
-    const DESCRIPTION = 'Generates a Thuata Framework entity'
+    const DESCRIPTION = 'Generates a Thuata Framework entity';
 
     protected function configure()
     {
         $this->setName(self::NAME);
+        $this->setDescription(self::DESCRIPTION);
     }
 
 }
