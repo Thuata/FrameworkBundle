@@ -23,7 +23,8 @@
  * THE SOFTWARE.
  */
 
-namespace thuata\frameworkbundle\Command;
+namespace Thuata\FrameworkBundle\Command;
+
 use Symfony\Component\Console\Command\Command;
 
 /**
