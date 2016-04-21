@@ -50,6 +50,11 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
         ManagerFactoryAccessableTrait,
         RepositoryFactoryAccessableTrait;
 
+    /**
+     * Returns the class name for the entity
+     *
+     * @return string
+     */
     abstract protected function getEntityClassName();
 
     /**

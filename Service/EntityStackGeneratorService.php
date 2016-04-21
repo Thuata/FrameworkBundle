@@ -28,7 +28,10 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
 use Thuata\FrameworkBundle\Manager\AbstractManager;
+use Thuata\FrameworkBundle\Repository\AbstractRepository;
+use Thuata\IntercessionBundle\Exception\NotWritableException;
 use Thuata\IntercessionBundle\Intercession\IntercessionClass;
+use Thuata\IntercessionBundle\Intercession\IntercessionMethod;
 use Thuata\IntercessionBundle\Service\GeneratorService;
 
 /**
@@ -90,6 +93,18 @@ class EntityStackGeneratorService
         $intercessionClass->setName($configuration->getManagerName());
         $intercessionClass->setNamespace($configuration->getEntityNamespace());
         $intercessionClass->setExtends(AbstractManager::class);
+        $intercessionClass->addUse($configuration->getEntityNamespace() . '\\' . $configuration->getEntityName());
+
+        $intercessionMethod = new IntercessionMethod();
+        $intercessionMethod->setName('getEntityClassName');
+        $intercessionMethod->setBody(sprintf(<<<EOT
+return %s::class;
+EOT
+        , $configuration->getEntityName()));
+        $intercessionMethod->setDescription('Returns the class name for the entity');
+        $intercessionMethod->setTypeReturned('string');
+
+        $intercessionClass->addMethod($intercessionMethod);
 
         return $intercessionClass;
     }
@@ -105,6 +120,12 @@ class EntityStackGeneratorService
     protected function renderManagerFile(EntityStackConfiguration $configuration)
     {
         $intercessionClass = $this->makeManagerIntercessionClass($configuration);
+
+        $dir = $configuration->getEntityDir();
+
+        if (!is_writable($dir)) {
+            throw new NotWritableException($dir);
+        }
 
         $this->getGenerator()->createClassDefinitionFile($intercessionClass, $configuration->getManagerPath());
     }
@@ -122,6 +143,7 @@ class EntityStackGeneratorService
         
         $intercessionClass->setName($configuration->getRepositoryName());
         $intercessionClass->setNamespace($configuration->getEntityNamespace());
+        $intercessionClass->setExtends(AbstractRepository::class);
 
         return $intercessionClass;
     }

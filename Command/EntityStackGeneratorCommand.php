@@ -26,6 +26,7 @@
 namespace Thuata\FrameworkBundle\Command;
 
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineEntityCommand;
+use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -52,8 +53,10 @@ class EntityStackGeneratorCommand extends GenerateDoctrineEntityCommand
         $this->setName(self::NAME);
         $this->setAliases([self::ALIAS]);
         $this->setHelp(sprintf(<<<EOT
-The <info>%command.name%</info> Generates a full stack for a doctrine entity,
+The <info>thuata:generate:entity</info> command Generates a full stack for a doctrine entity,
 including a mamanger and a repository.
+
+%s
 EOT
         , $this->getHelp()));
     }
@@ -62,8 +65,14 @@ EOT
     {
         parent::execute($input, $output);
 
+        $entityName = Validators::validateEntityName($input->getOption('entity'));
+        list($bundleName, $entity) = $this->parseShortcutNotation($entityName);
+
+        $bundle = $this->getContainer()->get('kernel')->getBundle($bundleName);
+
         $generator = $this->getContainer()->get('enjoy_framework.stackgeneratorservice');
-        
+
+        $generator->renderEntityStack($bundle, $entity);
     }
 
 }
