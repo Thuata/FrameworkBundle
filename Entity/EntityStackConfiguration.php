@@ -40,8 +40,13 @@ class EntityStackConfiguration
     const MANAGER_NAME_FORMAT = '%sManager';
     const REPOSITORY_NAME_FORMAT = '%sRepository';
     const FILE_PATH_FORMAT = '%s/%s.php';
+    const REPOSITORY_PATH_FORMAT = '%s/Repository/%s.php';
+    const MANAGER_PATH_FORMAT = '%s/Manager/%s.php';
     const ENTITY_NAME_REGEXP_FORMAT = '#^%s/([^\\.]+)\\.php$#';
     const ENTITY_DIR_FORMAT = '%s/Entity';
+    const ENTITY_NAMESPACE_FORMAT = '%s\\Entity';
+    const REPOSITORY_NAMESPACE_FORMAT = '%s\\Repository';
+    const MANAGER_NAMESPACE_FORMAT = '%s\\Manager';
 
     /**
      * @var string
@@ -71,6 +76,18 @@ class EntityStackConfiguration
      * @var string
      */
     private $repositoryPath;
+    /**
+     * @var string
+     */
+    private $entityNamespace;
+    /**
+     * @var string
+     */
+    private $managerNamespace;
+    /**
+     * @var string
+     */
+    private $repositoryNamespace;
 
     /**
      * EntityStackConfiguration constructor.
@@ -81,12 +98,18 @@ class EntityStackConfiguration
     public function __construct(Bundle $bundle, $entityName)
     {
         $this->entityName = $entityName;
-        $this->entityDir = sprintf(self::ENTITY_DIR_FORMAT, $bundle->getPath());
-        $this->entityPath = sprintf(self::FILE_PATH_FORMAT, $this->entityDir, $this->entityName);
+        // names
         $this->managerName = sprintf(self::MANAGER_NAME_FORMAT, $this->getEntityName());
         $this->repositoryName = sprintf(self::REPOSITORY_NAME_FORMAT, $this->getEntityName());
-        $this->managerPath = sprintf(self::FILE_PATH_FORMAT, $this->getEntityDir(), $this->getManagerName());
-        $this->repositoryPath = sprintf(self::FILE_PATH_FORMAT, $this->getEntityDir(), $this->getRepositoryName());
+        // pathes
+        $this->entityDir = sprintf(self::ENTITY_DIR_FORMAT, $bundle->getPath());
+        $this->entityPath = sprintf(self::FILE_PATH_FORMAT, $this->entityDir, $this->entityName);
+        $this->managerPath = sprintf(self::MANAGER_PATH_FORMAT, $bundle->getPath(), $this->getManagerName());
+        $this->repositoryPath = sprintf(self::REPOSITORY_PATH_FORMAT, $bundle->getPath(), $this->getRepositoryName());
+        // namespaces
+        $this->entityNamespace = sprintf(self::ENTITY_NAMESPACE_FORMAT, $bundle->getNamespace());
+        $this->managerNamespace = sprintf(self::MANAGER_NAMESPACE_FORMAT, $bundle->getNamespace());
+        $this->repositoryNamespace = sprintf(self::REPOSITORY_NAMESPACE_FORMAT, $bundle->getNamespace());
     }
 
     /**
@@ -157,5 +180,35 @@ class EntityStackConfiguration
     public function getRepositoryPath()
     {
         return $this->repositoryPath;
+    }
+
+    /**
+     * Gets the entity namespace
+     *
+     * @return string
+     */
+    public function getEntityNamespace()
+    {
+        return $this->entityNamespace;
+    }
+
+    /**
+     * Gets the manager namespace
+     *
+     * @return string
+     */
+    public function getManagerNamespace()
+    {
+        return $this->managerNamespace;
+    }
+
+    /**
+     * Gets the repository namespace
+     *
+     * @return string
+     */
+    public function getRepositoryNamespace()
+    {
+        return $this->repositoryNamespace;
     }
 }

@@ -27,13 +27,16 @@
 namespace Thuata\FrameworkBundle\Manager;
 
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
+use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
 use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
+use Thuata\FrameworkBundle\Manager\Traits\ManagerFactoryAccessableTrait;
 use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInterface;
 use Thuata\FrameworkBundle\Entity\Interfaces\TimestampableInterface;
 use Thuata\FrameworkBundle\Entity\AbstractEntity;
 use Doctrine\Common\Collections\Collection;
 use \Doctrine\Common\Collections\Criteria;
 use DateTime;
+use Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
 
 /**
  * Description of AbstractManager
@@ -43,10 +46,15 @@ use DateTime;
 abstract class AbstractManager implements FactorableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
 {
 
-    use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait,
-        \Thuata\FrameworkBundle\Manager\Traits\ManagerFactoryAccessableTrait,
-        \Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
+    use FactorableTrait,
+        ManagerFactoryAccessableTrait,
+        RepositoryFactoryAccessableTrait;
 
+    /**
+     * Returns the class name for the entity
+     *
+     * @return string
+     */
     abstract protected function getEntityClassName();
 
     /**
@@ -62,7 +70,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     /**
      * Gets a new intance of an entity
      *
-     * @return type
+     * @return AbstractEntity
      */
     public function getNew()
     {
@@ -76,7 +84,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     /**
      * Prepares an entity, setting its default values
      *
-     * @param \Thuata\FrameworkBundle\Manager\AbstractEntity $entity
+     * @param AbstractEntity $entity
      *
      * @return boolean
      */
@@ -139,7 +147,9 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     /**
      * Gets an entity by its ids
      *
-     * @param type $id
+     * @param integer $id
+     *
+     * @return AbstractEntity
      */
     public function getById($id)
     {
@@ -169,10 +179,12 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     /**
      * Get entities with id in $ids
      *
-     * @param array $ids
-     * @param array $orderBy
-     * @param type $limit
-     * @param type $offset
+     * @param array   $ids
+     * @param array   $orderBy
+     * @param integer $limit
+     * @param integer $offset
+     *
+     * @return Collection
      */
     public function getByIds(array $ids, array $orderBy = null, $limit = null, $offset = null)
     {

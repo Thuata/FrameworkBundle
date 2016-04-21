@@ -24,6 +24,7 @@
  */
 
 namespace thuata\frameworkbundle\Tests\Resources\Entity;
+
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
@@ -46,6 +47,9 @@ class EntityStackConfigurationTest extends KernelTestCase implements ReflectionT
      */
     private $container;
 
+    /**
+     * Sets up the test
+     */
     public function setUp()
     {
         self::bootKernel();
@@ -55,6 +59,9 @@ class EntityStackConfigurationTest extends KernelTestCase implements ReflectionT
         $this->generatorService = $this->container->get('enjoy_framework.stackgeneratorservice');
     }
 
+    /**
+     * testGetEntityName
+     */
     public function testGetEntityName()
     {
         $bundle = $this->container->get('kernel')->getBundle('ThuataFrameworkBundle');
@@ -65,6 +72,9 @@ class EntityStackConfigurationTest extends KernelTestCase implements ReflectionT
         $this->assertEquals($expected, $configuration->getEntityName());
     }
 
+    /**
+     * testGetRepositoryPath
+     */
     public function testGetManagerName()
     {
         $bundle = $this->container->get('kernel')->getBundle('ThuataFrameworkBundle');
@@ -75,6 +85,9 @@ class EntityStackConfigurationTest extends KernelTestCase implements ReflectionT
         $this->assertEquals($expected, $configuration->getManagerName());
     }
 
+    /**
+     * testGetRepositoryPath
+     */
     public function testGetRepositoryName()
     {
         $bundle = $this->container->get('kernel')->getBundle('ThuataFrameworkBundle');
@@ -85,43 +98,44 @@ class EntityStackConfigurationTest extends KernelTestCase implements ReflectionT
         $this->assertEquals($expected, $configuration->getRepositoryName());
     }
 
-    public function testGetRepositoryName()
+    /**
+     * testGetRepositoryPath
+     */
+    public function testGetEntityDir()
     {
         $bundle = $this->container->get('kernel')->getBundle('ThuataFrameworkBundle');
         $configuration = new EntityStackConfiguration($bundle, 'Entity');
 
-        $expected = 'EntityRepository';
+        $expected = $bundle->getPath() . '/Entity';
 
-        $this->assertEquals($expected, $configuration->getRepositoryName());
+        $this->assertEquals($expected, $configuration->getEntityDir());
     }
 
-    public function testGetRepositoryName()
+    /**
+     * testGetRepositoryPath
+     */
+    public function testGetManagerPath()
     {
         $bundle = $this->container->get('kernel')->getBundle('ThuataFrameworkBundle');
         $configuration = new EntityStackConfiguration($bundle, 'Entity');
 
-        $expected = 'EntityRepository';
+        $expected = $bundle->getPath() . '/Entity/EntityManager.php';
 
-        $this->assertEquals($expected, $configuration->getRepositoryName());
+        $this->assertEquals($expected, $configuration->getManagerPath());
     }
 
-    public function testGetRepositoryName()
+    /**
+     * testGetRepositoryPath
+     */
+    public function testGetRepositoryPath()
     {
         $bundle = $this->container->get('kernel')->getBundle('ThuataFrameworkBundle');
         $configuration = new EntityStackConfiguration($bundle, 'Entity');
 
-        $expected = 'EntityRepository';
+        $expected = $bundle->getPath() . '/Entity/EntityRepository.php';
 
-        $this->assertEquals($expected, $configuration->getRepositoryName());
+        $this->assertEquals($expected, $configuration->getRepositoryPath());
     }
 
-    public function testGetRepositoryName()
-    {
-        $bundle = $this->container->get('kernel')->getBundle('ThuataFrameworkBundle');
-        $configuration = new EntityStackConfiguration($bundle, 'Entity');
 
-        $expected = 'EntityRepository';
-
-        $this->assertEquals($expected, $configuration->getRepositoryName());
-    }
 }
