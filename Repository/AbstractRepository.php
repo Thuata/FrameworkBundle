@@ -28,6 +28,7 @@ namespace Thuata\FrameworkBundle\Repository;
 
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Doctrine\ORM\EntityRepository;
+use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
 
 /**
  * Description of AbstractRepository
@@ -36,7 +37,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class AbstractRepository extends EntityRepository implements FactorableInterface
 {
-    use \Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
+    use FactorableTrait;
 
     /**
      * Gets a new instance

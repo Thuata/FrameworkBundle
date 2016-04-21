@@ -27,6 +27,7 @@ namespace Thuata\FrameworkBundle\Service;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
+use Thuata\FrameworkBundle\Manager\AbstractManager;
 use Thuata\IntercessionBundle\Intercession\IntercessionClass;
 use Thuata\IntercessionBundle\Service\GeneratorService;
 
@@ -77,16 +78,80 @@ class EntityStackGeneratorService
         return new EntityStackConfiguration($bundle, $entityName);
     }
 
-    protected function extractBundleFromEntityName($entityName)
-    {
-
-    }
-
+    /**
+     * @param EntityStackConfiguration $configuration
+     *
+     * @return IntercessionClass
+     */
     protected function makeManagerIntercessionClass(EntityStackConfiguration $configuration)
     {
         $intercessionClass = new IntercessionClass();
 
         $intercessionClass->setName($configuration->getManagerName());
         $intercessionClass->setNamespace($configuration->getEntityNamespace());
+        $intercessionClass->setExtends(AbstractManager::class);
+
+        return $intercessionClass;
+    }
+
+    /**
+     * Renders the manager file
+     *
+     * @param EntityStackConfiguration $configuration
+     *
+     * @throws \Thuata\IntercessionBundle\Exception\NotFileException
+     * @throws \Thuata\IntercessionBundle\Exception\NotWritableException
+     */
+    protected function renderManagerFile(EntityStackConfiguration $configuration)
+    {
+        $intercessionClass = $this->makeManagerIntercessionClass($configuration);
+
+        $this->getGenerator()->createClassDefinitionFile($intercessionClass, $configuration->getManagerPath());
+    }
+
+    /**
+     * Makes the intercession class for the repository
+     *
+     * @param EntityStackConfiguration $configuration
+     *
+     * @return IntercessionClass
+     */
+    protected function makeRepositoryIntercessionClass(EntityStackConfiguration $configuration)
+    {
+        $intercessionClass = new IntercessionClass();
+        
+        $intercessionClass->setName($configuration->getRepositoryName());
+        $intercessionClass->setNamespace($configuration->getEntityNamespace());
+
+        return $intercessionClass;
+    }
+
+    /**
+     * Renders the repository file
+     *
+     * @param EntityStackConfiguration $configuration
+     *
+     * @throws \Thuata\IntercessionBundle\Exception\NotFileException
+     * @throws \Thuata\IntercessionBundle\Exception\NotWritableException
+     */
+    protected function renderRepositoryFile(EntityStackConfiguration $configuration)
+    {
+        $intercessionClass = $this->makeRepositoryIntercessionClass($configuration);
+
+        $this->getGenerator()->createClassDefinitionFile($intercessionClass, $configuration->getRepositoryPath());
+    }
+
+    /**
+     * Renders the stack (Manager and repository) for an entity in a bundle
+     *
+     * @param Bundle $bundle
+     * @param $entityName
+     */
+    public function renderEntityStack(Bundle $bundle, $entityName)
+    {
+        $configuration = $this->getEntityStackConfiguration($bundle, $entityName);
+
+        $this->renderManagerFile($configuration);
+        $this->renderRepositoryFile($configuration);
     }
 }

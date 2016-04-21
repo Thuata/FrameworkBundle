@@ -25,7 +25,9 @@
 
 namespace Thuata\FrameworkBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineEntityCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class EntityStackGeneratorCommand
@@ -34,15 +36,34 @@ use Symfony\Component\Console\Command\Command;
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class EntityStackGeneratorCommand extends Command
+class EntityStackGeneratorCommand extends GenerateDoctrineEntityCommand
 {
-    const NAME = 'thuata:entity:generate';
+    const NAME = 'thuata:generate:entity';
+    const ALIAS = 'thuata:entity:generate';
     const DESCRIPTION = 'Generates a Thuata Framework entity';
 
+    /**
+     * Configuration
+     */
     protected function configure()
     {
+        parent::configure();
+
         $this->setName(self::NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setAliases([self::ALIAS]);
+        $this->setHelp(sprintf(<<<EOT
+The <info>%command.name%</info> Generates a full stack for a doctrine entity,
+including a mamanger and a repository.
+EOT
+        , $this->getHelp()));
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        parent::execute($input, $output);
+
+        $generator = $this->getContainer()->get('enjoy_framework.stackgeneratorservice');
+        
     }
 
 }
