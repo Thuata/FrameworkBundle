@@ -177,6 +177,22 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     }
 
     /**
+     * Gets all entities matching a Criteria
+     *
+     * @param Criteria $criteria
+     *
+     * @return Collection
+     */
+    public function getOneEntityMatching(Criteria $criteria)
+    {
+        $entity = $this->getRepository()->matching($criteria)->first();
+
+        $this->prepareEntityForGet($entity);
+
+        return $entity;
+    }
+
+    /**
      * Get entities with id in $ids
      *
      * @param array   $ids
