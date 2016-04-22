@@ -142,7 +142,7 @@ EOT
         $intercessionClass = new IntercessionClass();
         
         $intercessionClass->setName($configuration->getRepositoryName());
-        $intercessionClass->setNamespace($configuration->getEntityNamespace());
+        $intercessionClass->setNamespace($configuration->getRepositoryNamespace());
         $intercessionClass->setExtends(AbstractRepository::class);
 
         return $intercessionClass;
