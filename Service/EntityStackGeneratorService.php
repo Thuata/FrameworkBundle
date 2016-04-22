@@ -91,7 +91,7 @@ class EntityStackGeneratorService
         $intercessionClass = new IntercessionClass();
 
         $intercessionClass->setName($configuration->getManagerName());
-        $intercessionClass->setNamespace($configuration->getEntityNamespace());
+        $intercessionClass->setNamespace($configuration->getManagerNamespace());
         $intercessionClass->setExtends(AbstractManager::class);
         $intercessionClass->addUse($configuration->getEntityNamespace() . '\\' . $configuration->getEntityName());
 
