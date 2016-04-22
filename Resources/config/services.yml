@@ -1,0 +1,5 @@
+services:
+    enjoy_framework.stackgeneratorservice:
+        class: Thuata\FrameworkBundle\Service\EntityStackGeneratorService
+        calls:
+            - ['setGenerator', [ "@thuata_intercession.generator" ]]
