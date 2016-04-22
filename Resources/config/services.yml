@@ -1,5 +1,17 @@
 services:
-    enjoy_framework.stackgeneratorservice:
+    thuata_framework.stackgeneratorservice:
         class: Thuata\FrameworkBundle\Service\EntityStackGeneratorService
         calls:
             - ['setGenerator', [ "@thuata_intercession.generator" ]]
+    thuata_framework.servicefactory:
+        class: Thuata\FrameworkBundle\Service\ServiceFactory
+        calls:
+            - ['setContainer', [ "@service_container" ]]
+    thuata_framework.managerfactory:
+        class: Thuata\FrameworkBundle\Manager\ManagerFactory
+        calls:
+            - ['setContainer', [ "@service_container" ]]
+    thuata_framework.repositoryfactory:
+        class: Thuata\FrameworkBundle\Repository\RepositoryFactory
+        calls:
+            - ['setContainer', [ "@service_container" ]]

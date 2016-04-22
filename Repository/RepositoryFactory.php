@@ -97,25 +97,4 @@ class RepositoryFactory extends AbstractFactory
 
         return $factorable;
     }
-
-    /**
-     * Gets the thuata repository corresponding to the entity class passed as param
-     *
-     * @param string $entityClassName
-     *
-     * @return AbstractRepository
-     *
-     * @throws \Exception
-     */
-    public function getRepositoryForEntityClassName($entityClassName)
-    {
-        $namespaced = preg_replace(self::REPOSITORY_REPLACE_REGEXP, '\\Repository\\', $entityClassName);
-        $repositoryClass = sprintf(self::REPOSITORY_FORMAT, $namespaced);
-
-        if (!class_exists($repositoryClass)) {
-            throw new \Exception(sprintf(self::ERROR_REPO_CLASS_INVALID, $repositoryClass));
-        }
-
-        return $this->getFactorableInstance($repositoryClass);
-    }
 }
