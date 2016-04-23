@@ -26,6 +26,8 @@
 
 namespace Thuata\FrameworkBundle\Manager;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bundle\DebugBundle\DependencyInjection\Compiler\DumpDataCollectorPass;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
 use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
@@ -64,7 +66,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      */
     protected function getRepository()
     {
-        return $this->getRepositoryFactory()->getRepositoryForEntityClassName($this->getEntityClassName());
+        return $this->getRepositoryFactory()->getFactorableInstance($this->getEntityClassName());
     }
 
     /**
@@ -213,4 +215,13 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
         return $this->getEntitiesMatching($criteria);
     }
 
+    /**
+     * Gets all applications
+     *
+     * @return Collection
+     */
+    public function getAll()
+    {
+        return $this->getEntitiesMatching(Criteria::create());
+    }
 }

@@ -26,6 +26,7 @@
 
 namespace Thuata\FrameworkBundle\Factory;
 
+use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Factory\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -40,68 +41,93 @@ abstract class AbstractFactory implements FactoryInterface
      * @var ContainerInterface
      */
     private $container;
-    
+
     /**
      * Sets the container
-     * 
+     *
      * @param ContainerInterface $container
      */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
     }
-    
+
     /**
      * Gets the container
-     * 
+     *
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected function getContainer()
     {
         return $this->container;
     }
-    
+
     /**
      * Called when factorable is loaded
-     * 
-     * @param \Thuata\FrameworkBundle\Factory\Factorable $factorable
+     *
+     * @param Factorable|FactorableInterface $factorable
      */
     protected function onFactorableLoaded(Factorable\FactorableInterface $factorable)
     {
     }
 
     /**
-     * 
-     * @param type $factorableClassName
+     * Instanciates the factorable
+     *
+     * @param $factorableClassName
+     *
+     * @return FactorableInterface
+     *
+     * @throws \Exception
      */
-    private function loadFactorableInstance($factorableClassName)
+    protected function instanciateFactorable($factorableClassName)
     {
         $reflectionClass = new \ReflectionClass($factorableClassName);
+
         if (!$reflectionClass->implementsInterface(Factorable\FactorableInterface::class)) {
             throw new \Exception('Trying to factory a class that does not implements FactorableInterface');
         }
-        $factorable = $reflectionClass->newInstance();
-        
+
+        return $reflectionClass->newInstance();
+    }
+
+    /**
+     * Loads a factorable instance
+     *
+     * @param string $factorableClassName
+     *
+     * @return FactorableInterface
+     *
+     * @throws \Exception
+     */
+    private function loadFactorableInstance($factorableClassName)
+    {
+        $factorable = $this->instanciateFactorable($factorableClassName);
+
+        $factorable->setFactory($this);
+
         $this->injectDependancies($factorable);
-        
+
         $this->onFactorableLoaded($factorable);
-        
+
         return $factorable;
     }
 
     /**
      * Injects dependancies to a factorable
-     * 
+     *
      * @param Factorable\FactorableInterface $factorable
      */
     abstract protected function injectDependancies(Factorable\FactorableInterface $factorable);
 
     /**
      * Instanciate a factorable from a class name and inject its dependancies.
-     * 
+     *
      * @param string $factorableClassName
-     * 
-     * @return 
+     *
+     * @return FactorableInterface
+     *
+     * @throws \Exception
      */
     public function getFactorableInstance($factorableClassName)
     {

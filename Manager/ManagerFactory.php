@@ -30,6 +30,7 @@ use Thuata\FrameworkBundle\Factory\AbstractFactory;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Manager\AbstractManager;
 use Thuata\ComponentBundle\Registry\RegistryableTrait;
+use Thuata\FrameworkBundle\Repository\RepositoryFactory;
 
 /**
  * Description of ManagerFactory
@@ -45,7 +46,10 @@ class ManagerFactory extends AbstractFactory
      */
     protected function injectDependancies(FactorableInterface $factorable)
     {
-        $factorable->setFactory($this);
+        /** @var RepositoryFactory $repositoryFactory */
+        $repositoryFactory = $this->getContainer()->get('thuata_framework.repositoryfactory');
+        /** @var AbstractManager $factorable */
+        $factorable->setRepositoryFactory($repositoryFactory);
     }
     
     /**

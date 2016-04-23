@@ -44,6 +44,10 @@ class ServiceFactory extends AbstractFactory
      */
     protected function injectDependancies(FactorableInterface $factorable)
     {
+        /** @var AbstractService $factorable */
+        $managerFactory = $this->getContainer()->get('thuata_framework.managerfactory');
+
+        $factorable->setManagerFactory($managerFactory);
     }
     
     /**
