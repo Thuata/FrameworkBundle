@@ -129,6 +129,18 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     }
 
     /**
+     * Prepares an entity for remove
+     *
+     * @param AbstractEntity $entity
+     *
+     * @return boolean
+     */
+    protected function prepareEntityForRemove(AbstractEntity $entity)
+    {
+        return true;
+    }
+
+    /**
      * Prepares multiple entities for get
      *
      * @param Collection $entities
@@ -213,6 +225,31 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
         $criteria->setMaxResults($limit);
 
         return $this->getEntitiesMatching($criteria);
+    }
+
+    /**
+     * Persists an entity
+     *
+     * @param AbstractEntity $entity
+     */
+    public function persist(AbstractEntity $entity)
+    {
+        if($this->prepareEntityForPersist($entity)) {
+            $this->getRepository()->persist($entity);
+        }
+
+    }
+
+    /**
+     * Removes an entity
+     *
+     * @param AbstractEntity $entity
+     */
+    public function remove(AbstractEntity $entity)
+    {
+        if ($this->prepareEntityForRemove($entity)) {
+            $this->getRepository()->remove($entity);
+        }
     }
 
     /**
