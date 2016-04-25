@@ -197,4 +197,15 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
         return $this->getEntitiesMatching($criteria);
     }
 
+    /**
+     * Persists an entity
+     *
+     * @param AbstractEntity $entity
+     */
+    public function persist(AbstractEntity $entity)
+    {
+        $this->prepareEntityForPersist($entity);
+
+        $this->getRepository()->persist($entity);
+    }
 }

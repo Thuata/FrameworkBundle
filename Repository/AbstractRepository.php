@@ -26,6 +26,7 @@
 
 namespace Thuata\FrameworkBundle\Repository;
 
+use Thuata\FrameworkBundle\Entity\AbstractEntity;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Doctrine\ORM\EntityRepository;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
@@ -51,5 +52,15 @@ class AbstractRepository extends EntityRepository implements FactorableInterface
         $ref = new \ReflectionClass($className);
 
         return $ref->newInstance();
+    }
+
+    /**
+     * Persists an entity
+     *
+     * @param AbstractEntity $entity
+     */
+    public function persist(AbstractEntity $entity)
+    {
+        $this->getEntityManager()->persist($entity);
     }
 }
