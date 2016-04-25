@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\Frameworkbundle\Controller;
+namespace Thuata\FrameworkBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
