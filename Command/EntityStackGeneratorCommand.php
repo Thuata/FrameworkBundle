@@ -70,7 +70,7 @@ EOT
 
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundleName);
 
-        $generator = $this->getContainer()->get('enjoy_framework.stackgeneratorservice');
+        $generator = $this->getContainer()->get('thuata_framework.stackgeneratorservice');
 
         $generator->renderEntityStack($bundle, $entity);
     }

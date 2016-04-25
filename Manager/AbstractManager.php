@@ -26,6 +26,8 @@
 
 namespace Thuata\FrameworkBundle\Manager;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bundle\DebugBundle\DependencyInjection\Compiler\DumpDataCollectorPass;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
 use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
@@ -64,7 +66,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      */
     protected function getRepository()
     {
-        return $this->getRepositoryFactory()->getRepositoryForEntityClassName($this->getEntityClassName());
+        return $this->getRepositoryFactory()->getFactorableInstance($this->getEntityClassName());
     }
 
     /**
@@ -189,6 +191,22 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     }
 
     /**
+     * Gets all entities matching a Criteria
+     *
+     * @param Criteria $criteria
+     *
+     * @return Collection
+     */
+    public function getOneEntityMatching(Criteria $criteria)
+    {
+        $entity = $this->getRepository()->matching($criteria)->first();
+
+        $this->prepareEntityForGet($entity);
+
+        return $entity;
+    }
+
+    /**
      * Get entities with id in $ids
      *
      * @param array   $ids
@@ -229,8 +247,18 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      */
     public function remove(AbstractEntity $entity)
     {
-        if($this->prepareEntityForRemove($entity)) {
+        if ($this->prepareEntityForRemove($entity)) {
             $this->getRepository()->remove($entity);
         }
+    }
+
+    /**
+     * Gets all applications
+     *
+     * @return Collection
+     */
+    public function getAll()
+    {
+        return $this->getEntitiesMatching(Criteria::create());
     }
 }
