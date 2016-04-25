@@ -63,4 +63,14 @@ class AbstractRepository extends EntityRepository implements FactorableInterface
     {
         $this->getEntityManager()->persist($entity);
     }
+
+    /**
+     * Removes an entity
+     *
+     * @param AbstractEntity $entity
+     */
+    public function remove(AbstractEntity $entity)
+    {
+        $this->getEntityManager()->remove($entity);
+    }
 }
