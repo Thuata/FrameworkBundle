@@ -1,5 +1,4 @@
 <?php
-
 /*
  * The MIT License
  *
@@ -23,46 +22,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Thuata\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
-use Thuata\FrameworkBundle\Repository\RepositoryFactory;
-use Thuata\FrameworkBundle\Tests\Resources\Repository\Repository;
+namespace Thuata\FrameworkBundle\Repository\Registry;
+
+use Doctrine\ORM\EntityManager;
 
 /**
- * Description of RepositoryFactoryTest
+ * <b>EntityManagerAwareInterface</b><br>
+ * Provides a method to set the entity manager
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Repository\Registry
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-class RepositoryFactoryTest extends TestCase
+interface EntityManagerAwareInterface
 {
     /**
-     * testGetInstance
+     * Sets the entity manager
+     *
+     * @param \Doctrine\ORM\EntityManager $entityManager
      */
-    public function testGetInstance()
-    {
-        $factory = new RepositoryFactory();
-        
-        $factorable = $factory->getFactorableInstance(Repository::class);
-        
-        $this->assertTrue($factorable instanceof Repository);
-    }
-    
-    /**
-     * one factorable instance created, two loaded
-     */
-    public function testOnlyOneNew()
-    {
-        Repository::$builds = 0;
-
-        $factory = new RepositoryFactory();
-        
-        // first call
-        $factorable = $factory->getFactorableInstance(Repository::class);
-        
-        // second call
-        $factorable = $factory->getFactorableInstance(Repository::class);
-        
-        $this->assertEquals(1, Repository::$builds);
-    }
+    public function setEntityManager(EntityManager $entityManager);
 }

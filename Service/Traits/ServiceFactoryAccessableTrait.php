@@ -28,9 +28,12 @@ namespace Thuata\FrameworkBundle\Service\Traits;
 use Thuata\FrameworkBundle\Service\ServiceFactory;
 
 /**
- * Description of ServiceAccessableTrait
+ * <b>ServiceFactoryAccessableTrait</b><br>
+ * Defines methods for ServiceFactoryAccessableInterface
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Service\Traits
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 trait ServiceFactoryAccessableTrait
 {

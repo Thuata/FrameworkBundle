@@ -28,6 +28,7 @@ namespace Thuata\FrameworkBundle\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\DebugBundle\DependencyInjection\Compiler\DumpDataCollectorPass;
+use Thuata\ComponentBundle\SoftDelete\SoftDeleteInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
 use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
@@ -41,9 +42,12 @@ use DateTime;
 use Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
 
 /**
- * Description of AbstractManager
+ * <b>AbstractManager</b><br>
+ * Provides all base mechanics for managers
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Manager
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 abstract class AbstractManager implements FactorableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
 {
@@ -67,6 +71,20 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     protected function getRepository()
     {
         return $this->getRepositoryFactory()->getFactorableInstance($this->getEntityClassName());
+    }
+
+    /**
+     * Checks if entity class name implements interface
+     *
+     * @param string $interfaceName
+     *
+     * @return bool
+     */
+    protected function entityImplements($interfaceName)
+    {
+        $reflectionClass = new \ReflectionClass($this->getEntityClassName());
+
+        return $reflectionClass->implementsInterface($interfaceName);
     }
 
     /**
@@ -260,5 +278,25 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     public function getAll()
     {
         return $this->getEntitiesMatching(Criteria::create());
+    }
+
+    /**
+     * Gets all entities not deleted
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     *
+     * @throws \Exception
+     */
+    public function getAllNotDeleted()
+    {
+        if (!$this->entityImplements(SoftDeleteInterface::class)) {
+            throw new \Exception(sprintf('Entities of class "%s" do not implement interface "%s"', $this->getEntityClassName(), SoftDeleteInterface::class));
+        }
+
+        $criteria = Criteria::create();
+
+        $criteria->where(Criteria::expr()->eq('deleted', false));
+
+        return $this->getEntitiesMatching($criteria);
     }
 }

@@ -26,15 +26,19 @@
 
 namespace Thuata\FrameworkBundle\Repository;
 
+use Thuata\ComponentBundle\Bridge\Doctrine\ShortcutNotationParser;
+use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
 use Thuata\FrameworkBundle\Factory\AbstractFactory;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
-use Thuata\FrameworkBundle\Repository\AbstractRepository;
 use Thuata\ComponentBundle\Registry\RegistryableTrait;
 
 /**
- * Description of RepositoryFactory
+ * <b>RepositoryFactory</b><br>
+ * Factory that allow to get repositories from an entity class
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Repository
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 class RepositoryFactory extends AbstractFactory
 {
@@ -49,6 +53,9 @@ class RepositoryFactory extends AbstractFactory
      */
     protected function injectDependancies(FactorableInterface $factorable)
     {
+        /** @var \Thuata\FrameworkBundle\Repository\AbstractRepository $factorable */
+        $factorable->setRegistryFactory($this->getContainer()->get('thuata_framework.registryfactory'));
+        $factorable->setEntityManager($this->getContainer()->get('doctrine.orm.entity_manager'));
     }
 
     /**
@@ -72,10 +79,18 @@ class RepositoryFactory extends AbstractFactory
      */
     protected function instanciateFactorable($factorableClassName)
     {
-        $doctrine = $this->getContainer()->get('doctrine');
-        $entityName = $doctrine->getEntityManager()->getClassMetadata($factorableClassName)->getName();
+        $shortcutParser = new ShortcutNotationParser($factorableClassName);
 
-        $repository = $doctrine->getRepository($entityName);
+        $bundle = $this->getContainer()->get('kernel')->getBundle($shortcutParser->getBundleName());
+
+        $stackConfiguration = new EntityStackConfiguration($bundle, $shortcutParser->getEntityName());
+
+        $repositoryClass = sprintf('%s\\%s', $stackConfiguration->getRepositoryNamespace(), $stackConfiguration->getRepositoryName());
+
+        $reflectionClass = new \ReflectionClass($repositoryClass);
+
+        /** @var \Thuata\FrameworkBundle\Repository\AbstractRepository $repository */
+        $repository = $reflectionClass->newInstance();
 
         return $repository;
     }
@@ -85,7 +100,7 @@ class RepositoryFactory extends AbstractFactory
      *
      * @param string $factorableClassName
      *
-     * @return AbstractRepository
+     * @return \Thuata\FrameworkBundle\Repository\AbstractRepository
      */
     public function getFactorableInstance($factorableClassName)
     {

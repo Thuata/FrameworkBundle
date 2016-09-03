@@ -33,9 +33,12 @@ use Thuata\ComponentBundle\Registry\RegistryableTrait;
 use Thuata\FrameworkBundle\Repository\RepositoryFactory;
 
 /**
- * Description of ManagerFactory
+ * <b>ManagerFactory</b><br>
+ * Factory to instantiate managers for entities
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Manager
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 class ManagerFactory extends AbstractFactory
 {

@@ -9,11 +9,21 @@
 namespace Thuata\FrameworkBundle\Entity;
 
 /**
- * AbstractEntity for manager and repository mechanics
+ * <b>AbstractEntity</b><br>
+ * Base class for entities
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Entity
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 abstract class AbstractEntity
 {
-    //put your code here
+    const ENTITY_NAME = 'ThuataFrameworkBundle:AbstractEntity';
+
+    /**
+     * Gets the entity id
+     *
+     * @return int|string
+     */
+    abstract public function getId();
 }

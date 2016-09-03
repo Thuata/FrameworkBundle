@@ -28,9 +28,12 @@ namespace Thuata\FrameworkBundle\Service\Traits;
 use Thuata\FrameworkBundle\Service\AbstractService;
 
 /**
- * Description of ServiceAccessableTrait
+ * <b>ServiceAccessableTrait</b><br>
+ * Defines methods for ServiceAccessableInterface
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Service\Traits
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 trait ServiceAccessableTrait
 {

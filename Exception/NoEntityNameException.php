@@ -1,5 +1,4 @@
 <?php
-
 /*
  * The MIT License
  *
@@ -24,16 +23,28 @@
  * THE SOFTWARE.
  */
 
-use ReflectionClass;
+namespace Thuata\FrameworkBundle\Exception;
 
 /**
- * Description of IntercessionClass
+ * <b>NoEntityNameException</b><br>
+ * Thrown when an entity class does not provide a ENTITY_NAME constant.
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Exception
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-class IntercessionClassFactory
+class NoEntityNameException extends \LogicException
 {
-    public function getIntercessionClass($className)
+    const MESSAGE_FORMAT = 'Entity %s does not define %s::ENTITY_NAME. This constant must contain the doctrine entity name.';
+    const ERROR_CODE = 500;
+
+    /**
+     * NoEntityNameException constructor.
+     *
+     * @param string $entityClassName
+     */
+    public function __construct($entityClassName)
     {
+        parent::__construct(sprintf(self::MESSAGE_FORMAT, $entityClassName, $entityClassName), self::ERROR_CODE, null);
     }
 }

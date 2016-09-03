@@ -11,7 +11,10 @@ namespace Thuata\FrameworkBundle\Entity\Interfaces;
 use DateTime;
 
 /**
+ * <b>TimestampableInterface</b><br>
  * Interface to provide timestamp information on an entity (creationDate, updateDate)
+ *
+ * @package Thuata\FrameworkBundle\Entity\Interfaces
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */

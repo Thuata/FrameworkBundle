@@ -32,9 +32,12 @@ use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
 use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInterface;
 
 /**
- * Description of AbstractService
+ * <b>AbstractService</b><br>
+ * Defines base mechanics for all services
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Service
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 class AbstractService implements FactorableInterface, ServiceFactoryAccessableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
 {

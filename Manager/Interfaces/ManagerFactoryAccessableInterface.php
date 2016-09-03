@@ -29,8 +29,12 @@ namespace Thuata\FrameworkBundle\Manager\Interfaces;
 use Thuata\FrameworkBundle\Manager\ManagerFactory;
 
 /**
+ * <b>ManagerFactoryAccessableInterface</b><br>
+ * Provides a setManagerFactory method for any class that should access to a manager factory
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Manager\Interfaces
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 interface ManagerFactoryAccessableInterface
 {

@@ -29,11 +29,12 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Thuata\FrameworkBundle\Exception\ExctractEntityNameException;
 
 /**
- * Class EntityStackConfiguration
+ * <b>EntityStackConfiguration</b><br>
+ * Configures a stack generation to pass to the Inercession bundle that will generate the classes definitions.
  *
- * @package thuata\frameworkbundle\Entity
+ * @package Thuata\FrameworkBundle\Entity
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 class EntityStackConfiguration
 {

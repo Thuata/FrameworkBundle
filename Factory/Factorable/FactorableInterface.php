@@ -29,8 +29,12 @@ namespace Thuata\FrameworkBundle\Factory\Factorable;
 use Thuata\FrameworkBundle\Factory\FactoryInterface;
 
 /**
+ * <b>FactorableInterface</b><br>
+ * Interface defining the methods for an object gotten from a factory
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Factory\Factorable
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 interface FactorableInterface
 {

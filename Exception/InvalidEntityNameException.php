@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -23,47 +23,29 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Repository\Traits;
-
-use Thuata\FrameworkBundle\Repository\AbstractRepository;
+namespace Thuata\FrameworkBundle\Exception;
 
 /**
- * <b>RepositoryAccessableTrait</b><br>
- * Provides method definitions for RepositoryAccessableInterface
+ * <b>InvalidEntityNameException</b><br>
+ * Thrown when an entity does not provide a valid entity name in its ENTITY_NAME constant
  *
- * @package Thuata\FrameworkBundle\Repository\Traits
+ * @package Thuata\FrameworkBundle\Exception
  *
  * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-trait RepositoryAccessableTrait
+class InvalidEntityNameException extends \LogicException
 {
-    /**
-     *
-     * @var AbstractRepository
-     */
-    private $repository;
-   
-    /**
-     * Sets the Repository
-     * 
-     * @param AbstractRepository $repository
-     *
-     * @return \Thuata\FrameworkBundle\Repository\Interfaces\RepositoryAccessableInterface
-     */
-    public function setRepository(AbstractRepository $repository)
-    {
-        $this->repository = $repository;
-        
-        return $this;
-    }
+    const MESSAGE_FORMAT = '%s, defined in %s::ENTITY_NAME constant, is not a valid entity name and entity repository can\'t be found in doctrine.';
+    const ERROR_CODE = 500;
 
     /**
-     * Gets the repository
-     * 
-     * @return AbstractRepository
+     * NoEntityNameException constructor.
+     *
+     * @param string $entityName
+     * @param string $entityClassName
      */
-    protected function getRepository()
+    public function __construct($entityName, $entityClassName)
     {
-        return $this->repository;
+        parent::__construct(sprintf(self::MESSAGE_FORMAT, $entityName, $entityClassName), self::ERROR_CODE, null);
     }
 }

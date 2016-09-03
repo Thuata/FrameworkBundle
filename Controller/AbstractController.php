@@ -27,11 +27,16 @@ namespace Thuata\FrameworkBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Class AbstractController
+ * <b>AbstractController</b><br>
+ * The abstract controller provides methods to get the service and manager factories.<br>
+ * If you chose to overload the Framework's factories, you can either overload :<br>
+ * <ul><li>The SERVICE_FACTORY_ID and MANAGER_FACTORY_ID constants to contain your own symfony services ids leading to
+ * the factories</li>
+ * <li>The getServiceFactory() and getManagerFactory() methods to return your own factories</li>
  *
- * @package Thuata\Frameworkbundle\Controller
+ * @package Thuata\FrameworkBundle\Controller
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 class AbstractController extends Controller
 {

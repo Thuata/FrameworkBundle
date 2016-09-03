@@ -27,6 +27,7 @@
 namespace Thuata\FrameworkBundle\Tests\Resources\Repository;
 
 use Thuata\FrameworkBundle\Repository\AbstractRepository;
+use Thuata\FrameworkBundle\Tests\Resources\Entity;
 
 /**
  * Description of Repository
@@ -43,5 +44,15 @@ class Repository extends AbstractRepository
     public function __construct()
     {
         self::$builds++;
+    }
+
+    /**
+     * Gets the entity class
+     *
+     * @return string
+     */
+    public function getEntityClass()
+    {
+        return Entity::class;
     }
 }

@@ -28,9 +28,12 @@ namespace Thuata\FrameworkBundle\Manager\Traits;
 use Thuata\FrameworkBundle\Manager\ManagerFactory;
 
 /**
- * Description of ManagerAccessableTrait
+ * <b>ManagerFactoryAccessableTrait</b><br>
+ * Defines the methods from ManagerFactoryAccessableInterface
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Manager\Traits
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 trait ManagerFactoryAccessableTrait
 {

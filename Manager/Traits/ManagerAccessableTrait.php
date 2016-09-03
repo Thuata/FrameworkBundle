@@ -28,9 +28,12 @@ namespace Thuata\FrameworkBundle\Manager\Traits;
 use Thuata\FrameworkBundle\Manager\AbstractManager;
 
 /**
- * Description of ManagerAccessableTrait
+ * <b>ManagerAccessableTrait</b><br>
+ * Defines the methods from ManagerAccessableInterface
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Manager\Traits
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 trait ManagerAccessableTrait
 {

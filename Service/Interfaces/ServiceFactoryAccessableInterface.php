@@ -29,8 +29,12 @@ namespace Thuata\FrameworkBundle\Service\Interfaces;
 use Thuata\FrameworkBundle\Service\ServiceFactory;
 
 /**
+ * <b>ServiceFactoryAccessableInterface</b><br>
+ * Provides setServiceFactory for object that shoul access to service factory
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Service\Interfaces
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 interface ServiceFactoryAccessableInterface
 {

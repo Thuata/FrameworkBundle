@@ -6,11 +6,15 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Thuata\ComponentBundle\Hydrator\ColumnHydrator;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * <b>ThuataFrameworkExtension</b><br>
+ * Configuration for the Framework bundle
  *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
+ * @package Thuata\FrameworkBundle\DependencyInjection
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 class ThuataFrameworkExtension extends Extension
 {

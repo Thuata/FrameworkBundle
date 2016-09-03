@@ -29,8 +29,12 @@ namespace Thuata\FrameworkBundle\Repository\Interfaces;
 use Thuata\FrameworkBundle\Repository\AbstractRepository;
 
 /**
+ * <b>RepositoryAccessableInterface</b><br>
+ * Provides a setRepository method for class that should access a repository
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Repository\Interfaces
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 interface RepositoryAccessableInterface
 {

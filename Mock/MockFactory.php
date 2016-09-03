@@ -28,7 +28,8 @@ use Thuata\ComponentBundle\Singleton\SingletonInterface;
 use Thuata\ComponentBundle\Singleton\SingletonableTrait;
 
 /**
- * Description of MockFactory
+ * <b>MockFactory</b><br>
+ * Factory to get a Mock from a class
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
@@ -39,9 +40,9 @@ class MockFactory implements SingletonInterface
     public function getMock($className)
     {
         if (!class_exists($className)) {
-            throw new \Exception(sprtintf('Can\'t mock "%s" class, as it does not exist.'));
+            throw new \Exception(sprintf('Can\'t mock "%s" class, as it does not exist.'));
         }
-        
+
         $reflectionClass = new ReflectionClass($className);
     }
 }
