@@ -26,11 +26,17 @@
 
 namespace Thuata\FrameworkBundle\Tests;
 
+use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
+
 /**
  * Description of AbstractTestCase
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class AbstractTestCase extends \Symfony\Bundle\FrameworkBundle\Tests\TestCase
+class AbstractTestCase extends TestCase
 {
+    public function setUp()
+    {
+        $kernel = new \AppKernel('test', false);
+    }
 }

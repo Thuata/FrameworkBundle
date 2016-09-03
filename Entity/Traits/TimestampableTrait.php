@@ -11,6 +11,7 @@ namespace Thuata\FrameworkBundle\Entity\Traits;
 use DateTime;
 
 /**
+ * <b>TimestampableTrait</b><br>
  * Trait defining properties and method to match TimestampableInterface
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>

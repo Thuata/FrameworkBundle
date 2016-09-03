@@ -31,9 +31,12 @@ use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\ComponentBundle\Registry\RegistryableTrait;
 
 /**
- * Description of ServiceFactory
+ * <b>ServiceFactory</b><br>
+ * Factory for services
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Service
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 class ServiceFactory extends AbstractFactory
 {

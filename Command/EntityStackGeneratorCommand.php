@@ -31,11 +31,15 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class EntityStackGeneratorCommand
+ * <b>EntityStackGeneratorCommand</b><br>
+ * Command to generate a full entity stack :
+ * <ul><li>The entity</li>
+ * <li>Its manager</li>
+ * <li>Its repository</li></ul>
  *
- * @package thuata\frameworkbundle\Command
+ * @package Thuata\FrameworkBundle\Command
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 class EntityStackGeneratorCommand extends GenerateDoctrineEntityCommand
 {

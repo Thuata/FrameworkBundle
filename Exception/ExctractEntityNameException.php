@@ -26,11 +26,12 @@
 namespace Thuata\FrameworkBundle\Exception;
 
 /**
- * Class ExctractEntityNameException
+ * <b>ExctractEntityNameException</b><br>
+ * Throw when its impossible to extract an entity name from a path.
  *
  * @package Thuata\FrameworkBundle\Exception
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 class ExctractEntityNameException extends \Exception
 {

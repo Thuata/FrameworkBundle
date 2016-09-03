@@ -28,9 +28,12 @@ namespace Thuata\FrameworkBundle\Repository\Traits;
 use Thuata\FrameworkBundle\Repository\RepositoryFactory;
 
 /**
- * Description of RepositoryAccessableTrait
+ * <b>RepositoryFactoryAccessableTrait</b><br>
+ * Provides method definitions for RepositoryFactoryAccessableInterface
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Repository\Traits
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 trait RepositoryFactoryAccessableTrait
 {

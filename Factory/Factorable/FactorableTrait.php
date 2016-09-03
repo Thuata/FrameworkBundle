@@ -29,9 +29,12 @@ namespace Thuata\FrameworkBundle\Factory\Factorable;
 use Thuata\FrameworkBundle\Factory\FactoryInterface;
 
 /**
- * Description of FactorableTrait
+ * <b>FactorableTrait</b><br>
+ * Defines thez methods signed in FactorableInterface
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Factory\Factorable
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 trait FactorableTrait
 {

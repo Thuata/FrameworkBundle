@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -23,47 +23,28 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Repository\Traits;
-
-use Thuata\FrameworkBundle\Repository\AbstractRepository;
+namespace Thuata\FrameworkBundle\Exception;
 
 /**
- * <b>RepositoryAccessableTrait</b><br>
- * Provides method definitions for RepositoryAccessableInterface
+ * <b>InvalidRegistryName</b><br>
+ * Thrown when trying to get a registry that does not exist
  *
- * @package Thuata\FrameworkBundle\Repository\Traits
+ * @package Thuata\FrameworkBundle\Exception
  *
  * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-trait RepositoryAccessableTrait
+class InvalidRegistryName extends \LogicException
 {
-    /**
-     *
-     * @var AbstractRepository
-     */
-    private $repository;
-   
-    /**
-     * Sets the Repository
-     * 
-     * @param AbstractRepository $repository
-     *
-     * @return \Thuata\FrameworkBundle\Repository\Interfaces\RepositoryAccessableInterface
-     */
-    public function setRepository(AbstractRepository $repository)
-    {
-        $this->repository = $repository;
-        
-        return $this;
-    }
+    const MESSAGE_FORMAT = 'The Registry %s does not exist.';
+    const ERROR_CODE = 500;
 
     /**
-     * Gets the repository
-     * 
-     * @return AbstractRepository
+     * InvalidRegistryName constructor.
+     *
+     * @param string $registryName
      */
-    protected function getRepository()
+    public function __construct($registryName)
     {
-        return $this->repository;
+        parent::__construct(sprintf(self::MESSAGE_FORMAT, $registryName), self::ERROR_CODE, null);
     }
 }

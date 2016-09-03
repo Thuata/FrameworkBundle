@@ -26,16 +26,19 @@
 
 namespace Thuata\FrameworkBundle\Factory;
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
-use Thuata\FrameworkBundle\Factory\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Description of Factory
+ * <b>AbstractFactory</b><br>
+ * Provides definition for factories
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Factory
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-abstract class AbstractFactory implements FactoryInterface
+abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -65,7 +68,7 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * Called when factorable is loaded
      *
-     * @param Factorable|FactorableInterface $factorable
+     * @param FactorableInterface $factorable
      */
     protected function onFactorableLoaded(Factorable\FactorableInterface $factorable)
     {

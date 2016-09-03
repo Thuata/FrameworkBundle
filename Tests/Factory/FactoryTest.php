@@ -24,7 +24,7 @@
  */
 namespace Thuata\FrameworkBundle\Tests;
 
-class FactoryTest extends \Symfony\Bundle\FrameworkBundle\Tests\TestCase
+class FactoryTest extends AbstractTestCase
 {
     /**
      * testGetInstance
@@ -32,30 +32,15 @@ class FactoryTest extends \Symfony\Bundle\FrameworkBundle\Tests\TestCase
     public function testGetInstance()
     {
         $factory = new Resources\Factory();
-        
+
         $factorable = $factory->getFactorableInstance(Resources\Factorable::class);
         
         $this->assertTrue($factorable instanceof Resources\Factorable);
     }
-//    
-//    /**
-//     * one factorable instance created, two loaded
-//     */
-//    public function testOnlyOneNew()
-//    {
-//        Resources\Factorable::$builds = 0;
-//
-//        $factory = new Resources\Factory();
-//        
-//        // first call
-//        $factorable = $factory->getFactorableInstance(Resources\Factorable::class);
-//        
-//        // second call
-//        $factorable = $factory->getFactorableInstance(Resources\Factorable::class);
-//        
-//        $this->assertEquals(1, Resources\Factorable::$builds);
-//    }
-    
+
+    /**
+     * testHasDependancies
+     */
     public function testHasDependancies()
     {
         $factory = new Resources\Factory();

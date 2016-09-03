@@ -15,3 +15,7 @@ services:
         class: Thuata\FrameworkBundle\Repository\RepositoryFactory
         calls:
             - ['setContainer', [ "@service_container" ]]
+    thuata_framework.registryfactory:
+        class: Thuata\FrameworkBundle\Repository\Registry\RegistryFactory
+        calls:
+            - ['setContainer', [ "@service_container" ]]

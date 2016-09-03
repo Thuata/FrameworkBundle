@@ -24,6 +24,7 @@
  */
 
 namespace Thuata\FrameworkBundle\Service;
+
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
@@ -35,11 +36,12 @@ use Thuata\IntercessionBundle\Intercession\IntercessionMethod;
 use Thuata\IntercessionBundle\Service\GeneratorService;
 
 /**
- * Class EntityStackGeneratorService
+ * <b>EntityStackGeneratorService</b><br>
+ * Generates the whom entity stack from a configuration
  *
- * @package thuata\frameworkbundle\Service
+ * @package Thuata\FrameworkBundle\Service
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 class EntityStackGeneratorService
 {

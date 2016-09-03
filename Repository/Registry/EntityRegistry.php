@@ -1,5 +1,4 @@
 <?php
-
 /*
  * The MIT License
  *
@@ -23,46 +22,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Thuata\Tests\Manager;
 
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
-use Thuata\FrameworkBundle\Manager\ManagerFactory;
-use Thuata\FrameworkBundle\Tests\Resources\Manager\Manager;
+namespace thuata\frameworkbundle\Repository\Registry;
+
+use Thuata\ComponentBundle\Registry\RegistryInterface;
+use Thuata\FrameworkBundle\Repository\AbstractRepository;
 
 /**
- * Description of ManagerFactoryTest
+ * <b>EntityRegistry</b><br>
+ * Defines methods for the registries used by repositories.
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package thuata\frameworkbundle\Repository\Registry
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-class ManagerFactoryTest extends TestCase
+abstract class EntityRegistry implements RegistryInterface
 {
     /**
-     * testGetInstance
+     * @var AbstractRepository
      */
-    public function testGetInstance()
-    {
-        $factory = new ManagerFactory();
-        
-        $factorable = $factory->getFactorableInstance(Manager::class);
+    private $repository;
 
-        $this->assertTrue($factorable instanceof Manager);
-    }
-    
     /**
-     * one factorable instance created, two loaded
+     * Sets the repository
+     *
+     * @param \Thuata\FrameworkBundle\Repository\AbstractRepository $repository
      */
-    public function testOnlyOneNew()
+    public function setRepository(AbstractRepository $repository)
     {
-        Manager::$builds = 0;
+        $this->repository = $repository;
+    }
 
-        $factory = new ManagerFactory();
-        
-        // first call
-        $factorable = $factory->getFactorableInstance(Manager::class);
-        
-        // second call
-        $factorable = $factory->getFactorableInstance(Manager::class);
-        
-        $this->assertEquals(1, Manager::$builds);
+    /**
+     * Gets the repository
+     *
+     * @return \Thuata\FrameworkBundle\Repository\AbstractRepository
+     */
+    protected function getRepository()
+    {
+        return $this->repository;
     }
 }

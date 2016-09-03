@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -23,47 +23,66 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Repository\Traits;
+namespace thuata\frameworkbundle\Repository\Registry;
 
-use Thuata\FrameworkBundle\Repository\AbstractRepository;
+use Thuata\ComponentBundle\Registry\RegistryInterface;
 
 /**
- * <b>RepositoryAccessableTrait</b><br>
- * Provides method definitions for RepositoryAccessableInterface
+ * <b>ArrayRegistry</b><br>
+ * Defines a registry being an array. Data is stored an retrieved faster but disapear at the end of the execution.
  *
- * @package Thuata\FrameworkBundle\Repository\Traits
+ * @package thuata\frameworkbundle\Repository\Registry
  *
  * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-trait RepositoryAccessableTrait
+class ArrayRegistry implements RegistryInterface
 {
     /**
-     *
-     * @var AbstractRepository
+     * @var array
      */
-    private $repository;
-   
+    private $registry = [];
+
     /**
-     * Sets the Repository
-     * 
-     * @param AbstractRepository $repository
-     *
-     * @return \Thuata\FrameworkBundle\Repository\Interfaces\RepositoryAccessableInterface
+     * {@inheritdoc}
      */
-    public function setRepository(AbstractRepository $repository)
+    public function findByKey($key)
     {
-        $this->repository = $repository;
-        
-        return $this;
+        if (array_key_exists($key, $this->registry)) {
+            return $this->registry[ $key ];
+        }
+
+        return null;
     }
 
     /**
-     * Gets the repository
-     * 
-     * @return AbstractRepository
+     * {@inheritdoc}
      */
-    protected function getRepository()
+    public function findByKeys(array $keys)
     {
-        return $this->repository;
+        return array_intersect_key($this->registry, array_flip($keys));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function add($key, $data)
+    {
+        $this->registry[ $key ] = $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function remove($key)
+    {
+        unset($this->registry[ $key ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function update($key, $data)
+    {
+        $this->add($key, $data);
     }
 }

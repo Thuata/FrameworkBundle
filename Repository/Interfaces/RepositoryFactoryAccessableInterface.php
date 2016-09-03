@@ -29,8 +29,12 @@ namespace Thuata\FrameworkBundle\Repository\Interfaces;
 use Thuata\FrameworkBundle\Repository\RepositoryFactory;
 
 /**
+ * <b>RepositoryFactoryAccessableInterface</b><br>
+ * Provides a setRepositoryFactory method for class that should access the repository factory
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Repository\Interfaces
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 interface RepositoryFactoryAccessableInterface
 {

@@ -29,8 +29,12 @@ namespace Thuata\FrameworkBundle\Service\Interfaces;
 use Thuata\FrameworkBundle\Service\AbstractService;
 
 /**
+ * <b>ServiceAccessableInterface</b><br>
+ * Provides setService method for objects that should acces to services
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Service\Interfaces
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 interface ServiceAccessableInterface
 {

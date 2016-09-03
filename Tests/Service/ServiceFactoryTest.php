@@ -24,7 +24,6 @@
  * THE SOFTWARE.
  */
 
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Thuata\FrameworkBundle\Tests\Resources\Service\Service;
 
 /**
@@ -32,15 +31,17 @@ use Thuata\FrameworkBundle\Tests\Resources\Service\Service;
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class ServiceFactoryTest extends TestCase
+class ServiceFactoryTest extends \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase
 {
     /**
      * testGetInstance
      */
     public function testGetInstance()
     {
-        $factory = new Thuata\FrameworkBundle\Service\ServiceFactory();
-        
+        self::bootKernel();
+
+        $factory = self::$kernel->getContainer()->get('thuata_framework.servicefactory');
+
         $factorable = $factory->getFactorableInstance(Service::class);
         
         $this->assertTrue($factorable instanceof Service);
@@ -51,10 +52,12 @@ class ServiceFactoryTest extends TestCase
      */
     public function testOnlyOneNew()
     {
+        self::bootKernel();
+
         Service::$builds = 0;
 
-        $factory = new Thuata\FrameworkBundle\Service\ServiceFactory();
-        
+        $factory = self::$kernel->getContainer()->get('thuata_framework.servicefactory');
+
         // first call
         $factorable = $factory->getFactorableInstance(Service::class);
         

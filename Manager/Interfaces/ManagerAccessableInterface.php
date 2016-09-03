@@ -29,8 +29,12 @@ namespace Thuata\FrameworkBundle\Manager\Interfaces;
 use Thuata\FrameworkBundle\Manager\AbstractManager;
 
 /**
+ * <b>ManagerAccessableInterface</b><br>
+ * Provides a setManager method for any class that should access to a manager
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Manager\Interfaces
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 interface ManagerAccessableInterface
 {

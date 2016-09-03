@@ -26,15 +26,15 @@
 
 namespace Thuata\FrameworkBundle\Factory;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\Container;
-
 /**
- * Interface for factories
+ * <b>FactoryInterface</b><br>
+ * Signs methods for factories.
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @package Thuata\FrameworkBundle\Factory
+ *
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-interface FactoryInterface extends ContainerAwareInterface
+interface FactoryInterface
 {
     /**
      * Instanciate a factorable from a class name and inject its dependancies.
