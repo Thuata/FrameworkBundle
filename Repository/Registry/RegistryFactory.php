@@ -50,13 +50,14 @@ class RegistryFactory implements ContainerAwareInterface
     /**
      * Registers a registry
      *
-     * @param string $name
-     * @param string $className
+     * @param string  $name
+     * @param string  $className
+     * @param boolean $replace
      */
-    public static function registerRegistry($name, $className)
+    public static function registerRegistry($name, $className, $replace = false)
     {
-        if (!array_key_exists($name, $className)) {
-            self::$registries[$name] = $className;
+        if (!array_key_exists($name, $className) or $replace) {
+            self::$registries[ $name ] = $className;
         }
     }
 
@@ -85,7 +86,7 @@ class RegistryFactory implements ContainerAwareInterface
             throw new InvalidRegistryName($registryName);
         }
 
-        $reflectionClass = new \ReflectionClass(self::$registries[$registryName]);
+        $reflectionClass = new \ReflectionClass(self::$registries[ $registryName ]);
 
         /** @var RegistryInterface $instance */
         $instance = $reflectionClass->newInstance();

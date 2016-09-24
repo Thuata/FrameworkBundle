@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-namespace thuata\frameworkbundle\Repository\Registry;
+namespace Thuata\FrameworkBundle\Repository\Registry;
 
 use Thuata\ComponentBundle\Registry\RegistryInterface;
 
@@ -59,7 +59,7 @@ class ArrayRegistry implements RegistryInterface
      */
     public function findByKeys(array $keys)
     {
-        return array_intersect_key($this->registry, array_flip($keys));
+        return array_values(array_intersect_key($this->registry, array_flip($keys)));
     }
 
     /**

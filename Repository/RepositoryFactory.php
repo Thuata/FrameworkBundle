@@ -112,4 +112,19 @@ class RepositoryFactory extends AbstractFactory
 
         return $factorable;
     }
+
+    /**
+     * Gets a repository for an entity
+     *
+     * @param string $entityName
+     *
+     * @return AbstractRepository
+     */
+    public function getRepositoryForEntity($entityName)
+    {
+        /** @var AbstractRepository $repository */
+        $repository = $this->getFactorableInstance($entityName);
+
+        return $repository;
+    }
 }
