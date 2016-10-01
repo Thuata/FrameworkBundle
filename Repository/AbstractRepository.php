@@ -74,11 +74,11 @@ abstract class AbstractRepository implements FactorableInterface
     /**
      * Gets an entity name from an entity class name if it provides an ENTITY_NAME constant
      *
-     * @param $className
+     * @param string $className
      *
      * @return string
      */
-    public static function getEntityNameFromClassName($className)
+    public static function getEntityNameFromClassName(string $className)
     {
         $entityName = constant(sprintf(self::ENTITY_NAME_CONST_FORMAT, $className));
 
@@ -142,7 +142,7 @@ abstract class AbstractRepository implements FactorableInterface
      *
      * @return $this
      */
-    protected function addRegistry($registryName)
+    protected function addRegistry(string $registryName)
     {
         $this->registries[] = $this->registryFactory->getRegistry($registryName);
 
@@ -190,7 +190,7 @@ abstract class AbstractRepository implements FactorableInterface
      *
      * @return AbstractEntity|null
      */
-    public function findById($id)
+    public function findById(int $id)
     {
         $entity = null;
 

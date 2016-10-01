@@ -74,11 +74,12 @@ class EntityStackGeneratorService
     /**
      * Gets the entity stack configuration for an entity
      *
-     * @param string $entityName
+     * @param \Symfony\Component\HttpKernel\Bundle\Bundle $bundle
+     * @param string                                      $entityName
      *
-     * @return EntityStackConfiguration
+     * @return \Thuata\FrameworkBundle\Entity\EntityStackConfiguration
      */
-    protected function getEntityStackConfiguration(Bundle $bundle, $entityName)
+    protected function getEntityStackConfiguration(Bundle $bundle, string $entityName)
     {
         return new EntityStackConfiguration($bundle, $entityName);
     }

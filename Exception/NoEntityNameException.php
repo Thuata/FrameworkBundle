@@ -43,7 +43,7 @@ class NoEntityNameException extends \LogicException
      *
      * @param string $entityClassName
      */
-    public function __construct($entityClassName)
+    public function __construct(string $entityClassName)
     {
         parent::__construct(sprintf(self::MESSAGE_FORMAT, $entityClassName, $entityClassName), self::ERROR_CODE, null);
     }

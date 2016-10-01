@@ -80,7 +80,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      *
      * @return bool
      */
-    protected function entityImplements($interfaceName)
+    protected function entityImplements(string $interfaceName)
     {
         $reflectionClass = new \ReflectionClass($this->getEntityClassName());
 
@@ -185,7 +185,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      */
     public function getById($id)
     {
-        $entity = $this->getRepository()->find($id);
+        $entity = $this->getRepository()->findById($id);
 
         $this->prepareEntityForGet($entity);
 

@@ -72,7 +72,7 @@ class ManagerFactory extends AbstractFactory
      * 
      * @return AbstractManager
      */
-    public function getFactorableInstance($factorableClassName)
+    public function getFactorableInstance(string $factorableClassName)
     {
         $factorable = $this->loadFromRegistry($factorableClassName);
         

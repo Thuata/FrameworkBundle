@@ -70,7 +70,7 @@ class ServiceFactory extends AbstractFactory
      * 
      * @return AbstractService
      */
-    public function getFactorableInstance($factorableClassName)
+    public function getFactorableInstance(string $factorableClassName)
     {
         $factorable = $this->loadFromRegistry($factorableClassName);
         

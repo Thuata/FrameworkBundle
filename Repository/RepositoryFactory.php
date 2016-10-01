@@ -71,13 +71,13 @@ class RepositoryFactory extends AbstractFactory
     /**
      * Instanciates the factorable
      *
-     * @param $factorableClassName
+     * @param string $factorableClassName
      *
      * @return FactorableInterface
      *
      * @throws \Exception
      */
-    protected function instanciateFactorable($factorableClassName)
+    protected function instanciateFactorable(string $factorableClassName)
     {
         $shortcutParser = new ShortcutNotationParser($factorableClassName);
 
@@ -102,7 +102,7 @@ class RepositoryFactory extends AbstractFactory
      *
      * @return \Thuata\FrameworkBundle\Repository\AbstractRepository
      */
-    public function getFactorableInstance($factorableClassName)
+    public function getFactorableInstance(string $factorableClassName)
     {
         $factorable = $this->loadFromRegistry($factorableClassName);
 

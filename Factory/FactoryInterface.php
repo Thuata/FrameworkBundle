@@ -26,6 +26,8 @@
 
 namespace Thuata\FrameworkBundle\Factory;
 
+use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
+
 /**
  * <b>FactoryInterface</b><br>
  * Signs methods for factories.
@@ -41,7 +43,7 @@ interface FactoryInterface
      * 
      * @param string $factorableClassName
      * 
-     * @return 
+     * @return FactorableInterface
      */
-    public function getFactorableInstance($factorableClassName);
+    public function getFactorableInstance(string $factorableClassName);
 }
