@@ -77,13 +77,13 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
     /**
      * Instanciates the factorable
      *
-     * @param $factorableClassName
+     * @param string $factorableClassName
      *
      * @return FactorableInterface
      *
      * @throws \Exception
      */
-    protected function instanciateFactorable($factorableClassName)
+    protected function instanciateFactorable(string $factorableClassName)
     {
         $reflectionClass = new \ReflectionClass($factorableClassName);
 
@@ -103,7 +103,7 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
      *
      * @throws \Exception
      */
-    private function loadFactorableInstance($factorableClassName)
+    private function loadFactorableInstance(string $factorableClassName)
     {
         $factorable = $this->instanciateFactorable($factorableClassName);
 
@@ -132,7 +132,7 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
      *
      * @throws \Exception
      */
-    public function getFactorableInstance($factorableClassName)
+    public function getFactorableInstance(string $factorableClassName)
     {
         return $this->loadFactorableInstance($factorableClassName);
     }

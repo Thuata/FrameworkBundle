@@ -38,7 +38,12 @@ class ExctractEntityNameException extends \Exception
     const MESSAGE_FORMAT = 'Can\'t extract entity name from path "%s"';
     const CODE = 500;
 
-    public function __construct($path)
+    /**
+     * ExctractEntityNameException constructor.
+     *
+     * @param string $path
+     */
+    public function __construct(string $path)
     {
         parent::__construct(sprintf(self::MESSAGE_FORMAT, $path), self::CODE, null);
     }

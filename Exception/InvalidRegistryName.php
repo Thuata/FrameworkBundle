@@ -43,7 +43,7 @@ class InvalidRegistryName extends \LogicException
      *
      * @param string $registryName
      */
-    public function __construct($registryName)
+    public function __construct(string $registryName)
     {
         parent::__construct(sprintf(self::MESSAGE_FORMAT, $registryName), self::ERROR_CODE, null);
     }

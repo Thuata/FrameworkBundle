@@ -53,7 +53,7 @@ class RegistryFactory implements ContainerAwareInterface
      * @param string $name
      * @param string $className
      */
-    public static function registerRegistry($name, $className)
+    public static function registerRegistry(string $name, string $className)
     {
         if (!array_key_exists($name, $className)) {
             self::$registries[$name] = $className;
@@ -79,7 +79,7 @@ class RegistryFactory implements ContainerAwareInterface
      *
      * @return RegistryInterface
      */
-    public function getRegistry($registryName)
+    public function getRegistry(string $registryName)
     {
         if (!array_key_exists(self::$registries, $registryName)) {
             throw new InvalidRegistryName($registryName);

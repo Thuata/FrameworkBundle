@@ -94,9 +94,9 @@ class EntityStackConfiguration
      * EntityStackConfiguration constructor.
      *
      * @param Bundle $bundle
-     * @param $entityName
+     * @param string $entityName
      */
-    public function __construct(Bundle $bundle, $entityName)
+    public function __construct(Bundle $bundle, string $entityName)
     {
         $this->entityName = $entityName;
         // names

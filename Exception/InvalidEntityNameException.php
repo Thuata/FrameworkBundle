@@ -44,7 +44,7 @@ class InvalidEntityNameException extends \LogicException
      * @param string $entityName
      * @param string $entityClassName
      */
-    public function __construct($entityName, $entityClassName)
+    public function __construct(string $entityName, string $entityClassName)
     {
         parent::__construct(sprintf(self::MESSAGE_FORMAT, $entityName, $entityClassName), self::ERROR_CODE, null);
     }
