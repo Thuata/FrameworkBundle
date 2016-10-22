@@ -18,9 +18,13 @@
         "symfony/symfony": "~3",
         "thuata/componentbundle" : "dev-master",
         "thuata/intercessionbundle" : "dev-master"
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2",
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "thuata/frameworktestbundle": ">=0.0"
     },
     "extra": {
         "branch-alias": {
