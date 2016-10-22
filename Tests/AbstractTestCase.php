@@ -35,8 +35,4 @@ use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
  */
 class AbstractTestCase extends TestCase
 {
-    public function setUp()
-    {
-        $kernel = new \AppKernel('test', false);
-    }
 }
