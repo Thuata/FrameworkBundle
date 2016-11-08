@@ -16,7 +16,7 @@
     "require": {
         "php": "~7.1",
         "symfony/symfony": "~3",
-        "thuata/componentbundle" : "dev-master",
+        "thuata/componentbundle" : ">=1",
         "thuata/intercessionbundle" : "dev-master"
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
