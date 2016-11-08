@@ -20,7 +20,7 @@
         "thuata/intercessionbundle" : "dev-master",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/doctrine-cache-bundle": "^1.2",
+        "doctrine/doctrine-cache-bundle": "^1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
