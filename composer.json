@@ -17,7 +17,7 @@
         "php": "~7.1",
         "symfony/symfony": "~3",
         "thuata/componentbundle" : ">=1",
-        "thuata/intercessionbundle" : "dev-master",
+        "thuata/intercessionbundle" : ">=1",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2"
