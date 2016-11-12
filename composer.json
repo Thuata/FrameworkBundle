@@ -1,0 +1,44 @@
+{
+    "name": "thuata/frameworkbundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "description": "Model Framwork bundle for symfony",
+    "authors": [
+        {
+            "name": "Anthony Maudry",
+            "email": "anthony.maudry@thuata.com",
+            "homepage": "http://www.thuata.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Thuata\\FrameworkBundle\\": "" }
+    },
+    "require": {
+        "php": "~7.1",
+        "symfony/symfony": "~3",
+        "thuata/componentbundle" : ">=1",
+        "thuata/intercessionbundle" : ">=1",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2"
+    },
+    "require-dev": {
+        "sensio/generator-bundle": "~2.3",
+        "thuata/frameworktestbundle": ">=0.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "v1-dev"
+        }
+    },
+    "repositories" : [
+        {
+            "type" : "git",
+            "url" : "git@github.com:Thuata/IntercessionBundle.git"
+        },
+        {
+            "type" : "git",
+            "url" : "git@github.com:Thuata/ComponentBundle.git"
+        }
+    ]
+}
