@@ -38,6 +38,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *
  * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
+<<<<<<< HEAD
 class AbstractController extends Controller
 {
     const SERVICE_FACTORY_ID = 'thuata_framework.servicefactory';
@@ -62,4 +63,9 @@ class AbstractController extends Controller
     {
         return $this->container->get(static::MANAGER_FACTORY_ID);
     }
+=======
+class AbstractController extends Controller implements ThuataControllerInterface
+{
+    use ThuataControllerTrait;
+>>>>>>> feature/multi
 }
