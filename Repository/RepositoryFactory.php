@@ -26,19 +26,13 @@
 
 namespace Thuata\FrameworkBundle\Repository;
 
-<<<<<<< HEAD
-=======
 use MongoDB\Client;
->>>>>>> feature/multi
 use Thuata\ComponentBundle\Bridge\Doctrine\ShortcutNotationParser;
 use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
 use Thuata\FrameworkBundle\Factory\AbstractFactory;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\ComponentBundle\Registry\RegistryableTrait;
-<<<<<<< HEAD
-=======
 use Thuata\FrameworkBundle\Repository\Registry\MongoDBAwareInterface;
->>>>>>> feature/multi
 
 /**
  * <b>RepositoryFactory</b><br>
@@ -64,15 +58,12 @@ class RepositoryFactory extends AbstractFactory
         /** @var \Thuata\FrameworkBundle\Repository\AbstractRepository $factorable */
         $factorable->setRegistryFactory($this->getContainer()->get('thuata_framework.registryfactory'));
         $factorable->setEntityManager($this->getContainer()->get('doctrine.orm.entity_manager'));
-<<<<<<< HEAD
-=======
 
         if ($factorable instanceof MongoDBAwareInterface) {
             $client = new Client(sprintf('mongodb://%s:%d', $this->getContainer()->getParameter('mongo_host'), $this->getContainer()->getParameter('mongo_port')));
             $collection = $client->selectDatabase($this->getContainer()->getParameter('mongo_database'))->selectCollection($factorable->getEntityName());
             $factorable->setMongoDBCollection($collection);
         }
->>>>>>> feature/multi
     }
 
     /**
@@ -82,13 +73,9 @@ class RepositoryFactory extends AbstractFactory
      */
     protected function onFactorableLoaded(FactorableInterface $factorable)
     {
-<<<<<<< HEAD
-        $this->addToRegistry($factorable);
-=======
         /** @var AbstractRepository $factorable */
         $this->addToRegistry($factorable);
         $factorable->loadRegistries();
->>>>>>> feature/multi
     }
 
     /**
@@ -103,10 +90,6 @@ class RepositoryFactory extends AbstractFactory
     protected function instanciateFactorable(string $factorableClassName)
     {
         $shortcutParser = new ShortcutNotationParser($factorableClassName);
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/multi
         $bundle = $this->getContainer()->get('kernel')->getBundle($shortcutParser->getBundleName());
 
         $stackConfiguration = new EntityStackConfiguration($bundle, $shortcutParser->getEntityName());
@@ -135,10 +118,7 @@ class RepositoryFactory extends AbstractFactory
         if (!$factorable instanceof AbstractRepository) {
             $factorable = parent::getFactorableInstance($factorableClassName);
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> feature/multi
         return $factorable;
     }
 

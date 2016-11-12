@@ -53,10 +53,7 @@ class ManagerFactory extends AbstractFactory
         $repositoryFactory = $this->getContainer()->get('thuata_framework.repositoryfactory');
         /** @var AbstractManager $factorable */
         $factorable->setRepositoryFactory($repositoryFactory);
-<<<<<<< HEAD
-=======
         $factorable->setManagerFactory($this);
->>>>>>> feature/multi
     }
     
     /**
@@ -83,11 +80,7 @@ class ManagerFactory extends AbstractFactory
         if (!$factorable instanceof AbstractManager) {
             $factorable = parent::getFactorableInstance($factorableClassName);
         }
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> feature/multi
         return $factorable;
     }
 }

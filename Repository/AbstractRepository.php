@@ -26,10 +26,7 @@
 
 namespace Thuata\FrameworkBundle\Repository;
 
-<<<<<<< HEAD
-=======
 use Doctrine\Common\Collections\Criteria;
->>>>>>> feature/multi
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Persisters\Entity\BasicEntityPersister;
@@ -40,11 +37,8 @@ use Thuata\FrameworkBundle\Exception\InvalidEntityNameException;
 use Thuata\FrameworkBundle\Exception\NoEntityNameException;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
-<<<<<<< HEAD
-=======
 use Thuata\FrameworkBundle\Repository\Registry\ArrayRegistry;
 use Thuata\FrameworkBundle\Repository\Registry\DoctrineRegistry;
->>>>>>> feature/multi
 use Thuata\FrameworkBundle\Repository\Registry\RegistryFactory;
 
 /**
@@ -58,10 +52,7 @@ use Thuata\FrameworkBundle\Repository\Registry\RegistryFactory;
 abstract class AbstractRepository implements FactorableInterface
 {
     use FactorableTrait;
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/multi
     const ENTITY_NAME_CONST_FORMAT = '%s::ENTITY_NAME';
 
     /**
@@ -129,13 +120,8 @@ abstract class AbstractRepository implements FactorableInterface
      */
     public function loadRegistries()
     {
-<<<<<<< HEAD
-        $this->addRegistry('array')
-            ->addRegistry('doctrine');
-=======
         $this->addRegistry(ArrayRegistry::NAME)
             ->addRegistry(DoctrineRegistry::NAME);
->>>>>>> feature/multi
     }
 
     /**
@@ -162,12 +148,7 @@ abstract class AbstractRepository implements FactorableInterface
      */
     protected function addRegistry(string $registryName)
     {
-<<<<<<< HEAD
-        $this->registries[] = $this->registryFactory->getRegistry($registryName);
-=======
-
         $this->registries[] = $this->registryFactory->getRegistry($registryName, $this->getEntityName());
->>>>>>> feature/multi
 
         return $this;
     }
@@ -193,21 +174,17 @@ abstract class AbstractRepository implements FactorableInterface
      */
     public function persist(AbstractEntity $entity)
     {
-<<<<<<< HEAD
-        $this->entityManager->persist($entity);
-=======
         $update = $entity->getId() !== null;
 
         for ($i = count($this->registries) - 1; $i >= 0; $i--) {
             /** @var RegistryInterface $registry */
-            $registry = $this->registries[ $i ];
+            $registry = $this->registries[$i];
             if ($update) {
                 $registry->update($entity->getId(), $entity);
             } else {
                 $registry->add($entity->getId(), $entity);
             }
         }
->>>>>>> feature/multi
     }
 
     /**
@@ -217,15 +194,11 @@ abstract class AbstractRepository implements FactorableInterface
      */
     public function remove(AbstractEntity $entity)
     {
-<<<<<<< HEAD
-        $this->entityManager->remove($entity);
-=======
         for ($i = count($this->registries) - 1; $i >= 0; $i--) {
             /** @var RegistryInterface $registry */
-            $registry = $this->registries[ $i ];
+            $registry = $this->registries[$i];
             $registry->remove($entity->getId());
         }
->>>>>>> feature/multi
     }
 
     /**
@@ -241,7 +214,7 @@ abstract class AbstractRepository implements FactorableInterface
 
         for ($i = 0; $i < count($this->registries); $i++) {
             /** @var RegistryInterface $registry */
-            $registry = $this->registries[ $i ];
+            $registry = $this->registries[$i];
             $entity = $registry->findByKey($id);
 
             if ($entity instanceof AbstractEntity) {
@@ -266,7 +239,7 @@ abstract class AbstractRepository implements FactorableInterface
 
         for ($i = 0; $i < count($this->registries); $i++) {
             /** @var RegistryInterface $registry */
-            $registry = $this->registries[ $i ];
+            $registry = $this->registries[$i];
             $found = $registry->findByKeys($ids);
             $entities = array_merge($entities, $found);
 
@@ -285,32 +258,6 @@ abstract class AbstractRepository implements FactorableInterface
      *
      * @param array $criteria
      *
-<<<<<<< HEAD
-     * @return array
-     */
-    public function findBy(array $criteria = [], array $orders = [], $limit = null, $offset = null)
-    {
-        $queryBuilder = $this->entityManager->createQueryBuilder()
-            ->select('id')
-            ->from($this->getEntityName(), 'e');
-
-        $persister = new BasicEntityPersister($this->entityManager, $this->entityManager->getClassMetadata($this->getEntityName()));
-
-        foreach ($criteria as $prop => $value) {
-            $queryBuilder->andWhere($persister->getSelectConditionStatementSQL($prop, $value));
-        }
-
-        $queryBuilder->orderBy($orders);
-
-        if ($limit !== null) {
-            $queryBuilder->setMaxResults($limit);
-        }
-
-        if ($offset !== null) {
-            $queryBuilder->setFirstResult($offset);
-        }
-
-=======
      * @param array $orders
      * @param null  $limit
      * @param null  $offset
@@ -369,7 +316,6 @@ abstract class AbstractRepository implements FactorableInterface
 
         $queryBuilder->addCriteria($criteria);
 
->>>>>>> feature/multi
         $ids = $queryBuilder->getQuery()->getResult(ColumnHydrator::HYDRATOR_MODE);
 
         return $this->findByIds($ids);
@@ -402,7 +348,7 @@ abstract class AbstractRepository implements FactorableInterface
         if (count($entities) >= 0) {
             for ($j = $from; $j >= 0; $j--) {
                 /** @var RegistryInterface $registry */
-                $registry = $this->registries[ $j ];
+                $registry = $this->registries[$j];
                 /** @var AbstractEntity $entity */
                 foreach ($entities as $entity) {
                     $registry->add($entity->getId(), $entity);

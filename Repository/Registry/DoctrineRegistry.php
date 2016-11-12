@@ -38,25 +38,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class DoctrineRegistry extends EntityRegistry implements EntityManagerAwareInterface
 {
-<<<<<<< HEAD
-=======
     const NAME = 'doctrine';
 
->>>>>>> feature/multi
     /**
      * @var EntityManager
      */
     private $entityManager;
 
     /**
-<<<<<<< HEAD
-     * @var EntityRepository
-     */
-    private $entityRepository;
-
-    /**
-=======
->>>>>>> feature/multi
      * Sets the entity manager
      *
      * @param  \Doctrine\ORM\EntityManager $entityManager
@@ -67,7 +56,6 @@ class DoctrineRegistry extends EntityRegistry implements EntityManagerAwareInter
     }
 
     /**
-<<<<<<< HEAD
      * Gets the entity repository
      *
      * @return \Doctrine\ORM\EntityRepository
@@ -82,8 +70,6 @@ class DoctrineRegistry extends EntityRegistry implements EntityManagerAwareInter
     }
 
     /**
-=======
->>>>>>> feature/multi
      * {@inheritdoc}
      */
     public function findByKey($key)

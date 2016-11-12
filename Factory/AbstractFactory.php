@@ -29,11 +29,8 @@ namespace Thuata\FrameworkBundle\Factory;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-<<<<<<< HEAD
-=======
 use Thuata\FrameworkBundle\Factory\Interfaces\DependenciesAwareInterface;
 use Thuata\FrameworkBundle\Repository\AbstractRepository;
->>>>>>> feature/multi
 
 /**
  * <b>AbstractFactory</b><br>
@@ -115,10 +112,7 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
         $factorable->setFactory($this);
 
         $this->injectDependancies($factorable);
-<<<<<<< HEAD
-=======
         $this->injectServices($factorable);
->>>>>>> feature/multi
 
         $this->onFactorableLoaded($factorable);
 
@@ -133,8 +127,6 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
     abstract protected function injectDependancies(Factorable\FactorableInterface $factorable);
 
     /**
-<<<<<<< HEAD
-=======
      * Inject services in factorable if it requires any
      *
      * @param FactorableInterface $factorable
@@ -151,7 +143,6 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
     }
 
     /**
->>>>>>> feature/multi
      * Instanciate a factorable from a class name and inject its dependancies.
      *
      * @param string $factorableClassName
@@ -162,12 +153,8 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
      */
     public function getFactorableInstance(string $factorableClassName)
     {
-<<<<<<< HEAD
-        return $this->loadFactorableInstance($factorableClassName);
-=======
         $factorable = $this->loadFactorableInstance($factorableClassName);
 
         return $factorable;
->>>>>>> feature/multi
     }
 }

@@ -33,10 +33,7 @@ use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
 use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
 use Thuata\FrameworkBundle\Manager\Traits\ManagerFactoryAccessableTrait;
-<<<<<<< HEAD
-=======
 use Thuata\FrameworkBundle\Repository\AbstractRepository;
->>>>>>> feature/multi
 use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInterface;
 use Thuata\FrameworkBundle\Entity\Interfaces\TimestampableInterface;
 use Thuata\FrameworkBundle\Entity\AbstractEntity;
@@ -55,10 +52,6 @@ use Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
  */
 abstract class AbstractManager implements FactorableInterface, ManagerFactoryAccessableInterface, RepositoryFactoryAccessableInterface
 {
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/multi
     use FactorableTrait,
         ManagerFactoryAccessableTrait,
         RepositoryFactoryAccessableTrait;
@@ -68,26 +61,16 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      *
      * @return string
      */
-<<<<<<< HEAD
-    abstract protected function getEntityClassName();
-=======
     abstract protected function getEntityClassName(): string;
->>>>>>> feature/multi
 
     /**
      * Gets the repository corresponding to the managed entity
      *
      * @return \Thuata\FrameworkBundle\Repository\AbstractRepository
      */
-<<<<<<< HEAD
-    protected function getRepository()
-    {
-        return $this->getRepositoryFactory()->getFactorableInstance($this->getEntityClassName());
-=======
     protected function getRepository(): AbstractRepository
     {
         return $this->getRepositoryFactory()->getFactorableInstance(AbstractRepository::getEntityNameFromClassName($this->getEntityClassName()));
->>>>>>> feature/multi
     }
 
     /**
@@ -97,11 +80,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      *
      * @return bool
      */
-<<<<<<< HEAD
-    protected function entityImplements(string $interfaceName)
-=======
     protected function entityImplements(string $interfaceName): bool
->>>>>>> feature/multi
     {
         $reflectionClass = new \ReflectionClass($this->getEntityClassName());
 
@@ -113,11 +92,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      *
      * @return AbstractEntity
      */
-<<<<<<< HEAD
-    public function getNew()
-=======
     public function getNew(): AbstractEntity
->>>>>>> feature/multi
     {
         $newEntity = $this->getRepository()->getNew();
 
@@ -133,11 +108,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      *
      * @return boolean
      */
-<<<<<<< HEAD
-    protected function prepareEntityForNew(AbstractEntity $entity)
-=======
     protected function prepareEntityForNew(AbstractEntity $entity): bool
->>>>>>> feature/multi
     {
         if ($entity instanceof TimestampableInterface) {
             $entity->setCreationDate(new DateTime());
@@ -154,11 +125,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      *
      * @return boolean
      */
-<<<<<<< HEAD
-    protected function prepareEntityForGet(AbstractEntity $entity)
-=======
     protected function prepareEntityForGet(AbstractEntity $entity): bool
->>>>>>> feature/multi
     {
         return true;
     }
@@ -170,11 +137,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      *
      * @return boolean
      */
-<<<<<<< HEAD
-    protected function prepareEntityForPersist(AbstractEntity $entity)
-=======
     protected function prepareEntityForPersist(AbstractEntity $entity): bool
->>>>>>> feature/multi
     {
         if ($entity instanceof TimestampableInterface) {
             $entity->setEditionDate(new DateTime());
@@ -190,11 +153,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      *
      * @return boolean
      */
-<<<<<<< HEAD
-    protected function prepareEntityForRemove(AbstractEntity $entity)
-=======
     protected function prepareEntityForRemove(AbstractEntity $entity): bool
->>>>>>> feature/multi
     {
         return true;
     }
@@ -206,11 +165,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      *
      * @return boolean
      */
-<<<<<<< HEAD
-    protected function prepareEntitesForGet(Collection $entities)
-=======
     protected function prepareEntitesForGet(Collection $entities): bool
->>>>>>> feature/multi
     {
         foreach ($entities as $entity) {
             if ($this->prepareEntityForGet($entity) === false) {
@@ -228,13 +183,6 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      *
      * @return AbstractEntity
      */
-<<<<<<< HEAD
-    public function getById($id)
-    {
-        $entity = $this->getRepository()->findById($id);
-
-        $this->prepareEntityForGet($entity);
-=======
     public function getById($id): ?AbstractEntity
     {
         $entity = $this->getRepository()->findById($id);
@@ -242,23 +190,11 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
         if ($entity instanceof AbstractEntity) {
             $this->prepareEntityForGet($entity);
         }
->>>>>>> feature/multi
 
         return $entity;
     }
 
     /**
-<<<<<<< HEAD
-     * Gets all entities matching a Criteria
-     *
-     * @param Criteria $criteria
-     *
-     * @return Collection
-     */
-    public function getEntitiesMatching(Criteria $criteria)
-    {
-        $entities = $this->getRepository()->matching($criteria);
-=======
      * Gets Entities by criteria ...
      *
      * @param array $criteria
@@ -271,7 +207,6 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     public function getEntitiesBy(array $criteria = [], array $orders = [], $limit = null, $offset = null): array
     {
         $entities = $this->getRepository()->findBy($criteria, $orders, $limit, $offset);
->>>>>>> feature/multi
 
         $this->prepareEntitesForGet($entities);
 
@@ -281,17 +216,6 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     /**
      * Gets all entities matching a Criteria
      *
-<<<<<<< HEAD
-     * @param Criteria $criteria
-     *
-     * @return Collection
-     */
-    public function getOneEntityMatching(Criteria $criteria)
-    {
-        $entity = $this->getRepository()->matching($criteria)->first();
-
-        $this->prepareEntityForGet($entity);
-=======
      * @param array $criteria
      * @param array $orders
      * @param int   $offset
@@ -305,7 +229,6 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
         if ($entity instanceof AbstractEntity) {
             $this->prepareEntityForGet($entity);
         }
->>>>>>> feature/multi
 
         return $entity;
     }
@@ -313,24 +236,6 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     /**
      * Get entities with id in $ids
      *
-<<<<<<< HEAD
-     * @param array   $ids
-     * @param array   $orderBy
-     * @param integer $limit
-     * @param integer $offset
-     *
-     * @return Collection
-     */
-    public function getByIds(array $ids, array $orderBy = null, $limit = null, $offset = null)
-    {
-        $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->in('id', $ids));
-        $criteria->orderBy($orderBy);
-        $criteria->setFirstResult($offset);
-        $criteria->setMaxResults($limit);
-
-        return $this->getEntitiesMatching($criteria);
-=======
      * @param array $ids
      *
      * @return array
@@ -343,7 +248,6 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
         $this->prepareEntitesForGet($entities);
 
         return $entities;
->>>>>>> feature/multi
     }
 
     /**
@@ -353,11 +257,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      */
     public function persist(AbstractEntity $entity)
     {
-<<<<<<< HEAD
-        if($this->prepareEntityForPersist($entity)) {
-=======
         if ($this->prepareEntityForPersist($entity)) {
->>>>>>> feature/multi
             $this->getRepository()->persist($entity);
         }
 
@@ -378,50 +278,26 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     /**
      * Gets all applications
      *
-<<<<<<< HEAD
-     * @return Collection
-     */
-    public function getAll()
-    {
-        return $this->getEntitiesMatching(Criteria::create());
-=======
      * @return array
      */
     public function getAll(): array
     {
         return $this->getEntitiesBy([]);
->>>>>>> feature/multi
     }
 
     /**
      * Gets all entities not deleted
      *
-<<<<<<< HEAD
-     * @return \Doctrine\Common\Collections\Collection
-     *
-     * @throws \Exception
-     */
-    public function getAllNotDeleted()
-=======
      * @return array
      *
      * @throws \Exception
      */
     public function getAllNotDeleted(): array
->>>>>>> feature/multi
     {
         if (!$this->entityImplements(SoftDeleteInterface::class)) {
             throw new \Exception(sprintf('Entities of class "%s" do not implement interface "%s"', $this->getEntityClassName(), SoftDeleteInterface::class));
         }
 
-<<<<<<< HEAD
-        $criteria = Criteria::create();
-
-        $criteria->where(Criteria::expr()->eq('deleted', false));
-
-        return $this->getEntitiesMatching($criteria);
-=======
         return $this->getEntitiesBy(['deleted' => false]);
->>>>>>> feature/multi
     }
 }

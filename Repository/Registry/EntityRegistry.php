@@ -23,14 +23,9 @@
  * THE SOFTWARE.
  */
 
-<<<<<<< HEAD
-namespace thuata\frameworkbundle\Repository\Registry;
-
-=======
 namespace Thuata\FrameworkBundle\Repository\Registry;
 
 use Doctrine\ORM\EntityRepository;
->>>>>>> feature/multi
 use Thuata\ComponentBundle\Registry\RegistryInterface;
 use Thuata\FrameworkBundle\Repository\AbstractRepository;
 
@@ -45,34 +40,13 @@ use Thuata\FrameworkBundle\Repository\AbstractRepository;
 abstract class EntityRegistry implements RegistryInterface
 {
     /**
-     * @var AbstractRepository
+     * @var repository
      */
-<<<<<<< HEAD
-    private $repository;
-=======
     private $entityRepository;
->>>>>>> feature/multi
 
     /**
      * Sets the repository
      *
-<<<<<<< HEAD
-     * @param \Thuata\FrameworkBundle\Repository\AbstractRepository $repository
-     */
-    public function setRepository(AbstractRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
-     * Gets the repository
-     *
-     * @return \Thuata\FrameworkBundle\Repository\AbstractRepository
-     */
-    protected function getRepository()
-    {
-        return $this->repository;
-=======
      * @param EntityRepository $repository
      */
     public function setEntityRepository(EntityRepository $repository)
@@ -88,6 +62,5 @@ abstract class EntityRegistry implements RegistryInterface
     public function getEntityRepository()
     {
         return $this->entityRepository;
->>>>>>> feature/multi
     }
 }

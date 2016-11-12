@@ -25,12 +25,9 @@
 
 namespace Thuata\FrameworkBundle\Repository\Registry;
 
-<<<<<<< HEAD
-=======
 use Doctrine\ORM\EntityManager;
 use MongoDB\Client;
 use MongoDB\Database;
->>>>>>> feature/multi
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Thuata\ComponentBundle\Registry\RegistryInterface;
@@ -62,12 +59,8 @@ class RegistryFactory implements ContainerAwareInterface
      */
     public static function registerRegistry(string $name, string $className, bool $replace = false)
     {
-<<<<<<< HEAD
-        if (!array_key_exists($name, $className) or $replace) {
-=======
         if (!array_key_exists($name, self::$registries) or $replace) {
->>>>>>> feature/multi
-            self::$registries[ $name ] = $className;
+            self::$registries[$name] = $className;
         }
     }
 
@@ -75,13 +68,6 @@ class RegistryFactory implements ContainerAwareInterface
      * Inject dependencies using implemented interfaces to registry
      *
      * @param \Thuata\ComponentBundle\Registry\RegistryInterface $registry
-<<<<<<< HEAD
-     */
-    private function injectDependencies(RegistryInterface $registry)
-    {
-        if ($registry instanceof EntityManagerAwareInterface) {
-            $registry->setEntityManager($this->container->get('doctrine.orm.entity_manager'));
-=======
      * @param string|null                                        $entityName
      *
      * @throws \Exception
@@ -109,7 +95,6 @@ class RegistryFactory implements ContainerAwareInterface
             $client = new Client(sprintf('mongodb://%s:%d', $this->container->getParameter('mongo_host'), $this->container->getParameter('mongo_port')));
             $collection = $client->selectDatabase($this->container->getParameter('mongo_database'))->selectCollection($entityName);
             $registry->setMongoDBCollection($collection);
->>>>>>> feature/multi
         }
     }
 
@@ -117,14 +102,6 @@ class RegistryFactory implements ContainerAwareInterface
      * Gets a registry from its name
      *
      * @param string $registryName
-<<<<<<< HEAD
-     *
-     * @return RegistryInterface
-     */
-    public function getRegistry(string $registryName)
-    {
-        if (!array_key_exists(self::$registries, $registryName)) {
-=======
      * @param string $entityClass
      *
      * @return RegistryInterface
@@ -132,20 +109,15 @@ class RegistryFactory implements ContainerAwareInterface
     public function getRegistry(string $registryName, $entityClass = null)
     {
         if (!array_key_exists($registryName, self::$registries)) {
->>>>>>> feature/multi
             throw new InvalidRegistryName($registryName);
         }
 
-        $reflectionClass = new \ReflectionClass(self::$registries[ $registryName ]);
+        $reflectionClass = new \ReflectionClass(self::$registries[$registryName]);
 
         /** @var RegistryInterface $instance */
         $instance = $reflectionClass->newInstance();
 
-<<<<<<< HEAD
-        $this->injectDependencies($instance);
-=======
         $this->injectDependencies($instance, $entityClass);
->>>>>>> feature/multi
 
         return $instance;
     }
