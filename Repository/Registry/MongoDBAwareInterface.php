@@ -26,5 +26,12 @@ use MongoDB\Collection;
  */
 interface MongoDBAwareInterface
 {
+    /**
+     * Sets the mongodb collection
+     *
+     * @param Collection $collection
+     *
+     * @return mixed
+     */
     public function setMongoDBCollection(Collection $collection);
 }

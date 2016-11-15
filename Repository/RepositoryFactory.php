@@ -94,9 +94,7 @@ class RepositoryFactory extends AbstractFactory
 
         $stackConfiguration = new EntityStackConfiguration($bundle, $shortcutParser->getEntityName());
 
-        $repositoryClass = sprintf('%s\\%s', $stackConfiguration->getRepositoryNamespace(), $stackConfiguration->getRepositoryName());
-
-        $reflectionClass = new \ReflectionClass($repositoryClass);
+        $reflectionClass = new \ReflectionClass($stackConfiguration->getRepositoryClass());
 
         /** @var \Thuata\FrameworkBundle\Repository\AbstractRepository $repository */
         $repository = $reflectionClass->newInstance();

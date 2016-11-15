@@ -30,7 +30,10 @@ use MongoDB\Client;
 use MongoDB\Database;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Thuata\ComponentBundle\Bridge\Doctrine\ShortcutNotationParser;
+use Thuata\ComponentBundle\Registry\ClassAwareInterface;
 use Thuata\ComponentBundle\Registry\RegistryInterface;
+use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
 use Thuata\FrameworkBundle\Exception\InvalidRegistryName;
 
 /**
@@ -77,7 +80,7 @@ class RegistryFactory implements ContainerAwareInterface
         /** @var EntityManager $entityManager */
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         if ($registry instanceof EntityManagerAwareInterface) {
-            $registry->setEntityManager($entityManager);
+            $registry->setEntityRepository($entityManager);
         }
 
         if ($registry instanceof EntityRegistry) {
@@ -85,6 +88,7 @@ class RegistryFactory implements ContainerAwareInterface
                 throw new \Exception('Can\'t load an entity registry without entity name');
             }
             $registry->setEntityRepository($entityManager->getRepository($entityName));
+            $registry->setEntityManager($entityManager);
         }
 
         if ($registry instanceof MongoDBAwareInterface) {
@@ -95,6 +99,20 @@ class RegistryFactory implements ContainerAwareInterface
             $client = new Client(sprintf('mongodb://%s:%d', $this->container->getParameter('mongo_host'), $this->container->getParameter('mongo_port')));
             $collection = $client->selectDatabase($this->container->getParameter('mongo_database'))->selectCollection($entityName);
             $registry->setMongoDBCollection($collection);
+        }
+
+        if ($registry instanceof ClassAwareInterface) {
+
+            $shortcutParser = new ShortcutNotationParser($entityName);
+            $bundle = $this->container->get('kernel')->getBundle($shortcutParser->getBundleName());
+
+            $stackConfiguration = new EntityStackConfiguration($bundle, $shortcutParser->getEntityName());
+
+            if ($registry instanceof MongoDBAwareInterface) {
+                $registry->setEntityClass($stackConfiguration->getDocumentClass());
+            } else {
+                $registry->setEntityClass($stackConfiguration->getEntityClass());
+            }
         }
     }
 

@@ -10,7 +10,9 @@ namespace Thuata\FrameworkBundle\Repository;
 
 use MongoDB\Collection;
 use MongoDB\Driver\Cursor;
+use Thuata\FrameworkBundle\Entity\AbstractEntity;
 use Thuata\FrameworkBundle\Repository\Registry\MongoDBAwareInterface;
+use Thuata\FrameworkBundle\Repository\Registry\MongoDBRegistry;
 
 
 /**
@@ -44,8 +46,7 @@ abstract class AbstractMongoDBRepository extends AbstractRepository implements M
      */
     public function loadRegistries()
     {
-        $this->addRegistry('array')
-            ->addRegistry('mongodb');
+        $this->addRegistry(MongoDBRegistry::NAME);
     }
 
     /**
@@ -61,8 +62,7 @@ abstract class AbstractMongoDBRepository extends AbstractRepository implements M
      */
     public function findBy(array $criteria = [], array $orders = [], $limit = null, $offset = null): array
     {
-        /** @var Cursor $cursor */
-        $cursor = $this->collection->find($criteria);
+        $options = [];
 
         if ($orders) {
             foreach ($orders as $field => &$dir) {
@@ -73,17 +73,30 @@ abstract class AbstractMongoDBRepository extends AbstractRepository implements M
                 }
 
             }
-            $cursor->sort($orders);
+            $options['sort'] = $orders;
         }
 
         if ($limit !== null) {
-            $cursor->limit($limit);
+            $options['limit'] = $limit;
         }
 
         if ($offset !== null) {
-            $cursor->skip($offset);
+            $options['skip'] = $offset;
         }
 
-        return iterator_to_array($cursor);
+        $options['projection'] = [];
+
+        /** @var Cursor $cursor */
+        $cursor = $this->collection->find($criteria, $options);
+
+        $ids = [];
+
+        $data = iterator_to_array($cursor);
+
+        array_walk($data, function($value, $key) use (&$ids) {
+            $ids[] = $value['_id'];
+        });
+
+        return $this->findByIds($ids);
     }
 }

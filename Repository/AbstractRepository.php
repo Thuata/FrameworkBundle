@@ -98,7 +98,7 @@ abstract class AbstractRepository implements FactorableInterface
      *
      * @return string
      */
-    abstract public function getEntityClass();
+    abstract public function getEntityClass(): string;
 
     /**
      * Sets the entity manager
@@ -317,6 +317,10 @@ abstract class AbstractRepository implements FactorableInterface
         $queryBuilder->addCriteria($criteria);
 
         $ids = $queryBuilder->getQuery()->getResult(ColumnHydrator::HYDRATOR_MODE);
+
+        if(count($ids) === 0) {
+            return [];
+        }
 
         return $this->findByIds($ids);
     }

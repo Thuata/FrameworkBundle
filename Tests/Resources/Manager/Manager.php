@@ -46,7 +46,7 @@ class Manager extends AbstractManager
         self::$builds++;
     }
 
-    protected function getEntityClassName()
+    protected function getEntityClassName(): string
     {
         return Entity::class;
     }

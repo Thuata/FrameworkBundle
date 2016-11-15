@@ -8,6 +8,7 @@
 
 namespace Thuata\FrameworkBundle\Document;
 
+use MongoDB\BSON\ObjectID;
 use Thuata\FrameworkBundle\Entity\AbstractEntity;
 
 /**
@@ -33,11 +34,15 @@ abstract class AbstractDocument extends AbstractEntity
     /**
      * Gets the document id
      *
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getId(): ?string
     {
-        return (int) $this->document['_id'];
+        if (array_key_exists('_id', $this->document)) {
+            return $this->document['_id'];
+        }
+
+        return null;
     }
 
     /**
@@ -48,6 +53,29 @@ abstract class AbstractDocument extends AbstractEntity
      * @return mixed
      */
     public function __get($name)
+    {
+        return $this->getMongoDocumentData($name);
+    }
+
+    /**
+     * Sets data to the document
+     *
+     * @param string $name
+     * @param mixed  $value
+     */
+    function __set($name, $value)
+    {
+        $this->setMongoDocumentData($name, $value);
+    }
+
+    /**
+     * Gets data from the document
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    protected function getMongoDocumentData($name)
     {
         if (array_key_exists($name, $this->document)) {
             return $this->document[$name];
@@ -60,9 +88,9 @@ abstract class AbstractDocument extends AbstractEntity
      * Sets data to the document
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
-    function __set($name, $value)
+    protected function setMongoDocumentData($name, $value)
     {
         $this->document[$name] = $value;
     }

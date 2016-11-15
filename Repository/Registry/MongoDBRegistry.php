@@ -8,8 +8,12 @@
 
 namespace Thuata\FrameworkBundle\Repository\Registry;
 
+use MongoDB\BSON\ObjectID;
 use MongoDB\Client;
 use MongoDB\Collection;
+use MongoDB\Driver\Cursor;
+use Thuata\ComponentBundle\Bridge\Doctrine\ShortcutNotationParser;
+use Thuata\ComponentBundle\Registry\ClassAwareInterface;
 use Thuata\ComponentBundle\Registry\RegistryInterface;
 use Thuata\FrameworkBundle\Document\AbstractDocument;
 
@@ -26,7 +30,7 @@ use Thuata\FrameworkBundle\Document\AbstractDocument;
  * @author    Matthieu Prieur <matthieu.prieur@enjoyyourbusiness.fr>
  * @copyright 2014 Enjoy Your Business - RCS Bourges B 800 159 295 ©
  */
-class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface
+class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface, ClassAwareInterface
 {
     const NAME = 'mongodb';
 
@@ -34,6 +38,11 @@ class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface
      * @var Collection
      */
     private $collection;
+
+    /**
+     * @var string
+     */
+    private $entityClass;
 
     /**
      * Finds an item by key
@@ -44,7 +53,9 @@ class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface
      */
     public function findByKey($key)
     {
-        $this->collection->findOne(['_id' => $key]);
+        $document = $this->collection->findOne(['_id' => $key]);
+
+        return $this->hydrateEntity($document);
     }
 
     /**
@@ -56,7 +67,15 @@ class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface
      */
     public function findByKeys(array $keys)
     {
-        $this->collection->findOne(['_id' => ['$in' => $keys]]);
+        $result = [];
+        /** @var Cursor $list */
+        $list = $this->collection->find(['_id' => ['$in' => $keys]]);
+
+        foreach ($list as $document) {
+            $result[] = $this->hydrateEntity($document);
+        }
+
+        return $result;
     }
 
     /**
@@ -72,7 +91,9 @@ class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface
     {
         $toInsert = $this->getDocumentData($data);
 
-        $this->collection->insertOne($toInsert);
+        $result = $this->collection->insertOne($toInsert);
+
+        $data->_id = $result->getInsertedId();
     }
 
     /**
@@ -80,16 +101,17 @@ class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface
      *
      * @param $document
      *
-     * @return array
+     * @return mixed
+     *
      * @throws \Exception
      */
-    protected function getDocumentData($document): array
+    protected function getDocumentData($document)
     {
         if (is_array($document)) {
             $data = $document;
         } elseif ($document instanceof AbstractDocument) {
             $reflectionClass = new \ReflectionClass($document);
-            $documentProperty = $reflectionClass->getProperty('document');
+            $documentProperty = $reflectionClass->getParentClass()->getProperty('document');
             $documentProperty->setAccessible(true);
             $data = $documentProperty->getValue($document);
         } else {
@@ -123,7 +145,7 @@ class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface
     {
         $toUpdate = $this->getDocumentData($data);
 
-        $this->collection->updateOne(['_id' => $key], $toUpdate);
+        $this->collection->updateOne(['_id' => new ObjectID($key)], ['$set' => $toUpdate]);
     }
 
     /**
@@ -132,5 +154,41 @@ class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface
     public function setMongoDBCollection(Collection $collection)
     {
         $this->collection = $collection;
+    }
+
+    /**
+     * Sets the entity name
+     *
+     * @param string $entityClass
+     */
+    public function setEntityClass(string $entityClass)
+    {
+        $this->entityClass = $entityClass;
+    }
+
+    /**
+     * Hydrates a document entity with a mongo document
+     *
+     * @param mixed $document
+     *
+     * @return AbstractDocument
+     *
+     * @throws \Exception
+     */
+    private function hydrateEntity($document)
+    {
+        $class = $this->entityClass;
+        $reflectionClass = new \ReflectionClass(AbstractDocument::class);
+        $entity = new $class();
+
+        if (!($entity instanceof AbstractDocument)) {
+            throw new \Exception(sprintf('"%s" is not a subclass of "%s"', $this->entityClass, AbstractDocument::class));
+        }
+
+        $documentProperty = $reflectionClass->getProperty('document');
+        $documentProperty->setAccessible(true);
+        $documentProperty->setValue($entity, $document);
+
+        return $entity;
     }
 }

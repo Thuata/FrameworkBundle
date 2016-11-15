@@ -46,6 +46,8 @@ class EntityStackConfiguration
     const ENTITY_NAME_REGEXP_FORMAT = '#^%s/([^\\.]+)\\.php$#';
     const ENTITY_DIR_FORMAT = '%s/Entity';
     const ENTITY_NAMESPACE_FORMAT = '%s\\Entity';
+    const DOCUMENT_NAMESPACE_FORMAT = '%s\\Document';
+    const DOCUMENT_DIR_FORMAT = '%s/Document';
     const REPOSITORY_NAMESPACE_FORMAT = '%s\\Repository';
     const MANAGER_NAMESPACE_FORMAT = '%s\\Manager';
 
@@ -61,6 +63,14 @@ class EntityStackConfiguration
      * @var string
      */
     private $entityName;
+    /**
+     * @var string
+     */
+    private $documentDir;
+    /**
+     * @var string
+     */
+    private $documentPath;
     /**
      * @var string
      */
@@ -81,6 +91,10 @@ class EntityStackConfiguration
      * @var string
      */
     private $entityNamespace;
+    /**
+     * @var string
+     */
+    private $documentNamespace;
     /**
      * @var string
      */
@@ -105,10 +119,13 @@ class EntityStackConfiguration
         // pathes
         $this->entityDir = sprintf(self::ENTITY_DIR_FORMAT, $bundle->getPath());
         $this->entityPath = sprintf(self::FILE_PATH_FORMAT, $this->entityDir, $this->entityName);
+        $this->documentDir = sprintf(self::DOCUMENT_DIR_FORMAT, $bundle->getPath());
+        $this->documentPath = sprintf(self::FILE_PATH_FORMAT, $this->documentDir, $this->entityName);
         $this->managerPath = sprintf(self::MANAGER_PATH_FORMAT, $bundle->getPath(), $this->getManagerName());
         $this->repositoryPath = sprintf(self::REPOSITORY_PATH_FORMAT, $bundle->getPath(), $this->getRepositoryName());
         // namespaces
         $this->entityNamespace = sprintf(self::ENTITY_NAMESPACE_FORMAT, $bundle->getNamespace());
+        $this->documentNamespace = sprintf(self::DOCUMENT_NAMESPACE_FORMAT, $bundle->getNamespace());
         $this->managerNamespace = sprintf(self::MANAGER_NAMESPACE_FORMAT, $bundle->getNamespace());
         $this->repositoryNamespace = sprintf(self::REPOSITORY_NAMESPACE_FORMAT, $bundle->getNamespace());
     }
@@ -141,6 +158,26 @@ class EntityStackConfiguration
     public function getEntityName()
     {
         return $this->entityName;
+    }
+
+    /**
+     * Gets documentDir
+     *
+     * @return string
+     */
+    public function getDocumentDir(): string
+    {
+        return $this->documentDir;
+    }
+
+    /**
+     * Gets documentPath
+     *
+     * @return string
+     */
+    public function getDocumentPath(): string
+    {
+        return $this->documentPath;
     }
 
     /**
@@ -194,6 +231,16 @@ class EntityStackConfiguration
     }
 
     /**
+     * Gets documentNamespace
+     *
+     * @return string
+     */
+    public function getDocumentNamespace(): string
+    {
+        return $this->documentNamespace;
+    }
+
+    /**
      * Gets the manager namespace
      *
      * @return string
@@ -211,5 +258,45 @@ class EntityStackConfiguration
     public function getRepositoryNamespace()
     {
         return $this->repositoryNamespace;
+    }
+
+    /**
+     * Gets the repository class
+     *
+     * @return string
+     */
+    public function getEntityClass()
+    {
+        return sprintf('%s\\%s', $this->getEntityNamespace(), $this->getEntityName());
+    }
+
+    /**
+     * Gets the repository class
+     *
+     * @return string
+     */
+    public function getManagerClass()
+    {
+        return sprintf('%s\\%s', $this->getManagerNamespace(), $this->getManagerName());
+    }
+
+    /**
+     * Gets the repository class
+     *
+     * @return string
+     */
+    public function getRepositoryClass()
+    {
+        return sprintf('%s\\%s', $this->getRepositoryNamespace(), $this->getRepositoryName());
+    }
+
+    /**
+     * Gets the document class
+     *
+     * @return string
+     */
+    public function getDocumentClass()
+    {
+        return sprintf('%s\\%s', $this->getDocumentNamespace(), $this->getEntityName());
     }
 }

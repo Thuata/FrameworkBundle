@@ -33,7 +33,7 @@ trait TimestampableTrait
      *
      * @param DateTime $creationDate
      *
-     * @return TimestampableInterface
+     * @return TimestampableTrait
      */
     public function setCreationDate(DateTime $creationDate)
     {

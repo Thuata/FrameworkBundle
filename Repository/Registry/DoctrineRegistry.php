@@ -36,38 +36,9 @@ use Doctrine\ORM\EntityRepository;
  *
  * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-class DoctrineRegistry extends EntityRegistry implements EntityManagerAwareInterface
+class DoctrineRegistry extends EntityRegistry
 {
     const NAME = 'doctrine';
-
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
-     * Sets the entity manager
-     *
-     * @param  \Doctrine\ORM\EntityManager $entityManager
-     */
-    public function setEntityManager(EntityManager $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
-    /**
-     * Gets the entity repository
-     *
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    public function getEntityRepository()
-    {
-        if (is_null($this->entityRepository)) {
-            $this->entityRepository = $this->getRepository()->getEntityRepository();
-        }
-
-        return $this->entityRepository;
-    }
 
     /**
      * {@inheritdoc}
@@ -90,8 +61,8 @@ class DoctrineRegistry extends EntityRegistry implements EntityManagerAwareInter
      */
     public function add($key, $data)
     {
-        $this->entityManager->persist($data);
-        $this->entityManager->getUnitOfWork()->commit($data);
+        $this->getEntityManager()->persist($data);
+        $this->getEntityManager()->getUnitOfWork()->commit($data);
     }
 
     /**
@@ -101,9 +72,8 @@ class DoctrineRegistry extends EntityRegistry implements EntityManagerAwareInter
     {
         $entity = $this->findByKey($key);
 
-        $this->entityManager->remove($entity);
-        $this->entityManager->getUnitOfWork()->commit($entity);
-        $this->entityManager->commit();
+        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->getUnitOfWork()->commit($entity);
     }
 
     /**
@@ -112,6 +82,5 @@ class DoctrineRegistry extends EntityRegistry implements EntityManagerAwareInter
     public function update($key, $data)
     {
         $this->add($key, $data);
-        $this->entityManager->getUnitOfWork()->commit($data);
     }
 }
