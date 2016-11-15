@@ -25,9 +25,15 @@
 
 namespace Thuata\FrameworkBundle\Repository\Registry;
 
+use Doctrine\ORM\EntityManager;
+use MongoDB\Client;
+use MongoDB\Database;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Thuata\ComponentBundle\Bridge\Doctrine\ShortcutNotationParser;
+use Thuata\ComponentBundle\Registry\ClassAwareInterface;
 use Thuata\ComponentBundle\Registry\RegistryInterface;
+use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
 use Thuata\FrameworkBundle\Exception\InvalidRegistryName;
 
 /**
@@ -56,8 +62,8 @@ class RegistryFactory implements ContainerAwareInterface
      */
     public static function registerRegistry(string $name, string $className, bool $replace = false)
     {
-        if (!array_key_exists($name, $className) or $replace) {
-            self::$registries[ $name ] = $className;
+        if (!array_key_exists($name, self::$registries) or $replace) {
+            self::$registries[$name] = $className;
         }
     }
 
@@ -65,11 +71,48 @@ class RegistryFactory implements ContainerAwareInterface
      * Inject dependencies using implemented interfaces to registry
      *
      * @param \Thuata\ComponentBundle\Registry\RegistryInterface $registry
+     * @param string|null                                        $entityName
+     *
+     * @throws \Exception
      */
-    private function injectDependencies(RegistryInterface $registry)
+    private function injectDependencies(RegistryInterface $registry, $entityName = null)
     {
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->container->get('doctrine.orm.entity_manager');
         if ($registry instanceof EntityManagerAwareInterface) {
-            $registry->setEntityManager($this->container->get('doctrine.orm.entity_manager'));
+            $registry->setEntityRepository($entityManager);
+        }
+
+        if ($registry instanceof EntityRegistry) {
+            if ($entityName === null) {
+                throw new \Exception('Can\'t load an entity registry without entity name');
+            }
+            $registry->setEntityRepository($entityManager->getRepository($entityName));
+            $registry->setEntityManager($entityManager);
+        }
+
+        if ($registry instanceof MongoDBAwareInterface) {
+            if ($entityName === null) {
+                throw new \Exception('Can\'t load a mongodb registry without entity name');
+            }
+
+            $client = new Client(sprintf('mongodb://%s:%d', $this->container->getParameter('mongo_host'), $this->container->getParameter('mongo_port')));
+            $collection = $client->selectDatabase($this->container->getParameter('mongo_database'))->selectCollection($entityName);
+            $registry->setMongoDBCollection($collection);
+        }
+
+        if ($registry instanceof ClassAwareInterface) {
+
+            $shortcutParser = new ShortcutNotationParser($entityName);
+            $bundle = $this->container->get('kernel')->getBundle($shortcutParser->getBundleName());
+
+            $stackConfiguration = new EntityStackConfiguration($bundle, $shortcutParser->getEntityName());
+
+            if ($registry instanceof MongoDBAwareInterface) {
+                $registry->setEntityClass($stackConfiguration->getDocumentClass());
+            } else {
+                $registry->setEntityClass($stackConfiguration->getEntityClass());
+            }
         }
     }
 
@@ -77,21 +120,22 @@ class RegistryFactory implements ContainerAwareInterface
      * Gets a registry from its name
      *
      * @param string $registryName
+     * @param string $entityClass
      *
      * @return RegistryInterface
      */
-    public function getRegistry(string $registryName)
+    public function getRegistry(string $registryName, $entityClass = null)
     {
-        if (!array_key_exists(self::$registries, $registryName)) {
+        if (!array_key_exists($registryName, self::$registries)) {
             throw new InvalidRegistryName($registryName);
         }
 
-        $reflectionClass = new \ReflectionClass(self::$registries[ $registryName ]);
+        $reflectionClass = new \ReflectionClass(self::$registries[$registryName]);
 
         /** @var RegistryInterface $instance */
         $instance = $reflectionClass->newInstance();
 
-        $this->injectDependencies($instance);
+        $this->injectDependencies($instance, $entityClass);
 
         return $instance;
     }

@@ -37,6 +37,8 @@ use Thuata\ComponentBundle\Registry\RegistryInterface;
  */
 class ArrayRegistry implements RegistryInterface
 {
+    const NAME = 'array';
+
     /**
      * @var array
      */

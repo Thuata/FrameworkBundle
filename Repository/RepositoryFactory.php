@@ -26,11 +26,13 @@
 
 namespace Thuata\FrameworkBundle\Repository;
 
+use MongoDB\Client;
 use Thuata\ComponentBundle\Bridge\Doctrine\ShortcutNotationParser;
 use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
 use Thuata\FrameworkBundle\Factory\AbstractFactory;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\ComponentBundle\Registry\RegistryableTrait;
+use Thuata\FrameworkBundle\Repository\Registry\MongoDBAwareInterface;
 
 /**
  * <b>RepositoryFactory</b><br>
@@ -56,6 +58,12 @@ class RepositoryFactory extends AbstractFactory
         /** @var \Thuata\FrameworkBundle\Repository\AbstractRepository $factorable */
         $factorable->setRegistryFactory($this->getContainer()->get('thuata_framework.registryfactory'));
         $factorable->setEntityManager($this->getContainer()->get('doctrine.orm.entity_manager'));
+
+        if ($factorable instanceof MongoDBAwareInterface) {
+            $client = new Client(sprintf('mongodb://%s:%d', $this->getContainer()->getParameter('mongo_host'), $this->getContainer()->getParameter('mongo_port')));
+            $collection = $client->selectDatabase($this->getContainer()->getParameter('mongo_database'))->selectCollection($factorable->getEntityName());
+            $factorable->setMongoDBCollection($collection);
+        }
     }
 
     /**
@@ -65,7 +73,9 @@ class RepositoryFactory extends AbstractFactory
      */
     protected function onFactorableLoaded(FactorableInterface $factorable)
     {
+        /** @var AbstractRepository $factorable */
         $this->addToRegistry($factorable);
+        $factorable->loadRegistries();
     }
 
     /**
@@ -80,14 +90,11 @@ class RepositoryFactory extends AbstractFactory
     protected function instanciateFactorable(string $factorableClassName)
     {
         $shortcutParser = new ShortcutNotationParser($factorableClassName);
-
         $bundle = $this->getContainer()->get('kernel')->getBundle($shortcutParser->getBundleName());
 
         $stackConfiguration = new EntityStackConfiguration($bundle, $shortcutParser->getEntityName());
 
-        $repositoryClass = sprintf('%s\\%s', $stackConfiguration->getRepositoryNamespace(), $stackConfiguration->getRepositoryName());
-
-        $reflectionClass = new \ReflectionClass($repositoryClass);
+        $reflectionClass = new \ReflectionClass($stackConfiguration->getRepositoryClass());
 
         /** @var \Thuata\FrameworkBundle\Repository\AbstractRepository $repository */
         $repository = $reflectionClass->newInstance();

@@ -29,6 +29,8 @@ namespace Thuata\FrameworkBundle\Factory;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Thuata\FrameworkBundle\Factory\Interfaces\DependenciesAwareInterface;
+use Thuata\FrameworkBundle\Repository\AbstractRepository;
 
 /**
  * <b>AbstractFactory</b><br>
@@ -110,6 +112,7 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
         $factorable->setFactory($this);
 
         $this->injectDependancies($factorable);
+        $this->injectServices($factorable);
 
         $this->onFactorableLoaded($factorable);
 
@@ -124,6 +127,22 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
     abstract protected function injectDependancies(Factorable\FactorableInterface $factorable);
 
     /**
+     * Inject services in factorable if it requires any
+     *
+     * @param FactorableInterface $factorable
+     */
+    protected function injectServices(FactorableInterface $factorable)
+    {
+        if ($factorable instanceof DependenciesAwareInterface) {
+            foreach ($factorable->getDependencies() as $prop => $value) {
+                $reflectionProperty = new \ReflectionProperty(get_class($factorable), $prop);
+                $reflectionProperty->setAccessible(true);
+                $reflectionProperty->setValue($factorable, $this->container->get($value));
+            }
+        }
+    }
+
+    /**
      * Instanciate a factorable from a class name and inject its dependancies.
      *
      * @param string $factorableClassName
@@ -134,6 +153,8 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
      */
     public function getFactorableInstance(string $factorableClassName)
     {
-        return $this->loadFactorableInstance($factorableClassName);
+        $factorable = $this->loadFactorableInstance($factorableClassName);
+
+        return $factorable;
     }
 }

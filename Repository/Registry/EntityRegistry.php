@@ -23,8 +23,10 @@
  * THE SOFTWARE.
  */
 
-namespace thuata\frameworkbundle\Repository\Registry;
+namespace Thuata\FrameworkBundle\Repository\Registry;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Thuata\ComponentBundle\Registry\RegistryInterface;
 use Thuata\FrameworkBundle\Repository\AbstractRepository;
 
@@ -39,27 +41,56 @@ use Thuata\FrameworkBundle\Repository\AbstractRepository;
 abstract class EntityRegistry implements RegistryInterface
 {
     /**
-     * @var AbstractRepository
+     * @var EntityRepository
      */
-    private $repository;
+    private $entityRepository;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
 
     /**
      * Sets the repository
      *
-     * @param \Thuata\FrameworkBundle\Repository\AbstractRepository $repository
+     * @param EntityRepository $repository
      */
-    public function setRepository(AbstractRepository $repository)
+    public function setEntityRepository(EntityRepository $repository)
     {
-        $this->repository = $repository;
+        $this->entityRepository = $repository;
     }
 
     /**
-     * Gets the repository
+     * Gets the entity repository
      *
-     * @return \Thuata\FrameworkBundle\Repository\AbstractRepository
+     * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getRepository()
+    public function getEntityRepository()
     {
-        return $this->repository;
+        return $this->entityRepository;
+    }
+
+    /**
+     * Gets entityManager
+     *
+     * @return EntityManager
+     */
+    public function getEntityManager(): EntityManager
+    {
+        return $this->entityManager;
+    }
+
+    /**
+     * Sets entityManager
+     *
+     * @param EntityManager $entityManager
+     *
+     * @return EntityRegistry
+     */
+    public function setEntityManager(EntityManager $entityManager): EntityRegistry
+    {
+        $this->entityManager = $entityManager;
+
+        return $this;
     }
 }

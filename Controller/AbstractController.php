@@ -38,28 +38,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *
  * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-class AbstractController extends Controller
+class AbstractController extends Controller implements ThuataControllerInterface
 {
-    const SERVICE_FACTORY_ID = 'thuata_framework.servicefactory';
-    const MANAGER_FACTORY_ID = 'thuata_framework.managerfactory';
-
-    /**
-     * Gets the service factory
-     *
-     * @return \Thuata\FrameworkBundle\Service\ServiceFactory
-     */
-    protected function getServiceFactory()
-    {
-        return $this->container->get(static::SERVICE_FACTORY_ID);
-    }
-
-    /**
-     * Gets the manager factory
-     *
-     * @return \Thuata\FrameworkBundle\Manager\ManagerFactory
-     */
-    protected function getManagerFactory()
-    {
-        return $this->container->get(static::MANAGER_FACTORY_ID);
-    }
+    use ThuataControllerTrait;
 }
