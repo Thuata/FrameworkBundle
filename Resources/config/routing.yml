@@ -1,0 +1,3 @@
+thuata_framework_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ThuataFrameworkBundle:Default:index }
