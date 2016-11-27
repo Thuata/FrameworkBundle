@@ -17,8 +17,8 @@ corresponding to a query and use the registries to load entities from those ids.
 
 When the manager calls the repository to get entities, it runs a query to load ids matching
 the request from the manager. From thoses ids it then calls the ```ArrayRegistry``` to fetch
-the entities. If not all entities are found the missing one will be fetched from the
- ```DoctrineRegistry```.
+the entities. If not all entities are found the missing one will be fetched from
+the ```DoctrineRegistry```.
  
 It is possible to modify the default behaviour the add, remove or replace registries.
 
