@@ -26,9 +26,6 @@
 
 namespace Thuata\FrameworkBundle\Manager;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bundle\DebugBundle\DependencyInjection\Compiler\DumpDataCollectorPass;
-use Symfony\Component\VarDumper\VarDumper;
 use Thuata\ComponentBundle\SoftDelete\SoftDeleteInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
@@ -39,7 +36,6 @@ use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInte
 use Thuata\FrameworkBundle\Entity\Interfaces\TimestampableInterface;
 use Thuata\FrameworkBundle\Entity\AbstractEntity;
 use Doctrine\Common\Collections\Collection;
-use \Doctrine\Common\Collections\Criteria;
 use DateTime;
 use Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
 

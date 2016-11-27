@@ -65,6 +65,8 @@ class DoctrineRegistry extends EntityRegistry
 
         VarDumper::dump($result);
         die();
+
+        return $this->getEntityRepository()->findBy(['id' => $keys]);
     }
 
     /**

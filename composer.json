@@ -2,7 +2,7 @@
     "name": "thuata/frameworkbundle",
     "license": "MIT",
     "type": "symfony-bundle",
-    "description": "Model Framwork bundle for symfony",
+    "description": "Model Framework bundle for Symfony",
     "authors": [
         {
             "name": "Anthony Maudry",
