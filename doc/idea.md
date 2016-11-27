@@ -24,6 +24,16 @@ layers
  - The User layer *can* use the Technical layer __if and only if__
 it is to fetch a single entity by a unique identifier
 
+## Should I use _Thuata Framework Bundle_ ?
+
+This idea of layers is the fundamentals behind _Thuata Framework Bundle_,
+if that concept does not fit the way you develop, _Thuata Framework
+Bundle_ won't fit you. It's sad but there are many design patterns for
+applications and lots of them are good.
+
+If you have not yet decided how you will design your model or if that
+design is OK for you, then you're welcome to continue. 
+
 ## Exemple : TODO list application
 
 Ok its not an original one, but its a smart one ;).
@@ -41,21 +51,9 @@ Here are the needs :
 - As a user I can remove a todo
 - As an admin I can see a chart with the number of todos created by day
 on a sliding month
-We need to create an application that will manage todo lists.
 
-Here are the needs :
-
-- As a user I can create a list with a name
-- As a user I can create a todo in a list with a content
-- As a user I can order my todos
-- As a user I can see a list of lists
-- As a user I can see a list of todos
-- As a user I can mark a todo as DONE
-- As a user I can remove a todo
-- As an admin I can see a chart with the number of todos created by day
-on a sliding month
-
-We could have written lots more and lots of things more complicated.
+We could have written lots more and lots of things more complicated. But that's enough
+fir the example.
 
 Lets study what goes in what layer :
 

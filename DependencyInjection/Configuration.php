@@ -15,13 +15,32 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+    const ROOT_NODE = 'thuata_framework';
+
     /**
      * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        /* $rootNode = */$treeBuilder->root('thuata_framework');
+        $rootNode = $treeBuilder->root(self::ROOT_NODE);
+
+        $rootNode
+            ->children()
+                ->arrayNode('default_registries')
+                    ->beforeNormalization()
+                        ->ifString()
+                            ->then(function ($value) {
+                                return array($value);
+                            })
+                    ->end()
+                    ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode('registries')
+                    ->useAttributeAsKey('name')
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

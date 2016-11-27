@@ -507,4 +507,9 @@ class TodoController extends Controller
 }
 ```
 
-Ok we are almost done. 
+Ok we are almost done. In the manager we used the method ```getOneEntityBy(array $criteria, ...)```.
+
+That method is a built-in one from the AbstractManager that will interrogate the data layer to fetch
+entities.
+
+So move on to the [Data Layer](data-layer.md)
