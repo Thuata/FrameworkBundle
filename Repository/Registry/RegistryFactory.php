@@ -54,6 +54,11 @@ class RegistryFactory implements ContainerAwareInterface
     private static $registries = [];
 
     /**
+     * @var array
+     */
+    private static $defaultRegistries = [];
+
+    /**
      * Registers a registry
      *
      * @param string  $name
@@ -64,6 +69,20 @@ class RegistryFactory implements ContainerAwareInterface
     {
         if (!array_key_exists($name, self::$registries) or $replace) {
             self::$registries[$name] = $className;
+        }
+    }
+
+    /**
+     * Registers a registry
+     */
+    public static function setDefaultRegistries(array $registries)
+    {
+        foreach ($registries as $registry) {
+            if (array_key_exists($registry, self::$registries)) {
+                self::$defaultRegistries[] = $registry;
+            } else {
+                throw new InvalidRegistryName($registry);
+            }
         }
     }
 
@@ -138,5 +157,13 @@ class RegistryFactory implements ContainerAwareInterface
         $this->injectDependencies($instance, $entityClass);
 
         return $instance;
+    }
+
+    /**
+     * Gets the default registries
+     */
+    public function getDefaultRegistries(): array
+    {
+        return self::$defaultRegistries;
     }
 }

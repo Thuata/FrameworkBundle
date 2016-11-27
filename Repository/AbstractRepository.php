@@ -48,11 +48,12 @@ use Thuata\FrameworkBundle\Repository\Registry\RegistryFactory;
  * The repository are provided by the RepositoryFactory witch is available only from Manager.
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
+ *
+ * @property RepositoryFactory $factory
  */
 abstract class AbstractRepository implements FactorableInterface
 {
     use FactorableTrait;
-
     const ENTITY_NAME_CONST_FORMAT = '%s::ENTITY_NAME';
 
     /**
@@ -120,8 +121,11 @@ abstract class AbstractRepository implements FactorableInterface
      */
     public function loadRegistries()
     {
-        $this->addRegistry(ArrayRegistry::NAME)
-            ->addRegistry(DoctrineRegistry::NAME);
+        $registries = $this->registryFactory->getDefaultRegistries();
+
+        foreach ($registries as $registry) {
+            $this->addRegistry($registry);
+        }
     }
 
     /**
@@ -178,7 +182,7 @@ abstract class AbstractRepository implements FactorableInterface
 
         for ($i = count($this->registries) - 1; $i >= 0; $i--) {
             /** @var RegistryInterface $registry */
-            $registry = $this->registries[$i];
+            $registry = $this->registries[ $i ];
             if ($update) {
                 $registry->update($entity->getId(), $entity);
             } else {
@@ -196,7 +200,7 @@ abstract class AbstractRepository implements FactorableInterface
     {
         for ($i = count($this->registries) - 1; $i >= 0; $i--) {
             /** @var RegistryInterface $registry */
-            $registry = $this->registries[$i];
+            $registry = $this->registries[ $i ];
             $registry->remove($entity->getId());
         }
     }
@@ -214,7 +218,7 @@ abstract class AbstractRepository implements FactorableInterface
 
         for ($i = 0; $i < count($this->registries); $i++) {
             /** @var RegistryInterface $registry */
-            $registry = $this->registries[$i];
+            $registry = $this->registries[ $i ];
             $entity = $registry->findByKey($id);
 
             if ($entity instanceof AbstractEntity) {
@@ -239,7 +243,7 @@ abstract class AbstractRepository implements FactorableInterface
 
         for ($i = 0; $i < count($this->registries); $i++) {
             /** @var RegistryInterface $registry */
-            $registry = $this->registries[$i];
+            $registry = $this->registries[ $i ];
             $found = $registry->findByKeys($ids);
             $entities = array_merge($entities, $found);
 
@@ -318,7 +322,7 @@ abstract class AbstractRepository implements FactorableInterface
 
         $ids = $queryBuilder->getQuery()->getResult(ColumnHydrator::HYDRATOR_MODE);
 
-        if(count($ids) === 0) {
+        if (count($ids) === 0) {
             return [];
         }
 
@@ -352,7 +356,7 @@ abstract class AbstractRepository implements FactorableInterface
         if (count($entities) >= 0) {
             for ($j = $from; $j >= 0; $j--) {
                 /** @var RegistryInterface $registry */
-                $registry = $this->registries[$j];
+                $registry = $this->registries[ $j ];
                 /** @var AbstractEntity $entity */
                 foreach ($entities as $entity) {
                     $registry->add($entity->getId(), $entity);
