@@ -27,6 +27,7 @@ namespace Thuata\FrameworkBundle\Repository\Registry;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Internal\Hydration\ArrayHydrator;
 use Symfony\Component\VarDumper\VarDumper;
 use Thuata\FrameworkBundle\Bridge\Doctrine\EntityHydrator;
 
@@ -63,8 +64,7 @@ class DoctrineRegistry extends EntityRegistry
             ->setParameter('keys', $keys)
             ->getQuery()->getResult();
 
-        VarDumper::dump($result);
-        die();
+        return $result;
     }
 
     /**

@@ -110,9 +110,24 @@ abstract class AbstractRepository implements FactorableInterface
         $this->entityManager = $em;
     }
 
+    /**
+     * Sets the registry factory
+     *
+     * @param RegistryFactory $factory
+     */
     public function setRegistryFactory(RegistryFactory $factory)
     {
         $this->registryFactory = $factory;
+    }
+
+    /**
+     * Gets the EntityManager from doctrine
+     *
+     * @return EntityManager
+     */
+    protected function getEntityManager()
+    {
+        return $this->entityManager;
     }
 
     /**

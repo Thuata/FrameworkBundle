@@ -208,7 +208,6 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     public function getEntitiesBy(array $criteria = [], array $orders = [], $limit = null, $offset = null): array
     {
         $entities = $this->getRepository()->findBy($criteria, $orders, $limit, $offset);
-
         $this->prepareEntitesForGet($entities);
 
         return $entities;
