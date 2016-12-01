@@ -1,0 +1,28 @@
+parameters:
+    thuata_framework.stackgeneratorservice.class: Thuata\FrameworkBundle\Service\EntityStackGeneratorService
+    thuata_framework.servicefactory.class: Thuata\FrameworkBundle\Service\ServiceFactory
+    thuata_framework.managerfactory.class: Thuata\FrameworkBundle\Manager\ManagerFactory
+    thuata_framework.repositoryfactory.class: Thuata\FrameworkBundle\Repository\RepositoryFactory
+    thuata_framework.registryfactory.class: Thuata\FrameworkBundle\Repository\Registry\RegistryFactory
+
+services:
+    thuata_framework.stackgeneratorservice:
+        class: '%thuata_framework.stackgeneratorservice.class%'
+        calls:
+            - ['setGenerator', [ "@thuata_intercession.generator" ]]
+    thuata_framework.servicefactory:
+        class: '%thuata_framework.servicefactory.class%'
+        calls:
+            - ['setContainer', [ "@service_container" ]]
+    thuata_framework.managerfactory:
+        class: '%thuata_framework.managerfactory.class%'
+        calls:
+            - ['setContainer', [ "@service_container" ]]
+    thuata_framework.repositoryfactory:
+        class: '%thuata_framework.repositoryfactory.class%'
+        calls:
+            - ['setContainer', [ "@service_container" ]]
+    thuata_framework.registryfactory:
+        class: '%thuata_framework.registryfactory.class%'
+        calls:
+            - ['setContainer', [ "@service_container" ]]
