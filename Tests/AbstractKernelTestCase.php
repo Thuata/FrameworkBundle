@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
@@ -23,47 +23,38 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Repository\Traits;
+namespace Thuata\FrameworkBundle\Tests;
 
-use Thuata\FrameworkBundle\Repository\AbstractRepository;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Thuata\FrameworkBundle\Tests\Interfaces\ReflectionTestInterface;
+use Thuata\FrameworkBundle\Tests\Traits\ReflectionTestTrait;
 
 /**
- * <b>RepositoryAccessableTrait</b><br>
- * Provides method definitions for RepositoryAccessableInterface
+ * <b>AbstractKernelTest</b><br>
  *
- * @package Thuata\FrameworkBundle\Repository\Traits
+ *
+ * @package thuata\frameworkbundle\Tests
  *
  * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ *
+ * @method void assertTrue(bool $assertion)
+ * @method void assertInstanceOf(string $expected, mixed $assertion)
+ * @method void assertEquals(mixed $expected, mixed $assertion)
  */
-trait RepositoryAccessableTrait
+class AbstractKernelTestCase extends KernelTestCase implements ReflectionTestInterface
 {
-    /**
-     *
-     * @var AbstractRepository
-     */
-    private $repository;
-   
-    /**
-     * Sets the Repository
-     * 
-     * @param AbstractRepository $repository
-     *
-     * @return \Thuata\FrameworkBundle\Repository\Interfaces\RepositoryAccessableInterface
-     */
-    public function setRepository(AbstractRepository $repository)
-    {
-        $this->repository = $repository;
-        
-        return $this;
-    }
+    use ReflectionTestTrait;
 
     /**
-     * Gets the repository
-     * 
-     * @return AbstractRepository
+     * @var ContainerInterface
      */
-    protected function getRepository()
+    protected $container;
+
+    public function setUp()
     {
-        return $this->repository;
+        self::bootKernel();
+
+        $this->container = self::$kernel->getContainer();
     }
 }

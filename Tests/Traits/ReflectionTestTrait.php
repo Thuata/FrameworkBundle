@@ -30,11 +30,10 @@ namespace Thuata\FrameworkBundle\Tests\Traits;
  *
  * @package Thuata\FrameworkBundle\Tests\Traits
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
 trait ReflectionTestTrait
 {
-
     /**
      * Invokes a non-accessible method and returns the result
      *
@@ -62,9 +61,13 @@ trait ReflectionTestTrait
      *
      * @return mixed
      */
-    public function getParameter($object, $paramName)
+    public function getParameter($object, $paramName, $class = null)
     {
-        $reflectionClass = new \ReflectionClass($object);
+        if (!is_string($class)) {
+            $reflectionClass = new \ReflectionClass($object);
+        } else {
+            $reflectionClass = new \ReflectionClass($class);
+        }
 
         $param = $reflectionClass->getProperty($paramName);
         $param->setAccessible(true);

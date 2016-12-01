@@ -1,3 +1,8 @@
+FrameworkBundle
+===============
+
+Model framework for symfony
+=======
 # Thuata FramewrokBundle
 
 This Bundle provides a model framework acting between controllers and

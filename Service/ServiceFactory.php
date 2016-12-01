@@ -44,8 +44,6 @@ class ServiceFactory extends AbstractFactory
 {
     use RegistryableTrait;
 
-    private $serviceIdMap = [];
-
     /**
      * {@inheritdoc}
      */

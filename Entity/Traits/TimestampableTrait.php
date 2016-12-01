@@ -9,6 +9,7 @@
 namespace Thuata\FrameworkBundle\Entity\Traits;
 
 use DateTime;
+use Thuata\FrameworkBundle\Entity\Interfaces\TimestampableInterface;
 
 /**
  * <b>TimestampableTrait</b><br>
@@ -33,9 +34,9 @@ trait TimestampableTrait
      *
      * @param DateTime $creationDate
      *
-     * @return TimestampableTrait
+     * @return TimestampableInterface
      */
-    public function setCreationDate(DateTime $creationDate)
+    public function setCreationDate(DateTime $creationDate): TimestampableInterface
     {
         $this->creationDate = $creationDate;
 
@@ -47,7 +48,7 @@ trait TimestampableTrait
      *
      * @return DateTime
      */
-    public function getCreationDate()
+    public function getCreationDate(): DateTime
     {
         return $this->creationDate;
     }
@@ -59,7 +60,7 @@ trait TimestampableTrait
      *
      * @return TimestampableInterface
      */
-    public function setEditionDate(DateTime $editionDate)
+    public function setEditionDate(DateTime $editionDate): TimestampableInterface
     {
         $this->editionDate = $editionDate;
 
@@ -71,7 +72,7 @@ trait TimestampableTrait
      *
      * @return DateTime
      */
-    public function getEditionDate()
+    public function getEditionDate(): DateTime
     {
         return $this->editionDate;
     }

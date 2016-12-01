@@ -26,8 +26,6 @@
 
 namespace Thuata\FrameworkBundle\Manager;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bundle\DebugBundle\DependencyInjection\Compiler\DumpDataCollectorPass;
 use Thuata\ComponentBundle\SoftDelete\SoftDeleteInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
@@ -38,7 +36,6 @@ use Thuata\FrameworkBundle\Repository\Interfaces\RepositoryFactoryAccessableInte
 use Thuata\FrameworkBundle\Entity\Interfaces\TimestampableInterface;
 use Thuata\FrameworkBundle\Entity\AbstractEntity;
 use Doctrine\Common\Collections\Collection;
-use \Doctrine\Common\Collections\Criteria;
 use DateTime;
 use Thuata\FrameworkBundle\Repository\Traits\RepositoryFactoryAccessableTrait;
 
@@ -161,11 +158,11 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     /**
      * Prepares multiple entities for get
      *
-     * @param Collection $entities
+     * @param Collection|array $entities
      *
      * @return boolean
      */
-    protected function prepareEntitesForGet(Collection $entities): bool
+    protected function prepareEntitesForGet($entities): bool
     {
         foreach ($entities as $entity) {
             if ($this->prepareEntityForGet($entity) === false) {
@@ -207,7 +204,6 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     public function getEntitiesBy(array $criteria = [], array $orders = [], $limit = null, $offset = null): array
     {
         $entities = $this->getRepository()->findBy($criteria, $orders, $limit, $offset);
-
         $this->prepareEntitesForGet($entities);
 
         return $entities;

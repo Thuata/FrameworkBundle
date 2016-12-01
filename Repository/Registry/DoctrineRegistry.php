@@ -27,6 +27,9 @@ namespace Thuata\FrameworkBundle\Repository\Registry;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Internal\Hydration\ArrayHydrator;
+use Symfony\Component\VarDumper\VarDumper;
+use Thuata\FrameworkBundle\Bridge\Doctrine\EntityHydrator;
 
 /**
  * <b>DoctrineRegistry</b><br>
@@ -45,7 +48,9 @@ class DoctrineRegistry extends EntityRegistry
      */
     public function findByKey($key)
     {
-        return $this->getEntityRepository()->find($key);
+        $results = $this->findByKeys([$key]);
+
+        return array_shift($results);
     }
 
     /**
@@ -53,7 +58,13 @@ class DoctrineRegistry extends EntityRegistry
      */
     public function findByKeys(array $keys)
     {
-        return $this->getEntityRepository()->findBy(['id' => $keys]);
+        $qb = $this->getEntityRepository()->createQueryBuilder('e');
+        $result = $qb->select('e')
+            ->where('e.id in (:keys)')
+            ->setParameter('keys', $keys)
+            ->getQuery()->getResult();
+
+        return $result;
     }
 
     /**

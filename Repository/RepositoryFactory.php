@@ -51,13 +51,19 @@ class RepositoryFactory extends AbstractFactory
     use RegistryableTrait;
 
     /**
+     * @var string
+     */
+    protected $defaultConnection;
+
+    /**
      * {@inheritdoc}
      */
     protected function injectDependancies(FactorableInterface $factorable)
     {
         /** @var \Thuata\FrameworkBundle\Repository\AbstractRepository $factorable */
         $factorable->setRegistryFactory($this->getContainer()->get('thuata_framework.registryfactory'));
-        $factorable->setEntityManager($this->getContainer()->get('doctrine.orm.entity_manager'));
+        $connectionName = $factorable->getConnectionName() ?: $this->defaultConnection;
+        $factorable->setEntityManager($this->getContainer()->get('doctrine')->getManager($connectionName));
 
         if ($factorable instanceof MongoDBAwareInterface) {
             $client = new Client(sprintf('mongodb://%s:%d', $this->getContainer()->getParameter('mongo_host'), $this->getContainer()->getParameter('mongo_port')));
@@ -133,5 +139,17 @@ class RepositoryFactory extends AbstractFactory
         $repository = $this->getFactorableInstance($entityName);
 
         return $repository;
+    }
+
+    /**
+     * Sets the default connection name if not provided by the repository
+     *
+     * @param string $name
+     *
+     * @return null|string
+     */
+    public function setDefaultConnection(string $name)
+    {
+        $this->defaultConnection = $name;
     }
 }

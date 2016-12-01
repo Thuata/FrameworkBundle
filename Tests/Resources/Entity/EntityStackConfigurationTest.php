@@ -56,7 +56,7 @@ class EntityStackConfigurationTest extends KernelTestCase implements ReflectionT
 
         $this->container = self::$kernel->getContainer();
 
-        $this->generatorService = $this->container->get('enjoy_framework.stackgeneratorservice');
+        $this->generatorService = $this->container->get('thuata_framework.stackgeneratorservice');
     }
 
     /**
@@ -119,7 +119,7 @@ class EntityStackConfigurationTest extends KernelTestCase implements ReflectionT
         $bundle = $this->container->get('kernel')->getBundle('ThuataFrameworkBundle');
         $configuration = new EntityStackConfiguration($bundle, 'Entity');
 
-        $expected = $bundle->getPath() . '/Entity/EntityManager.php';
+        $expected = $bundle->getPath() . '/Manager/EntityManager.php';
 
         $this->assertEquals($expected, $configuration->getManagerPath());
     }
@@ -132,7 +132,7 @@ class EntityStackConfigurationTest extends KernelTestCase implements ReflectionT
         $bundle = $this->container->get('kernel')->getBundle('ThuataFrameworkBundle');
         $configuration = new EntityStackConfiguration($bundle, 'Entity');
 
-        $expected = $bundle->getPath() . '/Entity/EntityRepository.php';
+        $expected = $bundle->getPath() . '/Repository/EntityRepository.php';
 
         $this->assertEquals($expected, $configuration->getRepositoryPath());
     }

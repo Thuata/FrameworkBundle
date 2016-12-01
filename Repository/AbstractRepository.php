@@ -29,7 +29,6 @@ namespace Thuata\FrameworkBundle\Repository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Persisters\Entity\BasicEntityPersister;
 use Thuata\ComponentBundle\Hydrator\ColumnHydrator;
 use Thuata\ComponentBundle\Registry\RegistryInterface;
 use Thuata\FrameworkBundle\Entity\AbstractEntity;
@@ -37,8 +36,6 @@ use Thuata\FrameworkBundle\Exception\InvalidEntityNameException;
 use Thuata\FrameworkBundle\Exception\NoEntityNameException;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
-use Thuata\FrameworkBundle\Repository\Registry\ArrayRegistry;
-use Thuata\FrameworkBundle\Repository\Registry\DoctrineRegistry;
 use Thuata\FrameworkBundle\Repository\Registry\RegistryFactory;
 
 /**
@@ -64,7 +61,7 @@ abstract class AbstractRepository implements FactorableInterface
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    protected $entityManager;
 
     /**
      * @var string
@@ -111,9 +108,34 @@ abstract class AbstractRepository implements FactorableInterface
         $this->entityManager = $em;
     }
 
+    /**
+     * Sets the registry factory
+     *
+     * @param RegistryFactory $factory
+     */
     public function setRegistryFactory(RegistryFactory $factory)
     {
         $this->registryFactory = $factory;
+    }
+
+    /**
+     * Gets the doctrine connection to use for that entity
+     *
+     * @return null|string
+     */
+    public function getConnectionName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Gets the EntityManager from doctrine
+     *
+     * @return EntityManager
+     */
+    protected function getEntityManager()
+    {
+        return $this->entityManager;
     }
 
     /**
