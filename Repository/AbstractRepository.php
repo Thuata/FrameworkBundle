@@ -64,7 +64,7 @@ abstract class AbstractRepository implements FactorableInterface
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    protected $entityManager;
 
     /**
      * @var string
@@ -114,6 +114,16 @@ abstract class AbstractRepository implements FactorableInterface
     public function setRegistryFactory(RegistryFactory $factory)
     {
         $this->registryFactory = $factory;
+    }
+
+    /**
+     * Gets the doctrine connection to use for that entity
+     *
+     * @return null|string
+     */
+    public function getConnectionName(): ?string
+    {
+        return null;
     }
 
     /**

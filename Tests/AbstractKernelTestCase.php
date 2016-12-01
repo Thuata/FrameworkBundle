@@ -23,55 +23,38 @@
  * THE SOFTWARE.
  */
 
-namespace Thuata\FrameworkBundle\Tests\Traits;
+namespace Thuata\FrameworkBundle\Tests;
+
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Thuata\FrameworkBundle\Tests\Interfaces\ReflectionTestInterface;
+use Thuata\FrameworkBundle\Tests\Traits\ReflectionTestTrait;
 
 /**
- * Trait ReflectionTestTrait
+ * <b>AbstractKernelTest</b><br>
  *
- * @package Thuata\FrameworkBundle\Tests\Traits
+ *
+ * @package thuata\frameworkbundle\Tests
  *
  * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ *
+ * @method void assertTrue(bool $assertion)
+ * @method void assertInstanceOf(string $expected, mixed $assertion)
+ * @method void assertEquals(mixed $expected, mixed $assertion)
  */
-trait ReflectionTestTrait
+class AbstractKernelTestCase extends KernelTestCase implements ReflectionTestInterface
 {
-    /**
-     * Invokes a non-accessible method and returns the result
-     *
-     * @param mixed  $object
-     * @param string $methodName
-     * @param array  $params
-     *
-     * @return mixed
-     */
-    public function invokeMethod($object, $methodName, $params = [])
-    {
-        $reflectionClass = new \ReflectionClass($object);
-
-        $method = $reflectionClass->getMethod($methodName);
-        $method->setAccessible(true);
-
-        return $method->invokeArgs($object, $params);
-    }
+    use ReflectionTestTrait;
 
     /**
-     * Returns the value of a non accessible parameter
-     *
-     * @param mixed  $object
-     * @param string $paramName
-     *
-     * @return mixed
+     * @var ContainerInterface
      */
-    public function getParameter($object, $paramName, $class = null)
+    protected $container;
+
+    public function setUp()
     {
-        if (!is_string($class)) {
-            $reflectionClass = new \ReflectionClass($object);
-        } else {
-            $reflectionClass = new \ReflectionClass($class);
-        }
+        self::bootKernel();
 
-        $param = $reflectionClass->getProperty($paramName);
-        $param->setAccessible(true);
-
-        return $param->getValue($object);
+        $this->container = self::$kernel->getContainer();
     }
 }

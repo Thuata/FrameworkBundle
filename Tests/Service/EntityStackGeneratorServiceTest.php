@@ -60,7 +60,7 @@ class EntityStackGeneratorServiceTest extends KernelTestCase implements Reflecti
 
         $this->container = self::$kernel->getContainer();
 
-        $this->generatorService = $this->container->get('enjoy_framework.stackgeneratorservice');
+        $this->generatorService = $this->container->get('thuata_framework.stackgeneratorservice');
     }
 
     public function testGeneratorService()

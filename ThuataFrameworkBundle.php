@@ -6,6 +6,7 @@ use Doctrine\ORM\Configuration;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Thuata\ComponentBundle\Hydrator\ColumnHydrator;
 use Thuata\FrameworkBundle\Bridge\Doctrine\EntityHydrator;
+use Thuata\FrameworkBundle\DependencyInjection\ThuataFrameworkExtension;
 use Thuata\FrameworkBundle\Repository\Registry\ArrayRegistry;
 use Thuata\FrameworkBundle\Repository\Registry\MongoDBRegistry;
 use Thuata\FrameworkBundle\Repository\Registry\RegistryFactory;

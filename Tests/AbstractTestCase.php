@@ -32,6 +32,10 @@ use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
  * Description of AbstractTestCase
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
+ *
+ * @method void assertTrue(bool $assertion)
+ * @method void assertInstanceOf(string $expected, mixed $assertion)
+ * @method void assertEquals(mixed $expected, mixed $assertion)
  */
 class AbstractTestCase extends TestCase
 {
