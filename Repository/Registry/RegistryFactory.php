@@ -91,15 +91,19 @@ class RegistryFactory implements ContainerAwareInterface
      *
      * @param \Thuata\ComponentBundle\Registry\RegistryInterface $registry
      * @param string|null                                        $entityName
+     * @param EntityManager                                      $entityManager
      *
      * @throws \Exception
      */
-    private function injectDependencies(RegistryInterface $registry, $entityName = null)
+    private function injectDependencies(RegistryInterface $registry, $entityName = null, EntityManager $entityManager = null)
     {
-        /** @var EntityManager $entityManager */
-        $entityManager = $this->container->get('doctrine.orm.entity_manager');
+        if (!($entityManager instanceof EntityManager)) {
+            /** @var EntityManager $entityManager */
+            $entityManager = $this->container->get('doctrine.orm.entity_manager');
+        }
+
         if ($registry instanceof EntityManagerAwareInterface) {
-            $registry->setEntityRepository($entityManager);
+            $registry->setEntityManager($entityManager);
         }
 
         if ($registry instanceof EntityRegistry) {
@@ -107,7 +111,6 @@ class RegistryFactory implements ContainerAwareInterface
                 throw new \Exception('Can\'t load an entity registry without entity name');
             }
             $registry->setEntityRepository($entityManager->getRepository($entityName));
-            $registry->setEntityManager($entityManager);
         }
 
         if ($registry instanceof MongoDBAwareInterface) {
@@ -138,12 +141,13 @@ class RegistryFactory implements ContainerAwareInterface
     /**
      * Gets a registry from its name
      *
-     * @param string $registryName
-     * @param string $entityClass
+     * @param string        $registryName
+     * @param string        $entityClass
+     * @param EntityManager $entityManager
      *
      * @return RegistryInterface
      */
-    public function getRegistry(string $registryName, $entityClass = null)
+    public function getRegistry(string $registryName, $entityClass = null, EntityManager $entityManager = null)
     {
         if (!array_key_exists($registryName, self::$registries)) {
             throw new InvalidRegistryName($registryName);
@@ -154,7 +158,7 @@ class RegistryFactory implements ContainerAwareInterface
         /** @var RegistryInterface $instance */
         $instance = $reflectionClass->newInstance();
 
-        $this->injectDependencies($instance, $entityClass);
+        $this->injectDependencies($instance, $entityClass, $entityManager);
 
         return $instance;
     }

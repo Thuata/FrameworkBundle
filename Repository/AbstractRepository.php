@@ -174,7 +174,7 @@ abstract class AbstractRepository implements FactorableInterface
      */
     protected function addRegistry(string $registryName)
     {
-        $this->registries[] = $this->registryFactory->getRegistry($registryName, $this->getEntityName());
+        $this->registries[] = $this->registryFactory->getRegistry($registryName, $this->getEntityName(), $this->entityManager);
 
         return $this;
     }

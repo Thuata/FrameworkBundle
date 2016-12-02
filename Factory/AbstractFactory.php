@@ -105,7 +105,7 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
      *
      * @throws \Exception
      */
-    private function loadFactorableInstance(string $factorableClassName)
+    protected function loadFactorableInstance(string $factorableClassName)
     {
         $factorable = $this->instanciateFactorable($factorableClassName);
 
@@ -113,8 +113,6 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
 
         $this->injectDependancies($factorable);
         $this->injectServices($factorable);
-
-        $this->onFactorableLoaded($factorable);
 
         return $factorable;
     }
@@ -154,6 +152,8 @@ abstract class AbstractFactory implements FactoryInterface, ContainerAwareInterf
     public function getFactorableInstance(string $factorableClassName)
     {
         $factorable = $this->loadFactorableInstance($factorableClassName);
+
+        $this->onFactorableLoaded($factorable);
 
         return $factorable;
     }

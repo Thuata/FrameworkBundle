@@ -38,7 +38,7 @@ use Thuata\FrameworkBundle\Repository\AbstractRepository;
  *
  * @author  Anthony Maudry <anthony.maudry@thuata.com>
  */
-abstract class EntityRegistry implements RegistryInterface
+abstract class EntityRegistry implements RegistryInterface, EntityManagerAwareInterface
 {
     /**
      * @var EntityRepository

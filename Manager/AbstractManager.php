@@ -53,6 +53,8 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
         ManagerFactoryAccessableTrait,
         RepositoryFactoryAccessableTrait;
 
+    private $connectionName;
+
     /**
      * Returns the class name for the entity
      *
@@ -67,7 +69,24 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      */
     protected function getRepository(): AbstractRepository
     {
-        return $this->getRepositoryFactory()->getFactorableInstance(AbstractRepository::getEntityNameFromClassName($this->getEntityClassName()));
+        return $this->getRepositoryFactory()->getRepositoryForEntity(
+            AbstractRepository::getEntityNameFromClassName($this->getEntityClassName()),
+            $this->connectionName
+        );
+    }
+
+    /**
+     * Sets connectionName
+     *
+     * @param mixed $connectionName
+     *
+     * @return AbstractManager
+     */
+    public function setConnectionName($connectionName)
+    {
+        $this->connectionName = $connectionName;
+
+        return $this;
     }
 
     /**
@@ -112,7 +131,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
             $entity->setEditionDate(new DateTime());
         }
 
-        return true;
+        return $this->prepareEntityForGet($entity);
     }
 
     /**

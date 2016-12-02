@@ -80,7 +80,6 @@ class RepositoryFactory extends AbstractFactory
     protected function onFactorableLoaded(FactorableInterface $factorable)
     {
         /** @var AbstractRepository $factorable */
-        $this->addToRegistry($factorable);
         $factorable->loadRegistries();
     }
 
@@ -117,26 +116,28 @@ class RepositoryFactory extends AbstractFactory
      */
     public function getFactorableInstance(string $factorableClassName)
     {
-        $factorable = $this->loadFromRegistry($factorableClassName);
-
-        if (!$factorable instanceof AbstractRepository) {
-            $factorable = parent::getFactorableInstance($factorableClassName);
-        }
-
-        return $factorable;
+        return parent::getFactorableInstance($factorableClassName);
     }
 
     /**
      * Gets a repository for an entity
      *
      * @param string $entityName
+     * @param string $connectionName
      *
      * @return AbstractRepository
      */
-    public function getRepositoryForEntity($entityName)
+    public function getRepositoryForEntity(string $entityName, string $connectionName = null): AbstractRepository
     {
         /** @var AbstractRepository $repository */
-        $repository = $this->getFactorableInstance($entityName);
+        $repository = $this->loadFactorableInstance($entityName);
+
+        if (is_string($connectionName)) {
+            $entityManager = $this->getContainer()->get('doctrine')->getManager($connectionName);
+            $repository->setEntityManager($entityManager);
+        }
+
+        $this->onFactorableLoaded($repository);
 
         return $repository;
     }

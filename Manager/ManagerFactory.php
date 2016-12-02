@@ -55,32 +55,4 @@ class ManagerFactory extends AbstractFactory
         $factorable->setRepositoryFactory($repositoryFactory);
         $factorable->setManagerFactory($this);
     }
-    
-    /**
-     * Called when factorable is loaded
-     * 
-     * @param FactorableInterface $factorable
-     */
-    protected function onFactorableLoaded(FactorableInterface $factorable)
-    {
-        $this->addToRegistry($factorable);
-    }
-    
-    /**
-     * Gets a service
-     * 
-     * @param string $factorableClassName
-     * 
-     * @return AbstractManager
-     */
-    public function getFactorableInstance(string $factorableClassName)
-    {
-        $factorable = $this->loadFromRegistry($factorableClassName);
-        
-        if (!$factorable instanceof AbstractManager) {
-            $factorable = parent::getFactorableInstance($factorableClassName);
-        }
-
-        return $factorable;
-    }
 }

@@ -42,5 +42,5 @@ interface EntityManagerAwareInterface
      *
      * @param \Doctrine\ORM\EntityManager $entityManager
      */
-    public function setEntityRepository(EntityManager $entityManager);
+    public function setEntityManager(EntityManager $entityManager);
 }

@@ -1,0 +1,13 @@
+language: php
+
+php:
+  - '7.1'
+
+before_script:
+  - composer install --dev
+
+script: phpunit --coverage-text
+
+notifications:
+  email:
+    - amaudry@gmail.com
