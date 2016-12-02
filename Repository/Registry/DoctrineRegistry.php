@@ -74,7 +74,6 @@ class DoctrineRegistry extends EntityRegistry
     {
         $this->getEntityManager()->merge($data);
         $this->getEntityManager()->flush();
-//        $this->getEntityManager()->getUnitOfWork()->commit($data);
     }
 
     /**
