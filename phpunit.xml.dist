@@ -2,6 +2,10 @@
 
 <phpunit bootstrap="./Tests/bootstrap.php" colors="true">
     <!-- Les fichiers de tests à lancer -->
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <server name="KERNEL_DIR" value="app/" />
+    </php>
     <testsuites>
         <testsuite name="ThuataFrameworkBundle test suite">
             <directory suffix="Test.php">./Tests</directory>
