@@ -53,7 +53,7 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
         ManagerFactoryAccessableTrait,
         RepositoryFactoryAccessableTrait;
 
-    private $connectionName;
+    protected $connectionName;
 
     /**
      * Returns the class name for the entity
