@@ -25,6 +25,7 @@
 namespace Thuata\FrameworkBundle\Tests\Resources;
 
 use Thuata\FrameworkBundle\Factory\AbstractFactory;
+use Thuata\FrameworkBundle\Factory\Factorable;
 
 /**
  * Description of Factory
@@ -38,6 +39,13 @@ class Factory extends AbstractFactory
      */
     protected function injectDependancies(\Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface $factorable)
     {
+        $factorable->setDateTime(new \DateTime());
+    }
+
+    protected function onFactorableLoaded(Factorable\FactorableInterface $factorable)
+    {
+        parent::onFactorableLoaded($factorable);
+
         $factorable->setDateTime(new \DateTime());
     }
 }

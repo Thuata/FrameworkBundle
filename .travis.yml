@@ -2,14 +2,12 @@ language: php
 
 php:
   - '7.1'
-phpunit:
- - '5.7'
 
 before_script:
   - composer self-update
   - composer update
 
-script: phpunit --coverage-text
+script: vendor/bin/phpunit --coverage-text
 
 notifications:
   email:

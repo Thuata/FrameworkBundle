@@ -24,10 +24,16 @@
  */
 namespace Thuata\FrameworkBundle\Tests;
 
+use Thuata\FrameworkBundle\Factory\AbstractFactory;
+use Thuata\FrameworkBundle\Tests\Resources\Factorable;
+use Thuata\FrameworkBundle\Tests\Resources\Factory;
+
 class FactoryTest extends AbstractTestCase
 {
     /**
      * testGetInstance
+     *
+     * @covers AbstractFactory::getFactorableInstance
      */
     public function testGetInstance()
     {
@@ -35,18 +41,28 @@ class FactoryTest extends AbstractTestCase
 
         $factorable = $factory->getFactorableInstance(Resources\Factorable::class);
         
-        $this->assertTrue($factorable instanceof Resources\Factorable);
+        $this->assertInstanceOf(Factorable::class, $factorable);
+
+        return $factorable;
     }
 
     /**
      * testHasDependancies
+     *
+     * @depends testGetInstance
      */
-    public function testHasDependancies()
+    public function testHasDependancies(Factorable $factorable)
     {
-        $factory = new Resources\Factory();
-
-        $factorable = $factory->getFactorableInstance(Resources\Factorable::class);
-        
         $this->assertInstanceOf(\DateTime::class, $factorable->getDateTime());
+    }
+
+    /**
+     * testHasDependancies
+     *
+     * @depends testGetInstance
+     */
+    public function testHasFactory(Factorable $factorable)
+    {
+        $this->assertInstanceOf(Factory::class, $factorable->getFactory());
     }
 }

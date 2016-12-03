@@ -26,12 +26,15 @@
 
 namespace Thuata\FrameworkBundle\Tests\Resources;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Thuata\FrameworkBundle\Factory\Interfaces\DependenciesAwareInterface;
+
 /**
  * Description of Factorable
  *
  * @author Anthony Maudry <anthony.maudry@thuata.com>
  */
-class Factorable implements \Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface
+class Factorable implements \Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface, DependenciesAwareInterface
 {
 
     /**
@@ -43,6 +46,11 @@ class Factorable implements \Thuata\FrameworkBundle\Factory\Factorable\Factorabl
      * @var \DateTime
      */
     private $dateTime;
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
     
     /**
      * Sets the datetime
@@ -80,5 +88,16 @@ class Factorable implements \Thuata\FrameworkBundle\Factory\Factorable\Factorabl
     public function getFactory()
     {
         return $this->factory;
+    }
+
+    /**
+     * Gets the dependencies needed by the factorable. MUST return a hash with properties to set as key
+     * and service keys as value
+     *
+     * @return array
+     */
+    public static function getDependencies()
+    {
+        return [];
     }
 }

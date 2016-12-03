@@ -53,7 +53,7 @@ trait FactorableTrait
     public function setFactory(FactoryInterface $factory)
     {
         $this->factory = $factory;
-        
+
         return $this;
     }
     
