@@ -26,7 +26,7 @@
 
 namespace Thuata\FrameworkBundle\Tests;
 
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
+use Doctrine\Bundle\DoctrineBundle\Tests\TestCase;
 
 /**
  * Description of AbstractTestCase

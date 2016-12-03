@@ -25,7 +25,6 @@
 
 namespace Thuata\FrameworkBundle\Service;
 
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
 use Thuata\FrameworkBundle\Manager\AbstractManager;

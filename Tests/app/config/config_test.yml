@@ -1,0 +1,40 @@
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: false
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver:   pdo_mysql
+                host:     127.0.0.1
+                port:     3306
+                dbname:   test
+                user:     root
+                password: XPx9cgPSJE3QMDAj855l
+                charset:  UTF8
+            test:
+                driver:   pdo_mysql
+                host:     127.0.0.1
+                port:     3306
+                dbname:   test_other
+                user:     root
+                password: XPx9cgPSJE3QMDAj855l
+                charset:  UTF8
+    orm:
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+            test:
+                connection: test

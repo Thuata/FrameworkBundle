@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-namespace thuata\frameworkbundle\Tests\Resources\Entity;
+namespace Thuata\FrameworkBundle\Tests\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
