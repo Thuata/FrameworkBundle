@@ -2,8 +2,11 @@ language: php
 
 php:
   - '7.1'
+phpunit:
+ - '5.7'
 
 before_script:
+  - composer self-update
   - composer install --dev
 
 script: phpunit --coverage-text
