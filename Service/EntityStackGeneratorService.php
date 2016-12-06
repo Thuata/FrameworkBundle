@@ -2,7 +2,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
+ * Copyright 2015 Anthony Maudry <amaudry@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ use Thuata\IntercessionBundle\Service\GeneratorService;
  *
  * @package Thuata\FrameworkBundle\Service
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class EntityStackGeneratorService
 {

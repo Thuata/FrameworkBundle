@@ -6,7 +6,7 @@
     "authors": [
         {
             "name": "Anthony Maudry",
-            "email": "anthony.maudry@thuata.com",
+            "email": "amaudry@gmail.com",
             "homepage": "http://www.thuata.com/"
         }
     ],
@@ -23,21 +23,12 @@
         "doctrine/doctrine-cache-bundle": "^1.2"
     },
     "require-dev": {
-        "sensio/generator-bundle": "^3"
+        "sensio/generator-bundle": "^3",
+        "phpunit/phpunit": "^5"
     },
     "extra": {
         "branch-alias": {
             "dev-master": "v1-dev"
         }
-    },
-    "repositories" : [
-        {
-            "type" : "git",
-            "url" : "git@github.com:Thuata/IntercessionBundle.git"
-        },
-        {
-            "type" : "git",
-            "url" : "git@github.com:Thuata/ComponentBundle.git"
-        }
-    ]
+    }
 }

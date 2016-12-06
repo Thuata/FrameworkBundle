@@ -90,7 +90,7 @@ use Thuata\FrameworkBundle\Manager\AbstractManager;
  *
  * @package AppBundle\Manager
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class TodoListManager extends AbstractManager
 {
@@ -342,7 +342,7 @@ use Thuata\FrameworkBundle\Manager\AbstractManager;
  *
  * @package AppBundle\Manager
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class TodoListManager extends AbstractManager
 {
@@ -404,7 +404,7 @@ use Thuata\FrameworkBundle\Service\AbstractService;
  *
  * @package AppBundle\Service
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class TodoManagementService extends AbstractService
 {
@@ -451,7 +451,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @package AppBundle\Controller
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class TodoController extends Controller
 {

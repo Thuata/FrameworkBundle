@@ -2,7 +2,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
+ * Copyright 2015 Anthony Maudry <amaudry@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ use Thuata\FrameworkBundle\Service\AbstractService;
  *
  * @package thuata\frameworkbundle\Exception
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class InvalidServiceException extends \LogicException
 {

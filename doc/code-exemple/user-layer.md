@@ -66,7 +66,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @package AppBundle\Controller
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class TodoController extends Controller
 {
