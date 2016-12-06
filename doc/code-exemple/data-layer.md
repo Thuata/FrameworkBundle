@@ -95,7 +95,7 @@ use Thuata\FrameworkBundle\Repository\AbstractRepository;
  *
  * @package AppBundle\Repository
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class TodoListRepository extends AbstractRepository
 {
@@ -123,7 +123,7 @@ use Thuata\FrameworkBundle\Entity\AbstractEntity;
  *
  * @package AppBundle\Entity
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class TodoList extends AbstractEntity
 {

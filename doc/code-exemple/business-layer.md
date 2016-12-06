@@ -169,7 +169,7 @@ use Thuata\FrameworkBundle\Entity\AbstractEntity;
  *
  * @package AppBundle\Entity
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class TodoList extends AbstractEntity
 {
@@ -254,7 +254,7 @@ use Thuata\FrameworkBundle\Service\AbstractService;
  *
  * @package AppBundle\Service
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class TodoManagementService extends AbstractService 
 {

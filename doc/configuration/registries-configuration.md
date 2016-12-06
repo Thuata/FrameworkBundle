@@ -17,7 +17,7 @@ namespace Thuata\ComponentBundle\Registry;
  *
  * @package thuata\componentbundle\Registry
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @author Anthony Maudry <amaudry@gmail.com>
  */
 interface RegistryInterface
 {
@@ -327,7 +327,7 @@ use Thuata\FrameworkBundle\Repository\AbstractRepository;
  *
  * @package AppBundle\Repository
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class TodoListRepository extends AbstractRepository
 {

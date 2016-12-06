@@ -14,7 +14,7 @@ namespace Thuata\FrameworkBundle\Entity;
  *
  * @package Thuata\FrameworkBundle\Entity
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 abstract class AbstractEntity
 {

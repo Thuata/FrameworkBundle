@@ -2,7 +2,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
+ * Copyright 2015 Anthony Maudry <amaudry@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ use Thuata\IntercessionBundle\Service\GeneratorService;
  *
  * @package Thuata\FrameworkBundle\Service
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class EntityStackGeneratorService
 {
@@ -106,7 +106,7 @@ EOT
         , $configuration->getEntityName()));
         $intercessionMethod->setDescription('Returns the class name for the entity');
         $intercessionMethod->setTypeReturned('string');
-
+        $intercessionMethod->setDeclaredTypeReturned(true);
         $intercessionClass->addMethod($intercessionMethod);
 
         return $intercessionClass;
@@ -117,7 +117,6 @@ EOT
      *
      * @param EntityStackConfiguration $configuration
      *
-     * @throws \Thuata\IntercessionBundle\Exception\NotFileException
      * @throws \Thuata\IntercessionBundle\Exception\NotWritableException
      */
     protected function renderManagerFile(EntityStackConfiguration $configuration)
@@ -156,7 +155,6 @@ EOT
      *
      * @param EntityStackConfiguration $configuration
      *
-     * @throws \Thuata\IntercessionBundle\Exception\NotFileException
      * @throws \Thuata\IntercessionBundle\Exception\NotWritableException
      */
     protected function renderRepositoryFile(EntityStackConfiguration $configuration)

@@ -11,7 +11,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * @package Thuata\FrameworkBundle\DependencyInjection
  *
- * @author  Anthony Maudry <anthony.maudry@thuata.com>
+ * @author  Anthony Maudry <amaudry@gmail.com>
  */
 class Configuration implements ConfigurationInterface
 {

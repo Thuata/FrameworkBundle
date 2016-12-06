@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 Anthony Maudry <anthony.maudry@thuata.com>.
+ * Copyright 2015 Anthony Maudry <amaudry@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ use Thuata\FrameworkBundle\Repository\Registry\RegistryFactory;
  * The repository will gather entities from Registries. It provides methods to find entities from criteria or ids.<br>
  * The repository are provided by the RepositoryFactory witch is available only from Manager.
  *
- * @author Anthony Maudry <anthony.maudry@thuata.com>
+ * @author Anthony Maudry <amaudry@gmail.com>
  *
  * @property RepositoryFactory $factory
  */
