@@ -106,7 +106,7 @@ EOT
         , $configuration->getEntityName()));
         $intercessionMethod->setDescription('Returns the class name for the entity');
         $intercessionMethod->setTypeReturned('string');
-
+        $intercessionMethod->setDeclaredTypeReturned(true);
         $intercessionClass->addMethod($intercessionMethod);
 
         return $intercessionClass;
@@ -117,7 +117,6 @@ EOT
      *
      * @param EntityStackConfiguration $configuration
      *
-     * @throws \Thuata\IntercessionBundle\Exception\NotFileException
      * @throws \Thuata\IntercessionBundle\Exception\NotWritableException
      */
     protected function renderManagerFile(EntityStackConfiguration $configuration)
@@ -156,7 +155,6 @@ EOT
      *
      * @param EntityStackConfiguration $configuration
      *
-     * @throws \Thuata\IntercessionBundle\Exception\NotFileException
      * @throws \Thuata\IntercessionBundle\Exception\NotWritableException
      */
     protected function renderRepositoryFile(EntityStackConfiguration $configuration)

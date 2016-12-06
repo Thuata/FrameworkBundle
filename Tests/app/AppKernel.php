@@ -39,8 +39,10 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Thuata\IntercessionBundle\ThuataIntercessionBundle(),
             new Thuata\ComponentBundle\ThuataComponentBundle(),
+            new Thuata\FrameworkBundle\ThuataFrameworkBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
