@@ -33,6 +33,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Thuata\ComponentBundle\Bridge\Doctrine\ShortcutNotationParser;
 use Thuata\ComponentBundle\Registry\ClassAwareInterface;
 use Thuata\ComponentBundle\Registry\RegistryInterface;
+use Thuata\FrameworkBundle\Bridge\MongoDb\ConnectionFactory;
 use Thuata\FrameworkBundle\Entity\EntityStackConfiguration;
 use Thuata\FrameworkBundle\Exception\InvalidRegistryName;
 
@@ -118,8 +119,7 @@ class RegistryFactory implements ContainerAwareInterface
                 throw new \Exception('Can\'t load a mongodb registry without entity name');
             }
 
-            $client = new Client(sprintf('mongodb://%s:%d', $this->container->getParameter('mongo_host'), $this->container->getParameter('mongo_port')));
-            $collection = $client->selectDatabase($this->container->getParameter('mongo_database'))->selectCollection($entityName);
+            $collection = ConnectionFactory::getInstance()->getConnection()->getMongoDatabase()->selectCollection($entityName);
             $registry->setMongoDBCollection($collection);
         }
 
