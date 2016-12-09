@@ -69,6 +69,16 @@ abstract class AbstractDocument extends AbstractEntity
     }
 
     /**
+     * Gets the original document
+     *
+     * @return array
+     */
+    public function getMongoDocument()
+    {
+        return $this->document;
+    }
+
+    /**
      * Gets data from the document
      *
      * @param string $name
