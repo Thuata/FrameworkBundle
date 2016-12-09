@@ -6,6 +6,8 @@ use Doctrine\ORM\Configuration;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Thuata\ComponentBundle\Hydrator\ColumnHydrator;
 use Thuata\FrameworkBundle\Bridge\Doctrine\EntityHydrator;
+use Thuata\FrameworkBundle\Bridge\MongoDB\Connection;
+use Thuata\FrameworkBundle\Bridge\MongoDB\ConnectionFactory;
 use Thuata\FrameworkBundle\DependencyInjection\ThuataFrameworkExtension;
 use Thuata\FrameworkBundle\Repository\Registry\ArrayRegistry;
 use Thuata\FrameworkBundle\Repository\Registry\MongoDBRegistry;
@@ -39,6 +41,14 @@ class ThuataFrameworkBundle extends Bundle
             RegistryFactory::setDefaultRegistries($config['default_registries']);
         } else {
             RegistryFactory::setDefaultRegistries([ArrayRegistry::NAME, DoctrineRegistry::NAME]);
+        }
+
+        if ($this->container->hasParameter('mongo_host')) {
+            ConnectionFactory::getInstance()->addConnection(null, new Connection(
+                $this->container->getParameter('mongo_host'),
+                $this->container->getParameter('mongo_port'),
+                $this->container->getParameter('mongo_db')
+            ));
         }
     }
 }

@@ -6,8 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
-use Thuata\FrameworkBundle\Bridge\MongoDB\Connection;
-use Thuata\FrameworkBundle\Bridge\MongoDB\ConnectionFactory;
 
 /**
  * <b>ThuataFrameworkExtension</b><br>
@@ -33,13 +31,5 @@ class ThuataFrameworkExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-
-        if ($container->hasParameter('mongo_host')) {
-            ConnectionFactory::getInstance()->addConnection(null, new Connection(
-                $container->getParameter('mongo_host'),
-                $container->getParameter('mongo_port'),
-                $container->getParameter('mongo_db')
-            ));
-        }
     }
 }
