@@ -27,6 +27,9 @@
 namespace Thuata\FrameworkBundle\Manager;
 
 use Thuata\ComponentBundle\SoftDelete\SoftDeleteInterface;
+use Thuata\FrameworkBundle\Document\AbstractDocument;
+use Thuata\FrameworkBundle\Entity\DocumentSerialization;
+use Thuata\FrameworkBundle\Entity\Interfaces\DocumentSerializableInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableInterface;
 use Thuata\FrameworkBundle\Factory\Factorable\FactorableTrait;
 use Thuata\FrameworkBundle\Manager\Interfaces\ManagerFactoryAccessableInterface;
@@ -143,7 +146,53 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
      */
     protected function prepareEntityForGet(AbstractEntity $entity): bool
     {
+        if ($entity instanceof AbstractDocument) {
+            $this->prepareDocumentForGet($entity);
+        }
         return true;
+    }
+
+    /**
+     * Prepares a document from MongoDB to be gotten
+     *
+     * @param AbstractDocument $entity
+     *
+     * @return bool
+     */
+    protected function prepareDocumentForGet(AbstractDocument $entity): bool
+    {
+        $document = $entity->getMongoDocument();
+
+        foreach ($document as $key => $value) {
+            if (is_array($value) and array_key_exists('document_serialization', $value)){
+                $documentEntity = $this->loadDocumentSerializedEntity($value);
+
+                $entity->__set($key, $documentEntity);
+            }
+        }
+
+        return true;
+    }
+
+    protected function loadDocumentSerializedEntity(array $serializationArray)
+    {
+        $serialization = DocumentSerialization::jsonDeserialize($serializationArray);
+
+        /** @var AbstractManager $manager */
+        $manager = $this->getManagerFactory()->getFactorableInstance($serialization->getManagerClass());
+
+        /** @var DocumentSerializableInterface $entity */
+        $entity = $manager->getNew();
+
+        if (!($entity instanceof DocumentSerializableInterface)) {
+            throw new \Exception('Entity "%s" does not implement interface "%s"', get_class($entity), DocumentSerializableInterface::class);
+        }
+
+        $entity->documentUnSerialize($serialization);
+
+        $manager->prepareEntityForGet($entity);
+
+        return $entity;
     }
 
     /**

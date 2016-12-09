@@ -17,6 +17,8 @@ use DateTime;
  * @package Thuata\FrameworkBundle\Entity\Interfaces
  *
  * @author Anthony Maudry <amaudry@gmail.com>
+ * @author Enjoy Your Business <http://www.enjoyyourbusiness.fr>
+ *
  */
 interface TimestampableInterface
 {

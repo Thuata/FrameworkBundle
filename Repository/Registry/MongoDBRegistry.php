@@ -16,6 +16,7 @@ use Thuata\ComponentBundle\Bridge\Doctrine\ShortcutNotationParser;
 use Thuata\ComponentBundle\Registry\ClassAwareInterface;
 use Thuata\ComponentBundle\Registry\RegistryInterface;
 use Thuata\FrameworkBundle\Document\AbstractDocument;
+use Thuata\FrameworkBundle\Entity\Interfaces\DocumentSerializableInterface;
 
 /**
  * Class MongoDBRegistry
@@ -114,6 +115,11 @@ class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface, Class
             $documentProperty = $reflectionClass->getParentClass()->getProperty('document');
             $documentProperty->setAccessible(true);
             $data = $documentProperty->getValue($document);
+            foreach ($data as $key => &$value) {
+                if ($value instanceof DocumentSerializableInterface) {
+                    $value = $value->documentSerialize()->jsonSerialize();
+                }
+            }
         } else {
             throw new \Exception('Invalid data type, array or AbstractDocument expected');
         }
