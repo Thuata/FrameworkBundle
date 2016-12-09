@@ -6,8 +6,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
-use Thuata\FrameworkBundle\Bridge\MongoDb\Connection;
-use Thuata\FrameworkBundle\Bridge\MongoDb\ConnectionFactory;
+use Thuata\FrameworkBundle\Bridge\MongoDB\Connection;
+use Thuata\FrameworkBundle\Bridge\MongoDB\ConnectionFactory;
 
 /**
  * <b>ThuataFrameworkExtension</b><br>
