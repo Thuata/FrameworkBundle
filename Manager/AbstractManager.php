@@ -163,6 +163,10 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
     {
         $document = $entity->getMongoDocument();
 
+        if (!$document or empty($document)) {
+            return true;
+        }
+
         foreach ($document as $key => $value) {
             if (is_array($value) and array_key_exists('document_serialization', $value)){
                 $documentEntity = $this->loadDocumentSerializedEntity($value);
@@ -325,6 +329,17 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
             $this->getRepository()->persist($entity);
         }
 
+        $this->afterPersist($entity);
+    }
+
+    /**
+     * Called after persist
+     *
+     * @param AbstractEntity $entity
+     */
+    protected function afterPersist(AbstractEntity $entity)
+    {
+        return;
     }
 
     /**
