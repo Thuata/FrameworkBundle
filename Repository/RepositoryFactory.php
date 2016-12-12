@@ -67,7 +67,7 @@ class RepositoryFactory extends AbstractFactory
 
         if ($factorable instanceof MongoDBAwareInterface) {
             $client = new Client(sprintf('mongodb://%s:%d', $this->getContainer()->getParameter('mongo_host'), $this->getContainer()->getParameter('mongo_port')));
-            $collection = $client->selectDatabase($this->getContainer()->getParameter('mongo_database'))->selectCollection($factorable->getEntityName());
+            $collection = $client->selectDatabase($this->getContainer()->getParameter('mongo_db'))->selectCollection($factorable->getEntityName());
             $factorable->setMongoDBCollection($collection);
         }
     }
