@@ -37,10 +37,6 @@ use Thuata\FrameworkBundle\Tests\Traits\ReflectionTestTrait;
  * @package thuata\frameworkbundle\Tests
  *
  * @author  Anthony Maudry <amaudry@gmail.com>
- *
- * @method void assertTrue(bool $assertion)
- * @method void assertInstanceOf(string $expected, mixed $assertion)
- * @method void assertEquals(mixed $expected, mixed $assertion)
  */
 class AbstractKernelTestCase extends KernelTestCase implements ReflectionTestInterface
 {

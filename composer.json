@@ -1,34 +1,43 @@
 {
-    "name": "thuata/frameworkbundle",
-    "license": "MIT",
-    "type": "symfony-bundle",
-    "description": "Model Framework bundle for Symfony",
-    "authors": [
-        {
-            "name": "Anthony Maudry",
-            "email": "amaudry@gmail.com",
-            "homepage": "https://anthony-maudry.github.io/"
-        }
-    ],
-    "autoload": {
-        "psr-4": { "Thuata\\FrameworkBundle\\": "" }
-    },
-    "require": {
-        "php": "~7.1",
-        "symfony/symfony": "~3",
-        "thuata/componentbundle" : "^1",
-        "thuata/intercessionbundle" : "^1.1",
-        "doctrine/orm": "^2.5",
-        "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/doctrine-cache-bundle": "^1.2"
-    },
-    "require-dev": {
-        "sensio/generator-bundle": "^3",
-        "phpunit/phpunit": "^5"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "v1-dev"
-        }
+  "name": "thuata/frameworkbundle",
+  "license": "MIT",
+  "type": "symfony-bundle",
+  "description": "Model Framework bundle for Symfony",
+  "authors": [
+    {
+      "name": "Anthony Maudry",
+      "email": "amaudry@gmail.com",
+      "homepage": "https://anthony-maudry.github.io/"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Thuata\\FrameworkBundle\\": ""
+    }
+  },
+  "require": {
+    "php": "~7.1",
+    "symfony/symfony": "~3",
+    "thuata/componentbundle": "^1",
+    "thuata/intercessionbundle": "^1.1",
+    "doctrine/orm": "^2.5",
+    "doctrine/doctrine-bundle": "^1.6",
+    "doctrine/doctrine-cache-bundle": "^1.2"
+  },
+  "require-dev": {
+    "sensio/generator-bundle": "^3",
+    "phpunit/phpunit": "^5",
+    "thuata/frameworktestbundle": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:Thuata/FrameworkTestBundle.git"
+    }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "v1-dev"
+    }
+  }
 }

@@ -49,6 +49,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Thuata\FrameworkTestBundle\ThuataFrameworkTestBundle();
         }
 
         return $bundles;
