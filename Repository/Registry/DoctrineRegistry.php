@@ -72,6 +72,7 @@ class DoctrineRegistry extends EntityRegistry
      */
     public function add($key, $data)
     {
+        $this->getEntityManager()->persist($data);
         $this->getEntityManager()->merge($data);
         $this->getEntityManager()->flush();
     }
