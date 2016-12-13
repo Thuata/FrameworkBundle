@@ -3,3 +3,4 @@ vendor/
 coverage/
 composer.lock
 Tests/var
+Tests/app/parameters.yml
