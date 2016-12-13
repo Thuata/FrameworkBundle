@@ -87,7 +87,7 @@ class DocumentSerialization implements DocumentSerializationInterface
     public static function jsonDeserialize(array $json): DocumentSerializationInterface
     {
         $managerClass = $json['document_serialization']['manager_class'];
-        $data = $json['document_serialization']['data'];
+        $data = (array) $json['document_serialization']['data'];
 
         return new self($managerClass, $data);
     }

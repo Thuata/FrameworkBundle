@@ -26,6 +26,7 @@
 
 namespace Thuata\FrameworkBundle\Manager;
 
+use MongoDB\Model\BSONDocument;
 use Thuata\ComponentBundle\SoftDelete\SoftDeleteInterface;
 use Thuata\FrameworkBundle\Document\AbstractDocument;
 use Thuata\FrameworkBundle\Entity\DocumentSerialization;
@@ -168,6 +169,9 @@ abstract class AbstractManager implements FactorableInterface, ManagerFactoryAcc
         }
 
         foreach ($document as $key => $value) {
+            if ($value instanceof BSONDocument) {
+                $value = $value->getArrayCopy();
+            }
             if (is_array($value) and array_key_exists('document_serialization', $value)){
                 $documentEntity = $this->loadDocumentSerializedEntity($value);
 

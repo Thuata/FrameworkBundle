@@ -27,7 +27,8 @@
   "require-dev": {
     "sensio/generator-bundle": "^3",
     "phpunit/phpunit": "^5",
-    "thuata/frameworktestbundle": "dev-master"
+    "thuata/frameworktestbundle": "dev-master",
+    "mongodb/mongodb": "^1"
   },
   "repositories": [
     {
