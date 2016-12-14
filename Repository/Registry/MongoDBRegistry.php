@@ -136,7 +136,7 @@ class MongoDBRegistry implements RegistryInterface, MongoDBAwareInterface, Class
      */
     public function remove($key)
     {
-        $this->collection->deleteOne(['_id' => $key]);
+        $this->collection->deleteOne(['_id' => new ObjectID($key)]);
     }
 
     /**
