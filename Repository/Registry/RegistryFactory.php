@@ -78,6 +78,8 @@ class RegistryFactory implements ContainerAwareInterface
      */
     public static function setDefaultRegistries(array $registries)
     {
+        self::$defaultRegistries = [];
+
         foreach ($registries as $registry) {
             if (array_key_exists($registry, self::$registries)) {
                 self::$defaultRegistries[] = $registry;
