@@ -75,6 +75,8 @@ class RegistryFactory implements ContainerAwareInterface
 
     /**
      * Registers a registry
+     *
+     * @param array $registries
      */
     public static function setDefaultRegistries(array $registries)
     {
